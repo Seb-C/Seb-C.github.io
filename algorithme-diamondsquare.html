@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+		<title>Sébastien Caparros - Blog d'un développeur</title>
+
+		<link rel="stylesheet" href="css/styles.css" />
+		<link rel="stylesheet" href="css/github-dark.css" />
+		<script src="js/scale.fix.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="alternate" type="application/atom+xml" title="Flux RSS Articles" href="http://www.sebastien-caparros.name/feed.xml" />
+	</head>
+	<body>
+		<div class="wrapper">
+			<header>
+				<h1>Sébastien Caparros</h1>
+				<p>Blog d'un développeur</p>
+				<p class="view"><a href="index.html">Liste des articles</a></p>
+				<p class="view"><a href="qui-suis-je.html">Qui suis-je ?</a></p>
+				<ul>
+					<li>
+						<a href="index.html">
+							<strong>Accueil</strong>
+							(liste des articles)
+						</a>
+					</li>
+					<li>
+						<a href="qui-suis-je.html">
+							<strong style="padding-top: 5px;">Qui suis-je ?</strong>
+						</a>
+					</li>
+				</ul>
+			</header>
+							<section>
+					<time datetime="2014-06-01T12:04:00">Le 01/06/2014 à 12:04:00</time>
+<h1>Algorithme DiamondSquare</h1>
+
+<p>
+	Pour générer la texture et le relief des planètes de mon jeu, j'ai utilisé l'algorithme DiamondSquare.</p>
+<p>
+	J'ai passé un long moment à l'implémenter en JS, à l'optimiser au maximum (notamment en utilisant des tableaux typés) et à le modifier pour que la texture soit applicable sur une sphère (sans que les bords de l'image soient visibles). Je me suis donc dit que ça serait sympa de partager.</p>
+<p>
+	Je me suis basé sur l'excellent tuto de <a href="http://hiko-seijuro.developpez.com/articles/diamond-square/">Hiko Seijuro sur developpez.com</a>, et je l'ai adapté à ma sauce. L'avantage de cet algorithme, c'est qu'il est beaucoup plus facile à comprendre et à modifier que le bruit de Perlin.</p>
+<p>
+	Pour une question de simplicité, celui-ci utilise la fonction <u>Math.random</u> de base, mais on peut très facilement changer ça pour du pseudo-aléatoire (pour ma part, j'ai opté pour <a href="https://github.com/skeeto/rng-js">rng.js</a>).</p>
+<p>
+	Faites en ce que vous voulez, c'est du WTFPL (mais j'apprécie un petit commentaire pour citer la source dans votre code ;) ).</p>
+<p>
+	Retrouvez le également sur <a href="https://github.com/Seb-C/planetTextureGenerator.js">GitHub</a></p>
+<hr />
+<p>
+	&nbsp;</p>
+<div>
+	<script type="text/javascript">
+	var resolution = 512;
+	var variabilityRate = 1.25;
+	var maxColours = 10;
+	
+	// Getting canvas pixel array
+	var canvas = document.createElement("canvas");
+	canvas.style.display = "block";
+	canvas.width  = resolution;
+	canvas.height = resolution / 2;
+	var context = canvas.getContext("2d");
+	var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+	var texturePixels = imageData.data;
+	document.currentScript.parentNode.appendChild(canvas);
+	
+	function refreshTexture() {
+		// Colors applied to the texture, depending on it's height
+		var colorsNumber = Math.ceil((1 - Math.exp(Math.random()) / Math.E) * maxColours);
+		var colorSteps = [];
+		for(var i = 0 ; i < colorsNumber ; i++) {
+			colorSteps.push({
+				minValue: (1 / colorsNumber) * i,
+				color: [
+					Math.random() * 255,
+					Math.random() * 255,
+					Math.random() * 255
+				]
+			});
+		}
+		
+		// Initializing relief array with the points of the first square
+		var textureRelief = new Float32Array((resolution + 1) * (resolution + 1));
+		textureRelief[0                                   ] = Math.random();
+		textureRelief[resolution                          ] = Math.random();
+		textureRelief[             resolution * resolution] = Math.random();
+		textureRelief[resolution + resolution * resolution] = Math.random();
+		
+		var setPixel = function(x, y, value) {
+			var pixelIndex = x + y * resolution;
+			
+			textureRelief[pixelIndex] = value;
+			
+			var colorValue = value;
+			if(colorValue < 0) colorValue = 0;
+			if(colorValue > 1) colorValue = 1;
+			
+			// Determining pixel color
+			var color = colorSteps[0].color;
+			for(var i = 1 ; i < colorSteps.length ; i++) {
+				if(colorValue >= colorSteps[i].minValue) {
+					color = colorSteps[i].color;
+				} else {
+					break;
+				}
+			}
+			
+			// Setting pixel color
+			var pixelIndexRGB = pixelIndex * 4;
+			texturePixels[pixelIndexRGB    ] = Math.round(color[0] * colorValue); // R
+			texturePixels[pixelIndexRGB + 1] = Math.round(color[1] * colorValue); // G
+			texturePixels[pixelIndexRGB + 2] = Math.round(color[2] * colorValue); // B
+			texturePixels[pixelIndexRGB + 3] = 255;                               // A
+		};
+
+		// Diamond-Square algorithm
+		var halfSizeY = ((resolution + 1) / 2 + 0.5);
+		for(var currentSize = resolution ; currentSize > 1 ; currentSize /= 2) {
+			var halfCurrentSize = currentSize / 2;
+			
+			// Square
+			for(var x = halfCurrentSize ; x < resolution + 1 ; x += currentSize) {
+				for(var y = halfCurrentSize ; y <= halfSizeY ; y += currentSize) {
+					var squareAvg = (
+						  textureRelief[(x - halfCurrentSize) + (y - halfCurrentSize) * resolution]
+						+ textureRelief[(x + halfCurrentSize) + (y - halfCurrentSize) * resolution]
+						+ textureRelief[(x + halfCurrentSize) + (y + halfCurrentSize) * resolution]
+						+ textureRelief[(x - halfCurrentSize) + (y + halfCurrentSize) * resolution]
+					) / 4;
+					
+					var diamondAvg = diamondSum / diamondCount;
+					if(y == 0 || y == halfSizeY - 1) {
+						setPixel(x, y, 0.5); // First and last lines are always at a constant height to be applicable on a sphere
+					} else {
+						setPixel(x, y, squareAvg + ((Math.random() * 2 - 1) * currentSize * variabilityRate) / (resolution + 1));
+					}
+				}
+			}
+			
+			// Diamond
+			for(var x = 0 ; x < resolution ; x += halfCurrentSize) {
+				var yStart = ((x / halfCurrentSize) % 2 == 0) ? halfCurrentSize : 0; 
+				
+				for(var y = yStart ; y <= halfSizeY ; y += currentSize) {
+					var diamondSum = 0, diamondCount = 0;
+					
+					if(y - halfCurrentSize >= 0) {
+						diamondSum += textureRelief[x + (y - halfCurrentSize) * resolution];
+						diamondCount++
+					}
+					if(x + halfCurrentSize < resolution + 1) {
+						diamondSum += textureRelief[(x + halfCurrentSize) + y * resolution];
+						diamondCount++
+					}
+					if(y + halfCurrentSize < halfSizeY) {
+						diamondSum += textureRelief[x + (y + halfCurrentSize) * resolution];
+						diamondCount++
+					}
+					if(x - halfCurrentSize >= 0) {
+						diamondSum += textureRelief[(x - halfCurrentSize) + y * resolution];
+						diamondCount++
+					}
+					
+					var diamondAvg = diamondSum / diamondCount;
+					if(y == 0 || y == halfSizeY - 1) {
+						setPixel(x, y, 0.5); // First and last lines are always at a constant height to be applicable on a sphere
+					} else {
+						setPixel(x, y, diamondAvg + ((Math.random() * 2 - 1) * currentSize * variabilityRate) / (resolution + 1));
+						if(x == 0) setPixel(resolution, y, textureRelief[x + y * resolution]); // Makes it tileable horizontally
+					}
+				}
+			}
+		}
+		
+		context.putImageData(imageData, 0, 0);
+	};
+	refreshTexture();
+	
+	// Refresh button
+	var refreshButton = document.createElement("input");
+	refreshButton.setAttribute("type", "button");
+	refreshButton.setAttribute("value", "Nouvelle texture");
+	refreshButton.addEventListener("click", refreshTexture);
+	document.currentScript.parentNode.appendChild(refreshButton);
+</script></div>
+<p>
+	&nbsp;</p>
+<hr />
+<pre class="brush:jscript;">
+// A mettre dans une balise script. Si je la met ici,
+// ça fait planter la coloration syntaxique ...
+var resolution = 512;
+var variabilityRate = 1.25;
+var maxColours = 10;
+
+// Getting canvas pixel array
+var canvas = document.createElement("canvas");
+canvas.style.display = "block";
+canvas.width  = resolution;
+canvas.height = resolution / 2;
+var context = canvas.getContext("2d");
+var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+var texturePixels = imageData.data;
+document.currentScript.parentNode.appendChild(canvas);
+
+function refreshTexture() {
+	// Colors applied to the texture, depending on it's height
+	var colorsNumber = Math.ceil((1 - Math.exp(Math.random()) / Math.E) * maxColours);
+	var colorSteps = [];
+	for(var i = 0 ; i &lt; colorsNumber ; i++) {
+		colorSteps.push({
+			minValue: (1 / colorsNumber) * i,
+			color: [
+				Math.random() * 255,
+				Math.random() * 255,
+				Math.random() * 255
+			]
+		});
+	}
+	
+	// Initializing relief array with the points of the first square
+	var textureRelief = new Float32Array((resolution + 1) * (resolution + 1));
+	textureRelief[0                                   ] = Math.random();
+	textureRelief[resolution                          ] = Math.random();
+	textureRelief[             resolution * resolution] = Math.random();
+	textureRelief[resolution + resolution * resolution] = Math.random();
+	
+	var setPixel = function(x, y, value) {
+		var pixelIndex = x + y * resolution;
+		
+		textureRelief[pixelIndex] = value;
+		
+		var colorValue = value;
+		if(colorValue &lt; 0) colorValue = 0;
+		if(colorValue &gt; 1) colorValue = 1;
+		
+		// Determining pixel color
+		var color = colorSteps[0].color;
+		for(var i = 1 ; i &lt; colorSteps.length ; i++) {
+			if(colorValue &gt;= colorSteps[i].minValue) {
+				color = colorSteps[i].color;
+			} else {
+				break;
+			}
+		}
+		
+		// Setting pixel color
+		var pixelIndexRGB = pixelIndex * 4;
+		texturePixels[pixelIndexRGB    ] = Math.round(color[0] * colorValue); // R
+		texturePixels[pixelIndexRGB + 1] = Math.round(color[1] * colorValue); // G
+		texturePixels[pixelIndexRGB + 2] = Math.round(color[2] * colorValue); // B
+		texturePixels[pixelIndexRGB + 3] = 255;                               // A
+	};
+
+	// Diamond-Square algorithm
+	var halfSizeY = ((resolution + 1) / 2 + 0.5);
+	for(var currentSize = resolution ; currentSize &gt; 1 ; currentSize /= 2) {
+		var halfCurrentSize = currentSize / 2;
+		
+		// Square
+		for(var x = halfCurrentSize ; x &lt; resolution + 1 ; x += currentSize) {
+			for(var y = halfCurrentSize ; y &lt;= halfSizeY ; y += currentSize) {
+				var squareAvg = (
+					  textureRelief[(x - halfCurrentSize) + (y - halfCurrentSize) * resolution]
+					+ textureRelief[(x + halfCurrentSize) + (y - halfCurrentSize) * resolution]
+					+ textureRelief[(x + halfCurrentSize) + (y + halfCurrentSize) * resolution]
+					+ textureRelief[(x - halfCurrentSize) + (y + halfCurrentSize) * resolution]
+				) / 4;
+				
+				var diamondAvg = diamondSum / diamondCount;
+				if(y == 0 || y == halfSizeY - 1) {
+					setPixel(x, y, 0.5); // First and last lines are always at a constant height to be applicable on a sphere
+				} else {
+					setPixel(x, y, squareAvg + ((Math.random() * 2 - 1) * currentSize * variabilityRate) / (resolution + 1));
+				}
+			}
+		}
+		
+		// Diamond
+		for(var x = 0 ; x &lt; resolution ; x += halfCurrentSize) {
+			var yStart = ((x / halfCurrentSize) % 2 == 0) ? halfCurrentSize : 0; 
+			
+			for(var y = yStart ; y &lt;= halfSizeY ; y += currentSize) {
+				var diamondSum = 0, diamondCount = 0;
+				
+				if(y - halfCurrentSize &gt;= 0) {
+					diamondSum += textureRelief[x + (y - halfCurrentSize) * resolution];
+					diamondCount++
+				}
+				if(x + halfCurrentSize &lt; resolution + 1) {
+					diamondSum += textureRelief[(x + halfCurrentSize) + y * resolution];
+					diamondCount++
+				}
+				if(y + halfCurrentSize &lt; halfSizeY) {
+					diamondSum += textureRelief[x + (y + halfCurrentSize) * resolution];
+					diamondCount++
+				}
+				if(x - halfCurrentSize &gt;= 0) {
+					diamondSum += textureRelief[(x - halfCurrentSize) + y * resolution];
+					diamondCount++
+				}
+				
+				var diamondAvg = diamondSum / diamondCount;
+				if(y == 0 || y == halfSizeY - 1) {
+					setPixel(x, y, 0.5); // First and last lines are always at a constant height to be applicable on a sphere
+				} else {
+					setPixel(x, y, diamondAvg + ((Math.random() * 2 - 1) * currentSize * variabilityRate) / (resolution + 1));
+					if(x == 0) setPixel(resolution, y, textureRelief[x + y * resolution]); // Makes it tileable horizontally
+				}
+			}
+		}
+	}
+	
+	context.putImageData(imageData, 0, 0);
+};
+refreshTexture();
+
+// Refresh button
+var refreshButton = document.createElement("input");
+refreshButton.setAttribute("type", "button");
+refreshButton.setAttribute("value", "Nouvelle texture");
+refreshButton.addEventListener("click", refreshTexture);
+document.currentScript.parentNode.appendChild(refreshButton);
+</pre>
+				</section>
+					</div>
+		<footer>
+			<p>
+				<span style="float: left; padding-right: 10px;">
+					<a href="feed.xml">
+						<img src="images/feed.png" alt="Flux RSS" title="Flux RSS" />
+					</a>
+				</span>
+				
+				<!-- Contact, merci à http://www.caspam.org/ pour la protection -->
+				<script type="text/javascript">
+				//<![CDATA[
+				var d="";for(var i=0;i<665;i++)d+=String.fromCharCode(("0z,9.V;ofz\'L}!{(NlOZ`-.[+gJRi%]#Q& b\"n)*j~qkcK0CFp2,/ed\\rhsIm|143_$P^aM;E}V;;E{E-V;Q!^q\"%mc 0[e\"1NF\"!RCNsrj(!jhQ%#^(~(* |3/ 1isQ%^|Q](^(0+C&RjsOKjhQ%#^]z\"( %}F {+d-~bebKi\\ !}qQg*dgz^0O},~(cm Z}IFlh\"q |3I+I\"j#I\"I+hbebKi\\ !}qQg*d+h^0Oz(~lg,~[z(2N1`c#KLhZqNs\"!cc q(/#sNjb!}hbK^sNh3hQ]f,#%`clzPhO|b,%h(~]i,\\]gk2(~4~lh\"e#%m`JRm`QgbebKi\\ !}qQg*dJg^0O},~(cm Z}IFlh\"bNh(* |3/ 1isQ%PI\"][^(0+C&]Ze&{NcQqmbNm\\0(q3\' |3I#%`I`\'\\d`!LaNh3hQ]f,#%`clzPIO|b,%h(~]i,\\]gkF;T ),A0z,9#VIT#ULOQT#DVMB5{VA.G#(}~2h A-G|\"z,Z.A#BBUUJQB6A.G#(}~2h A-G|\"z,Z.A#DJBBUUJKB6A.G#(}~2h A-G|\"z,Z.A#DKBBUUOB6.G#(}~2h A-G|\"z,Z.A#DLBBT}DVl.,#(!G ,)\'\\\"z,\\)}~A{WWWJOEA{WWWQB?KNNE{?KNNB7T~0z&A}G-/{-.,AIEKPOBB".charCodeAt(i)+38)%95+32);eval(d)
+				//]]>
+				</script>
+			</p>
+			<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+		</footer>
+	</body>
+</html>

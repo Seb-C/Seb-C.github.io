@@ -1,0 +1,92 @@
+<time datetime="2013-06-29T13:15:00">Le 29/06/2013 à 13:15:00</time>
+<h1>Un peu d'héritage en JavaScript</h1>
+
+<p>
+	Je ne suis pas très actif sur ce blog ces derniers temps car je suis toujours à fond dans le développement d'un jeu en WebGL. Je n'en dis pas plus pour le moment, mais je ferais peut-être prochainement un article dessus avec quelques copies d'écran bien choisies (car je ne veux pas dévoiler les aspects les plus intéréssants :D ).</p>
+<p>
+	Bref, passons en au fait. Je cherchais depuis longtemps un moyen simple et fonctionnel de faire de l'héritage en JavaScript. Mais malgré le nombre d'articles sur le sujet qu'on peut trouver sur Internet, aucun ne m'a jamais complètement satisfait.</p>
+<p>
+	Entre les solutions qui cassent en partie le typage (instanceof qui ne répond que sur la classe parente ou sur la classe fille), celles qui sont très lourdes (boucle sur les attributs et méthodes du prototype), celles qui nécessitent d'avoir du code en double (pas d'appel possible au constructeur parent) et celles qui modifient le prototype d'Object, je n'ai jamais rien trouvé qui me satisfasse.</p>
+<p>
+	Mais ça, c'était avant. Avant que je ne tombe sur un article très récent (mai/juin 2013) sur le site de Mozilla, qui présente <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Classical_inheritance_with_Object.create">une méthode d'héritage plutôt convaincante</a>, avec la méthode Object.create.</p>
+<p>
+	L'appel au constructeur parent est possible, on peut utiliser instanceof sur la classe mère et la classe fille, et le code semble assez performant.</p>
+<p>
+	Si votre développement cible tous les navigateurs, même les plus anciens (ce qui n'est pas mon cas), pensez bien a inclure le <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Polyfill">polyfill proposé par Mozilla</a>.</p>
+<p>
+	Il y a cependant deux petits défauts qui me gênaient :</p>
+<ul>
+	<li>
+		Il faut faire appel au constructeur parent par le nom de la classe parente. Ca me dérange car j'ai l'habitude de réduire la redondance au minimum, quitte à pousser le langage jusque dans ses retranchements. Et avoir deux fois le nom de la classe parente dans ma déclaration, ca ne me convient pas.</li>
+	<li>
+		Le code n'est pas très intuitif et est assez lourd à écrire quand on veut faire un héritage.</li>
+</ul>
+<p>
+	J'ai donc élaboré la modeste fonction suivante, qui répond à tous mes critères :</p>
+<pre class="brush:jscript;">
+Function.prototype.extend = function(Parent) {
+    this.prototype = Object.create(Parent.prototype);
+    this.prototype.constructor = this;
+    this.prototype.parent = function(/* any args */) {
+        Parent.apply(this, arguments);
+    };
+};</pre>
+<p>
+	Et un rapide exemple d'utilisation :</p>
+<pre class="brush:jscript;">
+/**
+ * Définit un véhicule équipé de roues
+ * @param int Le nombre de roues du véhicule
+ */
+var VehiculeRoulant = function(nombreRoues) {
+	this._nombreRoues = nombreRoues;
+};
+
+/**
+ * @return int Le nombre de roues du véhicule
+ */
+VehiculeRoulant.prototype.getNombreRoues = function() {
+	return this._nombreRoues;
+};
+
+/**
+ * Définit une Moto, qui hérite de VehiculeRoulant
+ * @param boolean true si le véhicule est équipé d'un side-car
+ */
+var Moto = function(hasSideCar) {
+	this.hasSideCar = hasSideCar;
+	
+	this.parent(this.hasSideCar ? 3 : 2);
+}
+Moto.extend(VehiculeRoulant);
+
+Moto.prototype.toString = function() {
+	var r = "Je suis une moto avec " + this.getNombreRoues() + " roues";
+	if(this.hasSideCar) {
+		r += " (car équipée d'un side-car)";
+	}
+	r += ".";
+	
+	return r;
+};
+
+alert(new Moto(true));  // Je suis une moto avec 3 roues (car équipée d'un side-car).
+alert(new Moto(false)); // Je suis une moto avec 2 roues.
+</pre>
+<p>
+	&nbsp;</p>
+<p>
+	En résumé, vous pouvez faire un héritage comme ceci :</p>
+<pre class="brush:jscript;">
+var Fille = function(/*bla*/) { /*blabla*/ };
+Fille.extend(Mere);</pre>
+<p>
+	Et faire appel au constructeur parent via :</p>
+<pre class="brush:jscript;">
+this.parent(/* arguments à passer au parent */);</pre>
+<p>
+	Le seul défaut restant, c'est qu'on ne peut pas étendre une méthode parente. On est obligé de l'écraser ou de contourner le problème. Je n'ai pas trouvé de solution propre pour le faire.</p>
+<p>
+	Au niveau du code en lui-même, je ne modifie pas Object, mais Function. Du coup, quand vous utiliserez un simple objet comme tableau associatif, vous n'aurez pas d'attribut parasite. Par contre, si vous voulez boucler sur les attributs d'une instance d'une classe (Function), il y en aura (mais vous ne devriez pas avoir besoin de le faire si vous développez proprement ;) ), auquel cas il faudra suivre les recommandations en utilisant hasOwnProperty.</p>
+<p>
+	En espérant que ca soit utile à quelqu'un ! Sentez vous libre de réutiliser ma fonction où vous voulez et sans restrictions, mais si vous pouvez mettre un lien vers cette page en commentaire de la fonction, j'apprécierais.</p>

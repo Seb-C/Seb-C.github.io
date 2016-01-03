@@ -6,8 +6,809 @@
 		<language>fr</language>
 		<description>Blog d'un développeur</description>
 		<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://localhost/feed.php" />
-		<lastBuildDate>2012-09-22T12:00:00</lastBuildDate>
+		<lastBuildDate>2015-07-02T20:18:00</lastBuildDate>
 		
+					<item>
+				<title>Une classe String en PHP ?</title>
+				<link>http://www.sebastien-caparros.name/classe-string-php.html</link>
+				<guid>http://www.sebastien-caparros.name/classe-string-php.html</guid>
+				<description>&lt;time datetime=&quot;2015-07-02T20:18:00&quot;&gt;Le 02/07/2015 &agrave; 20:18:00&lt;/time&gt;
+&lt;h1&gt;Une classe String en PHP ?&lt;/h1&gt;
+
+&lt;p&gt;
+	Je souhaitais depuis quelque temps avoir en PHP une API plus propre pour g&eacute;rer les cha&icirc;nes de caract&egrave;res. Difficile en effet de nier que l'API native - bien que tr&egrave;s compl&egrave;te - est tr&egrave;s mal foutue (je ne sais pas ce que je ferais sans la doc ...) et difficile &agrave; utiliser de mani&egrave;re optimale :&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;
+		Aucune convention de nommage : certaines fonctions se nomment &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_machin&lt;/span&gt; alors que d'autres se nomment &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strmachin&lt;/span&gt; et d'autres simplement &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;machin&lt;/span&gt;.&lt;/li&gt;
+	&lt;li&gt;
+		Des noms totalement abscons : bon courage pour lire un code utilisant all&egrave;grement du &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strspn&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strtok&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strrchr&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strpbrk&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strstr&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strtr&lt;/span&gt; ou encore&amp;nbsp;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strnatcasecmp&lt;/span&gt;. D'apr&egrave;s mon exp&eacute;rience, &ccedil;a finit (malheureusement) presque toujours en mode bricolage plut&ocirc;t que passer une heure dans la doc (dommage parce qu'on peut faire des choses assez &eacute;l&eacute;gantes avec une API aussi compl&egrave;te).&lt;/li&gt;
+	&lt;li&gt;
+		Certaines fonctions peuvent &ecirc;tre utilis&eacute;es de mani&egrave;re sensible ou insensible &agrave; la casse (par exemple &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_replace&lt;/span&gt; vs &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_ireplace&lt;/span&gt;). C'est plut&ocirc;t une bonne chose, mais &ccedil;a aurait &eacute;t&eacute; plus simple &agrave; retenir en passant un bool&eacute;en.&lt;/li&gt;
+	&lt;li&gt;
+		Sans conna&icirc;tre le langage, savez vous comment &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;splitter&lt;/span&gt; une cha&icirc;ne de caract&egrave;res ? Il existe une fonction &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;split&lt;/span&gt;, mais elle est obsol&egrave;te et agit sur les expressions rationelles. Il existe aussi la fonction &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;preg_split&lt;/span&gt; pour les expressions r&eacute;guli&egrave;res. La fonction &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_split&lt;/span&gt; alors ? Non plus, car elle permet uniquement de d&eacute;couper une cha&icirc;ne en fonction d'une certaine longueur. Il faut utiliser &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;explode&lt;/span&gt; pour faire un &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;split&lt;/span&gt;&amp;nbsp;conventionnel.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+	J'ai donc cr&eacute;&eacute; une classe intitul&eacute;e &lt;a href=&quot;documents/nicestring.php.tar.gz&quot;&gt;NiceString&lt;/a&gt; (le mot cl&eacute; &quot;String&quot; n'est pas r&eacute;serv&eacute; par le langage, mais &ccedil;a ne me semble pas tr&egrave;s prudent non plus de l'utiliser) que je partage sur &lt;a href=&quot;https://github.com/Seb-C/NiceString.php&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;
+	On y retrouve les m&eacute;thodes classiques de ce genre de classe, que je vous laisse d&eacute;couvrir (je me suis beaucoup inspir&eacute; de Java), mais je me suis surtout amus&eacute; avec les diff&eacute;rentes m&eacute;thodes et classes magiques de PHP. J'insiste sur le c&ocirc;t&eacute; exp&eacute;rimental, je l'ai fait surtout pour le fun, c'est tr&egrave;s probablement lent, et c'est horrible et &eacute;l&eacute;gant &agrave; la fois.&lt;/p&gt;
+&lt;h2&gt;
+	Interface ArrayAccess&lt;/h2&gt;
+&lt;p&gt;
+	Cette interface permet de surcharger les &eacute;l&eacute;ments de syntaxe des tableaux. En l'occurence, &amp;nbsp;&ccedil;a permet d'utiliser &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;isset&lt;/span&gt;&amp;nbsp;et d'acc&eacute;der &agrave; un caract&egrave;re par son index :&amp;nbsp;&lt;/p&gt;
+&lt;pre class=&quot;brush:php;&quot;&gt;
+$truc = new NiceString(&quot;Bonjour&quot;);
+isset($truc[1]) // ==&amp;gt; true
+isset($truc[10]) // ==&amp;gt; false
+echo $truc[1] // ==&amp;gt; &quot;o&quot;&lt;/pre&gt;
+&lt;h2&gt;
+	Interface Iterator&lt;/h2&gt;
+&lt;p&gt;
+	Rien de tr&egrave;s tordu ici, on peut simplement faire un foreach pour boucler sur chaque caract&egrave;re de la cha&icirc;ne.&lt;/p&gt;
+&lt;h2&gt;
+	M&eacute;thode __invoke&lt;/h2&gt;
+&lt;p&gt;
+	Cette m&eacute;thode permet de g&eacute;rer le cas dans lequel on essaye d'appeler l'objet comme une fonction. Je l'ai utilis&eacute; pour pouvoir r&eacute;cup&eacute;rer une partie d'une cha&icirc;ne de caract&egrave;res :&lt;/p&gt;
+&lt;pre class=&quot;brush:php;&quot;&gt;
+$hw = new NiceString(&quot;Hello World!&quot;);
+echo $hw(4, 8); // ==&amp;gt; &quot;o Wo&quot;&lt;/pre&gt;
+&lt;h2&gt;
+	M&eacute;thode __get&lt;/h2&gt;
+&lt;p&gt;
+	Probablement celle avec laquelle je me suis le plus amus&eacute;. On ne peut pas surcharger l'op&eacute;rateur de concat&eacute;nation en PHP (caract&egrave;re &quot;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;.&lt;/span&gt;&quot;). Mais j'ai trouv&eacute; un moyen d&eacute;tourn&eacute; de concat&eacute;ner en utilisant l'op&eacute;rateur de pointage (&quot;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;-&amp;gt;&lt;/span&gt;&quot;).&lt;/p&gt;
+&lt;p&gt;
+	Avant de vous montrer le r&eacute;sultat, je vais rappeler quelques points importants et m&eacute;connus du langage :&amp;nbsp;&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;
+		La m&eacute;thode &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;__get&lt;/span&gt; permet de g&eacute;rer le cas o&ugrave; on essaye d'acc&eacute;der &agrave; une propri&eacute;t&eacute; de l'objet qui n'existe pas.&lt;/li&gt;
+	&lt;li&gt;
+		On peut acc&eacute;der dynamiquement &agrave; une variable, propri&eacute;t&eacute; ou m&eacute;thode &agrave; partir de son nom (sous forme d'une cha&icirc;ne de caract&egrave;res) de plusieurs mani&egrave;res diff&eacute;rentes
+		&lt;ul&gt;
+			&lt;li&gt;
+				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;$$variableContenantLeNomDeLaVariableAUtiliser&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;
+				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;${$variableContenantLeNomDeLaVariableAUtiliser}&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;
+				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;${&quot;nom de la variable&quot;}&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;
+				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;$objet-&amp;gt;$variableContenantLeNomDeLaPropriete&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;
+				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;$objet-&amp;gt;{$variableContenantLeNomDeLaPropriete}&lt;/span&gt;&lt;/li&gt;
+			&lt;li&gt;
+				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;$objet-&amp;gt;{&quot;nom de la propri&eacute;t&eacute;&quot;}&lt;/span&gt;&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/li&gt;
+	&lt;li&gt;
+		On peut d'ailleurs &quot;empiler&quot; cette syntaxe, par exemple :&amp;nbsp;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&quot;brush:php;&quot;&gt;
+$a = &quot;Hello World!&quot;;
+$b = &quot;a&quot;;
+$c = &quot;b&quot;;
+$d = &quot;c&quot;;
+
+echo $$$$d; // ==&amp;gt; &quot;Hello World!&quot;&lt;/pre&gt;
+&lt;p&gt;
+	J'ai donc utilis&eacute; la m&eacute;thode &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;__get&lt;/span&gt; pour retourner un autre objet &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;NiceString&lt;/span&gt;, ce qui permet d'encha&icirc;ner avec des choses comme &ccedil;a :&amp;nbsp;&lt;/p&gt;
+&lt;pre class=&quot;brush:php;&quot;&gt;
+$people = &quot;World&quot;;
+const MY_NAME = 'FooBar';
+$age = 42;
+
+$hello = new NiceString(&quot;Hello &quot;);
+
+echo $hello-&amp;gt;$people-&amp;gt;{&quot;, my name is &quot;}-&amp;gt;{MY_NAME}-&amp;gt;{&quot; and I'm &quot;}-&amp;gt;$age-&amp;gt;{&quot; years old.\n&quot;};&lt;/pre&gt;
+&lt;p&gt;
+	(ce code affichera &quot;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;Hello World, my name is FooBar and I'm 42 years old.&quot;&lt;/span&gt;)&lt;/p&gt;
+&lt;p&gt;
+	OK, c'est horrible d'un point de vue s&eacute;mantique et syntaxique, mais avouez que c'est astucieux :P ?&lt;/p&gt;
+&lt;p&gt;
+	&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;
+	Je partage tout &ccedil;a sous licence MIT, mais c'est tr&egrave;s exp&eacute;rimental, utilisez le &agrave; vos risques et p&eacute;rils !&lt;/p&gt;
+</description>
+				<pubDate>2015-07-02T20:18:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Partage de GlitchyVerse sur GitHub</title>
+				<link>http://www.sebastien-caparros.name/partage-glitchyverse-github.html</link>
+				<guid>http://www.sebastien-caparros.name/partage-glitchyverse-github.html</guid>
+				<description>&lt;time datetime=&quot;2015-03-11T19:00:00&quot;&gt;Le 11/03/2015 &agrave; 19:00:00&lt;/time&gt;
+&lt;h1&gt;Partage de GlitchyVerse sur GitHub&lt;/h1&gt;
+
+&lt;p&gt;
+	Ca doit bien faire 6 mois que je n'ai plus touch&eacute; &agrave; GlitchyVerse par manque de motivation.&lt;/p&gt;
+&lt;p&gt;
+	J'ai donc d&eacute;cid&eacute; de partager son code source, au cas o&ugrave; &ccedil;a puisse &ecirc;tre utile &agrave; quelqu'un.&lt;/p&gt;
+&lt;p&gt;
+	Je le place sous licence MIT, et vous le trouverez &lt;a href=&quot;https://github.com/Seb-C/GlitchyVerse&quot;&gt;ici&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;
+	La partie serveur a &eacute;t&eacute; enti&egrave;rement refaite en Go. L'ensemble inclut donc un moteur de jeu maison (d&eacute;velopp&eacute; &quot;from scratch&quot; en HTML5/WebGL pur), un moteur de collisions basique et bien s&ucirc;r les &eacute;l&eacute;ments du gameplay en lui m&ecirc;me.&lt;/p&gt;
+</description>
+				<pubDate>2015-03-11T19:00:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Algorithme DiamondSquare</title>
+				<link>http://www.sebastien-caparros.name/algorithme-diamondsquare.html</link>
+				<guid>http://www.sebastien-caparros.name/algorithme-diamondsquare.html</guid>
+				<description>&lt;time datetime=&quot;2014-06-01T12:04:00&quot;&gt;Le 01/06/2014 &agrave; 12:04:00&lt;/time&gt;
+&lt;h1&gt;Algorithme DiamondSquare&lt;/h1&gt;
+
+&lt;p&gt;
+	Pour g&eacute;n&eacute;rer la texture et le relief des plan&egrave;tes de mon jeu, j'ai utilis&eacute; l'algorithme DiamondSquare.&lt;/p&gt;
+&lt;p&gt;
+	J'ai pass&eacute; un long moment &agrave; l'impl&eacute;menter en JS, &agrave; l'optimiser au maximum (notamment en utilisant des tableaux typ&eacute;s) et &agrave; le modifier pour que la texture soit applicable sur une sph&egrave;re (sans que les bords de l'image soient visibles). Je me suis donc dit que &ccedil;a serait sympa de partager.&lt;/p&gt;
+&lt;p&gt;
+	Je me suis bas&eacute; sur l'excellent tuto de &lt;a href=&quot;http://hiko-seijuro.developpez.com/articles/diamond-square/&quot;&gt;Hiko Seijuro sur developpez.com&lt;/a&gt;, et je l'ai adapt&eacute; &agrave; ma sauce. L'avantage de cet algorithme, c'est qu'il est beaucoup plus facile &agrave; comprendre et &agrave; modifier que le bruit de Perlin.&lt;/p&gt;
+&lt;p&gt;
+	Pour une question de simplicit&eacute;, celui-ci utilise la fonction &lt;u&gt;Math.random&lt;/u&gt; de base, mais on peut tr&egrave;s facilement changer &ccedil;a pour du pseudo-al&eacute;atoire (pour ma part, j'ai opt&eacute; pour &lt;a href=&quot;https://github.com/skeeto/rng-js&quot;&gt;rng.js&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;
+	Faites en ce que vous voulez, c'est du WTFPL (mais j'appr&eacute;cie un petit commentaire pour citer la source dans votre code ;) ).&lt;/p&gt;
+&lt;p&gt;
+	Retrouvez le &eacute;galement sur &lt;a href=&quot;https://github.com/Seb-C/planetTextureGenerator.js&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;
+	&amp;nbsp;&lt;/p&gt;
+&lt;div&gt;
+	&lt;script type=&quot;text/javascript&quot;&gt;
+	var resolution = 512;
+	var variabilityRate = 1.25;
+	var maxColours = 10;
+	
+	// Getting canvas pixel array
+	var canvas = document.createElement(&quot;canvas&quot;);
+	canvas.style.display = &quot;block&quot;;
+	canvas.width  = resolution;
+	canvas.height = resolution / 2;
+	var context = canvas.getContext(&quot;2d&quot;);
+	var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+	var texturePixels = imageData.data;
+	document.currentScript.parentNode.appendChild(canvas);
+	
+	function refreshTexture() {
+		// Colors applied to the texture, depending on it's height
+		var colorsNumber = Math.ceil((1 - Math.exp(Math.random()) / Math.E) * maxColours);
+		var colorSteps = [];
+		for(var i = 0 ; i &lt; colorsNumber ; i++) {
+			colorSteps.push({
+				minValue: (1 / colorsNumber) * i,
+				color: [
+					Math.random() * 255,
+					Math.random() * 255,
+					Math.random() * 255
+				]
+			});
+		}
+		
+		// Initializing relief array with the points of the first square
+		var textureRelief = new Float32Array((resolution + 1) * (resolution + 1));
+		textureRelief[0                                   ] = Math.random();
+		textureRelief[resolution                          ] = Math.random();
+		textureRelief[             resolution * resolution] = Math.random();
+		textureRelief[resolution + resolution * resolution] = Math.random();
+		
+		var setPixel = function(x, y, value) {
+			var pixelIndex = x + y * resolution;
+			
+			textureRelief[pixelIndex] = value;
+			
+			var colorValue = value;
+			if(colorValue &lt; 0) colorValue = 0;
+			if(colorValue &gt; 1) colorValue = 1;
+			
+			// Determining pixel color
+			var color = colorSteps[0].color;
+			for(var i = 1 ; i &lt; colorSteps.length ; i++) {
+				if(colorValue &gt;= colorSteps[i].minValue) {
+					color = colorSteps[i].color;
+				} else {
+					break;
+				}
+			}
+			
+			// Setting pixel color
+			var pixelIndexRGB = pixelIndex * 4;
+			texturePixels[pixelIndexRGB    ] = Math.round(color[0] * colorValue); // R
+			texturePixels[pixelIndexRGB + 1] = Math.round(color[1] * colorValue); // G
+			texturePixels[pixelIndexRGB + 2] = Math.round(color[2] * colorValue); // B
+			texturePixels[pixelIndexRGB + 3] = 255;                               // A
+		};
+
+		// Diamond-Square algorithm
+		var halfSizeY = ((resolution + 1) / 2 + 0.5);
+		for(var currentSize = resolution ; currentSize &gt; 1 ; currentSize /= 2) {
+			var halfCurrentSize = currentSize / 2;
+			
+			// Square
+			for(var x = halfCurrentSize ; x &lt; resolution + 1 ; x += currentSize) {
+				for(var y = halfCurrentSize ; y &lt;= halfSizeY ; y += currentSize) {
+					var squareAvg = (
+						  textureRelief[(x - halfCurrentSize) + (y - halfCurrentSize) * resolution]
+						+ textureRelief[(x + halfCurrentSize) + (y - halfCurrentSize) * resolution]
+						+ textureRelief[(x + halfCurrentSize) + (y + halfCurrentSize) * resolution]
+						+ textureRelief[(x - halfCurrentSize) + (y + halfCurrentSize) * resolution]
+					) / 4;
+					
+					var diamondAvg = diamondSum / diamondCount;
+					if(y == 0 || y == halfSizeY - 1) {
+						setPixel(x, y, 0.5); // First and last lines are always at a constant height to be applicable on a sphere
+					} else {
+						setPixel(x, y, squareAvg + ((Math.random() * 2 - 1) * currentSize * variabilityRate) / (resolution + 1));
+					}
+				}
+			}
+			
+			// Diamond
+			for(var x = 0 ; x &lt; resolution ; x += halfCurrentSize) {
+				var yStart = ((x / halfCurrentSize) % 2 == 0) ? halfCurrentSize : 0; 
+				
+				for(var y = yStart ; y &lt;= halfSizeY ; y += currentSize) {
+					var diamondSum = 0, diamondCount = 0;
+					
+					if(y - halfCurrentSize &gt;= 0) {
+						diamondSum += textureRelief[x + (y - halfCurrentSize) * resolution];
+						diamondCount++
+					}
+					if(x + halfCurrentSize &lt; resolution + 1) {
+						diamondSum += textureRelief[(x + halfCurrentSize) + y * resolution];
+						diamondCount++
+					}
+					if(y + halfCurrentSize &lt; halfSizeY) {
+						diamondSum += textureRelief[x + (y + halfCurrentSize) * resolution];
+						diamondCount++
+					}
+					if(x - halfCurrentSize &gt;= 0) {
+						diamondSum += textureRelief[(x - halfCurrentSize) + y * resolution];
+						diamondCount++
+					}
+					
+					var diamondAvg = diamondSum / diamondCount;
+					if(y == 0 || y == halfSizeY - 1) {
+						setPixel(x, y, 0.5); // First and last lines are always at a constant height to be applicable on a sphere
+					} else {
+						setPixel(x, y, diamondAvg + ((Math.random() * 2 - 1) * currentSize * variabilityRate) / (resolution + 1));
+						if(x == 0) setPixel(resolution, y, textureRelief[x + y * resolution]); // Makes it tileable horizontally
+					}
+				}
+			}
+		}
+		
+		context.putImageData(imageData, 0, 0);
+	};
+	refreshTexture();
+	
+	// Refresh button
+	var refreshButton = document.createElement(&quot;input&quot;);
+	refreshButton.setAttribute(&quot;type&quot;, &quot;button&quot;);
+	refreshButton.setAttribute(&quot;value&quot;, &quot;Nouvelle texture&quot;);
+	refreshButton.addEventListener(&quot;click&quot;, refreshTexture);
+	document.currentScript.parentNode.appendChild(refreshButton);
+&lt;/script&gt;&lt;/div&gt;
+&lt;p&gt;
+	&amp;nbsp;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre class=&quot;brush:jscript;&quot;&gt;
+// A mettre dans une balise script. Si je la met ici,
+// &ccedil;a fait planter la coloration syntaxique ...
+var resolution = 512;
+var variabilityRate = 1.25;
+var maxColours = 10;
+
+// Getting canvas pixel array
+var canvas = document.createElement(&quot;canvas&quot;);
+canvas.style.display = &quot;block&quot;;
+canvas.width  = resolution;
+canvas.height = resolution / 2;
+var context = canvas.getContext(&quot;2d&quot;);
+var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+var texturePixels = imageData.data;
+document.currentScript.parentNode.appendChild(canvas);
+
+function refreshTexture() {
+	// Colors applied to the texture, depending on it's height
+	var colorsNumber = Math.ceil((1 - Math.exp(Math.random()) / Math.E) * maxColours);
+	var colorSteps = [];
+	for(var i = 0 ; i &amp;lt; colorsNumber ; i++) {
+		colorSteps.push({
+			minValue: (1 / colorsNumber) * i,
+			color: [
+				Math.random() * 255,
+				Math.random() * 255,
+				Math.random() * 255
+			]
+		});
+	}
+	
+	// Initializing relief array with the points of the first square
+	var textureRelief = new Float32Array((resolution + 1) * (resolution + 1));
+	textureRelief[0                                   ] = Math.random();
+	textureRelief[resolution                          ] = Math.random();
+	textureRelief[             resolution * resolution] = Math.random();
+	textureRelief[resolution + resolution * resolution] = Math.random();
+	
+	var setPixel = function(x, y, value) {
+		var pixelIndex = x + y * resolution;
+		
+		textureRelief[pixelIndex] = value;
+		
+		var colorValue = value;
+		if(colorValue &amp;lt; 0) colorValue = 0;
+		if(colorValue &amp;gt; 1) colorValue = 1;
+		
+		// Determining pixel color
+		var color = colorSteps[0].color;
+		for(var i = 1 ; i &amp;lt; colorSteps.length ; i++) {
+			if(colorValue &amp;gt;= colorSteps[i].minValue) {
+				color = colorSteps[i].color;
+			} else {
+				break;
+			}
+		}
+		
+		// Setting pixel color
+		var pixelIndexRGB = pixelIndex * 4;
+		texturePixels[pixelIndexRGB    ] = Math.round(color[0] * colorValue); // R
+		texturePixels[pixelIndexRGB + 1] = Math.round(color[1] * colorValue); // G
+		texturePixels[pixelIndexRGB + 2] = Math.round(color[2] * colorValue); // B
+		texturePixels[pixelIndexRGB + 3] = 255;                               // A
+	};
+
+	// Diamond-Square algorithm
+	var halfSizeY = ((resolution + 1) / 2 + 0.5);
+	for(var currentSize = resolution ; currentSize &amp;gt; 1 ; currentSize /= 2) {
+		var halfCurrentSize = currentSize / 2;
+		
+		// Square
+		for(var x = halfCurrentSize ; x &amp;lt; resolution + 1 ; x += currentSize) {
+			for(var y = halfCurrentSize ; y &amp;lt;= halfSizeY ; y += currentSize) {
+				var squareAvg = (
+					  textureRelief[(x - halfCurrentSize) + (y - halfCurrentSize) * resolution]
+					+ textureRelief[(x + halfCurrentSize) + (y - halfCurrentSize) * resolution]
+					+ textureRelief[(x + halfCurrentSize) + (y + halfCurrentSize) * resolution]
+					+ textureRelief[(x - halfCurrentSize) + (y + halfCurrentSize) * resolution]
+				) / 4;
+				
+				var diamondAvg = diamondSum / diamondCount;
+				if(y == 0 || y == halfSizeY - 1) {
+					setPixel(x, y, 0.5); // First and last lines are always at a constant height to be applicable on a sphere
+				} else {
+					setPixel(x, y, squareAvg + ((Math.random() * 2 - 1) * currentSize * variabilityRate) / (resolution + 1));
+				}
+			}
+		}
+		
+		// Diamond
+		for(var x = 0 ; x &amp;lt; resolution ; x += halfCurrentSize) {
+			var yStart = ((x / halfCurrentSize) % 2 == 0) ? halfCurrentSize : 0; 
+			
+			for(var y = yStart ; y &amp;lt;= halfSizeY ; y += currentSize) {
+				var diamondSum = 0, diamondCount = 0;
+				
+				if(y - halfCurrentSize &amp;gt;= 0) {
+					diamondSum += textureRelief[x + (y - halfCurrentSize) * resolution];
+					diamondCount++
+				}
+				if(x + halfCurrentSize &amp;lt; resolution + 1) {
+					diamondSum += textureRelief[(x + halfCurrentSize) + y * resolution];
+					diamondCount++
+				}
+				if(y + halfCurrentSize &amp;lt; halfSizeY) {
+					diamondSum += textureRelief[x + (y + halfCurrentSize) * resolution];
+					diamondCount++
+				}
+				if(x - halfCurrentSize &amp;gt;= 0) {
+					diamondSum += textureRelief[(x - halfCurrentSize) + y * resolution];
+					diamondCount++
+				}
+				
+				var diamondAvg = diamondSum / diamondCount;
+				if(y == 0 || y == halfSizeY - 1) {
+					setPixel(x, y, 0.5); // First and last lines are always at a constant height to be applicable on a sphere
+				} else {
+					setPixel(x, y, diamondAvg + ((Math.random() * 2 - 1) * currentSize * variabilityRate) / (resolution + 1));
+					if(x == 0) setPixel(resolution, y, textureRelief[x + y * resolution]); // Makes it tileable horizontally
+				}
+			}
+		}
+	}
+	
+	context.putImageData(imageData, 0, 0);
+};
+refreshTexture();
+
+// Refresh button
+var refreshButton = document.createElement(&quot;input&quot;);
+refreshButton.setAttribute(&quot;type&quot;, &quot;button&quot;);
+refreshButton.setAttribute(&quot;value&quot;, &quot;Nouvelle texture&quot;);
+refreshButton.addEventListener(&quot;click&quot;, refreshTexture);
+document.currentScript.parentNode.appendChild(refreshButton);
+&lt;/pre&gt;
+</description>
+				<pubDate>2014-06-01T12:04:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>25 ans du Web</title>
+				<link>http://www.sebastien-caparros.name/25-ans-du-web.html</link>
+				<guid>http://www.sebastien-caparros.name/25-ans-du-web.html</guid>
+				<description>&lt;time datetime=&quot;2014-03-12T17:50:00&quot;&gt;Le 12/03/2014 &agrave; 17:50:00&lt;/time&gt;
+&lt;h1&gt;25 ans du Web&lt;/h1&gt;
+
+&lt;p&gt;
+	Si vous avez lu les actualit&eacute;s r&eacute;cemment, vous savez que c'est le 25&lt;sup&gt;&egrave;me&lt;/sup&gt; anniversaire du Web (&agrave; ne pas confondre avec Internet). J'en profite donc pour apporter ma modeste pierre &agrave; l'&eacute;difice, mais surtout pour relayer le message publi&eacute; par Tim Berners-Lee (plus de d&eacute;tails sur &lt;a href=&quot;http://www.webat25.org/&quot;&gt;webat25.org&lt;/a&gt;). Car si cela fait d&eacute;j&agrave; 25 ans que la plus belle cr&eacute;ation humaine (oui, j'ose l'affirmer ! Vous en connaissez d'autres qui ont r&eacute;uni 2.5 milliards de personnes dans un but commun ?) a commenc&eacute; &agrave; bouleverser notre civilisation, il ne faut pas oublier que les deux tiers de la population mondiale n'y ont toujours pas acc&egrave;s.&lt;/p&gt;
+&lt;p&gt;
+	&lt;iframe allowfullscreen=&quot;&quot; frameborder=&quot;0&quot; mozallowfullscreen=&quot;&quot; src=&quot;//player.vimeo.com/video/88343326&quot; webkitallowfullscreen=&quot;&quot; width=&quot;600&quot; height=&quot;450&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
+</description>
+				<pubDate>2014-03-12T17:50:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Deuxième vidéo de présentation de mon jeu</title>
+				<link>http://www.sebastien-caparros.name/deuxieme-video-presentation-jeu.html</link>
+				<guid>http://www.sebastien-caparros.name/deuxieme-video-presentation-jeu.html</guid>
+				<description>&lt;time datetime=&quot;2014-02-10T14:10:00&quot;&gt;Le 10/02/2014 &agrave; 14:10:00&lt;/time&gt;
+&lt;h1&gt;Deuxi&egrave;me vid&eacute;o de pr&eacute;sentation de mon jeu&lt;/h1&gt;
+
+&lt;p&gt;
+	Tout est dans le titre ! Je fais le point avant de m'attaquer &agrave; un autre gros morceau : l'inventaire et l'&eacute;quipage.&lt;/p&gt;
+&lt;p&gt;
+	&lt;iframe allowfullscreen=&quot;&quot; frameborder=&quot;0&quot; src=&quot;//www.youtube.com/embed/JZFSgCou2sE&quot; width=&quot;600&quot; height=&quot;450&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
+</description>
+				<pubDate>2014-02-10T14:10:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Publication d'une librairie JS : FileLoader.js</title>
+				<link>http://www.sebastien-caparros.name/publication-librairie-fileloader-js.html</link>
+				<guid>http://www.sebastien-caparros.name/publication-librairie-fileloader-js.html</guid>
+				<description>&lt;time datetime=&quot;2013-12-02T19:53:00&quot;&gt;Le 02/12/2013 &agrave; 19:53:00&lt;/time&gt;
+&lt;h1&gt;Publication d'une librairie JS : FileLoader.js&lt;/h1&gt;
+
+&lt;p&gt;
+	Je viens de publier sur GitHub une petite librairie javascript. Je ne vais pas r&eacute;&eacute;crire toute la description que j'y ait mis, donc je vous invite &agrave; aller voir :&lt;/p&gt;
+&lt;p&gt;
+	&lt;a href=&quot;https://github.com/Seb-C/FileLoader.js&quot;&gt;https://github.com/Seb-C/FileLoader.js&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+	Basiquement, elle vous permet de mettre tous les fichiers n&eacute;cessaires &agrave; votre application web (scripts, images, binaires, ...) dans une archive tar et de tout charger par une unique transaction HTTP. &Ccedil;a permet dans mon cas d'&eacute;viter au client de t&eacute;l&eacute;charger les 132 fichiers n&eacute;cessaires &agrave; l'ex&eacute;cution du jeu. Le tout est mis dans un unique fichier tar qui est pars&eacute; en JavaScript c&ocirc;t&eacute; client.&lt;/p&gt;
+</description>
+				<pubDate>2013-12-02T19:53:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Petite vidéo de présentation du jeu</title>
+				<link>http://www.sebastien-caparros.name/premiere-video-jeu-developpement.html</link>
+				<guid>http://www.sebastien-caparros.name/premiere-video-jeu-developpement.html</guid>
+				<description>&lt;time datetime=&quot;2013-10-26T01:51:00&quot;&gt;Le 26/10/2013 &agrave; 01:51:00&lt;/time&gt;
+&lt;h1&gt;Petite vid&eacute;o de pr&eacute;sentation du jeu&lt;/h1&gt;
+
+&lt;p&gt;
+	Une vid&eacute;o o&ugrave; je pr&eacute;sente le jeu sur lequel je travaille depuis de nombreux mois.&lt;/p&gt;
+&lt;p&gt;
+	&lt;iframe allowfullscreen=&quot;&quot; frameborder=&quot;0&quot; src=&quot;//www.youtube.com/embed/eC0HhQq1DgQ?rel=0&quot; width=&quot;600&quot; height=&quot;450&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
+</description>
+				<pubDate>2013-10-26T01:51:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Un peu d'héritage en JavaScript</title>
+				<link>http://www.sebastien-caparros.name/un-peu-d-heritage-en-javascript.html</link>
+				<guid>http://www.sebastien-caparros.name/un-peu-d-heritage-en-javascript.html</guid>
+				<description>&lt;time datetime=&quot;2013-06-29T13:15:00&quot;&gt;Le 29/06/2013 &agrave; 13:15:00&lt;/time&gt;
+&lt;h1&gt;Un peu d'h&eacute;ritage en JavaScript&lt;/h1&gt;
+
+&lt;p&gt;
+	Je ne suis pas tr&egrave;s actif sur ce blog ces derniers temps car je suis toujours &agrave; fond dans le d&eacute;veloppement d'un jeu en WebGL. Je n'en dis pas plus pour le moment, mais je ferais peut-&ecirc;tre prochainement un article dessus avec quelques copies d'&eacute;cran bien choisies (car je ne veux pas d&eacute;voiler les aspects les plus int&eacute;r&eacute;ssants :D ).&lt;/p&gt;
+&lt;p&gt;
+	Bref, passons en au fait. Je cherchais depuis longtemps un moyen simple et fonctionnel de faire de l'h&eacute;ritage en JavaScript. Mais malgr&eacute; le nombre d'articles sur le sujet qu'on peut trouver sur Internet, aucun ne m'a jamais compl&egrave;tement satisfait.&lt;/p&gt;
+&lt;p&gt;
+	Entre les solutions qui cassent en partie le typage (instanceof qui ne r&eacute;pond que sur la classe parente ou sur la classe fille), celles qui sont tr&egrave;s lourdes (boucle sur les attributs et m&eacute;thodes du prototype), celles qui n&eacute;cessitent d'avoir du code en double (pas d'appel possible au constructeur parent) et celles qui modifient le prototype d'Object, je n'ai jamais rien trouv&eacute; qui me satisfasse.&lt;/p&gt;
+&lt;p&gt;
+	Mais &ccedil;a, c'&eacute;tait avant. Avant que je ne tombe sur un article tr&egrave;s r&eacute;cent (mai/juin 2013) sur le site de Mozilla, qui pr&eacute;sente &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Classical_inheritance_with_Object.create&quot;&gt;une m&eacute;thode d'h&eacute;ritage plut&ocirc;t convaincante&lt;/a&gt;, avec la m&eacute;thode Object.create.&lt;/p&gt;
+&lt;p&gt;
+	L'appel au constructeur parent est possible, on peut utiliser instanceof sur la classe m&egrave;re et la classe fille, et le code semble assez performant.&lt;/p&gt;
+&lt;p&gt;
+	Si votre d&eacute;veloppement cible tous les navigateurs, m&ecirc;me les plus anciens (ce qui n'est pas mon cas), pensez bien a inclure le &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Polyfill&quot;&gt;polyfill propos&eacute; par Mozilla&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;
+	Il y a cependant deux petits d&eacute;fauts qui me g&ecirc;naient :&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;
+		Il faut faire appel au constructeur parent par le nom de la classe parente. Ca me d&eacute;range car j'ai l'habitude de r&eacute;duire la redondance au minimum, quitte &agrave; pousser le langage jusque dans ses retranchements. Et avoir deux fois le nom de la classe parente dans ma d&eacute;claration, ca ne me convient pas.&lt;/li&gt;
+	&lt;li&gt;
+		Le code n'est pas tr&egrave;s intuitif et est assez lourd &agrave; &eacute;crire quand on veut faire un h&eacute;ritage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+	J'ai donc &eacute;labor&eacute; la modeste fonction suivante, qui r&eacute;pond &agrave; tous mes crit&egrave;res :&lt;/p&gt;
+&lt;pre class=&quot;brush:jscript;&quot;&gt;
+Function.prototype.extend = function(Parent) {
+    this.prototype = Object.create(Parent.prototype);
+    this.prototype.constructor = this;
+    this.prototype.parent = function(/* any args */) {
+        Parent.apply(this, arguments);
+    };
+};&lt;/pre&gt;
+&lt;p&gt;
+	Et un rapide exemple d'utilisation :&lt;/p&gt;
+&lt;pre class=&quot;brush:jscript;&quot;&gt;
+/**
+ * D&eacute;finit un v&eacute;hicule &eacute;quip&eacute; de roues
+ * @param int Le nombre de roues du v&eacute;hicule
+ */
+var VehiculeRoulant = function(nombreRoues) {
+	this._nombreRoues = nombreRoues;
+};
+
+/**
+ * @return int Le nombre de roues du v&eacute;hicule
+ */
+VehiculeRoulant.prototype.getNombreRoues = function() {
+	return this._nombreRoues;
+};
+
+/**
+ * D&eacute;finit une Moto, qui h&eacute;rite de VehiculeRoulant
+ * @param boolean true si le v&eacute;hicule est &eacute;quip&eacute; d'un side-car
+ */
+var Moto = function(hasSideCar) {
+	this.hasSideCar = hasSideCar;
+	
+	this.parent(this.hasSideCar ? 3 : 2);
+}
+Moto.extend(VehiculeRoulant);
+
+Moto.prototype.toString = function() {
+	var r = &quot;Je suis une moto avec &quot; + this.getNombreRoues() + &quot; roues&quot;;
+	if(this.hasSideCar) {
+		r += &quot; (car &eacute;quip&eacute;e d'un side-car)&quot;;
+	}
+	r += &quot;.&quot;;
+	
+	return r;
+};
+
+alert(new Moto(true));  // Je suis une moto avec 3 roues (car &eacute;quip&eacute;e d'un side-car).
+alert(new Moto(false)); // Je suis une moto avec 2 roues.
+&lt;/pre&gt;
+&lt;p&gt;
+	&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;
+	En r&eacute;sum&eacute;, vous pouvez faire un h&eacute;ritage comme ceci :&lt;/p&gt;
+&lt;pre class=&quot;brush:jscript;&quot;&gt;
+var Fille = function(/*bla*/) { /*blabla*/ };
+Fille.extend(Mere);&lt;/pre&gt;
+&lt;p&gt;
+	Et faire appel au constructeur parent via :&lt;/p&gt;
+&lt;pre class=&quot;brush:jscript;&quot;&gt;
+this.parent(/* arguments &agrave; passer au parent */);&lt;/pre&gt;
+&lt;p&gt;
+	Le seul d&eacute;faut restant, c'est qu'on ne peut pas &eacute;tendre une m&eacute;thode parente. On est oblig&eacute; de l'&eacute;craser ou de contourner le probl&egrave;me. Je n'ai pas trouv&eacute; de solution propre pour le faire.&lt;/p&gt;
+&lt;p&gt;
+	Au niveau du code en lui-m&ecirc;me, je ne modifie pas Object, mais Function. Du coup, quand vous utiliserez un simple objet comme tableau associatif, vous n'aurez pas d'attribut parasite. Par contre, si vous voulez boucler sur les attributs d'une instance d'une classe (Function), il y en aura (mais vous ne devriez pas avoir besoin de le faire si vous d&eacute;veloppez proprement ;) ), auquel cas il faudra suivre les recommandations en utilisant hasOwnProperty.&lt;/p&gt;
+&lt;p&gt;
+	En esp&eacute;rant que ca soit utile &agrave; quelqu'un ! Sentez vous libre de r&eacute;utiliser ma fonction o&ugrave; vous voulez et sans restrictions, mais si vous pouvez mettre un lien vers cette page en commentaire de la fonction, j'appr&eacute;cierais.&lt;/p&gt;
+</description>
+				<pubDate>2013-06-29T13:15:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Déplacements totalement libres en WebGL</title>
+				<link>http://www.sebastien-caparros.name/faire-un-deplacement-totalement-libre-en-webgl.html</link>
+				<guid>http://www.sebastien-caparros.name/faire-un-deplacement-totalement-libre-en-webgl.html</guid>
+				<description>&lt;time datetime=&quot;2013-02-27T18:31:00&quot;&gt;Le 27/02/2013 &agrave; 18:31:00&lt;/time&gt;
+&lt;h1&gt;D&eacute;placements totalement libres en WebGL&lt;/h1&gt;
+
+&lt;p&gt;
+	Ces derniers temps, j'ai beaucoup appris en me frottant au WebGL. Je me suis aussi beaucoup pris la t&ecirc;te, mais j'ai r&eacute;ussi la premi&egrave;re chose que je souhaitais r&eacute;aliser avec : faire en sorte qu'on puisse se d&eacute;placer et tourner autour de soi de mani&egrave;re totalement libre et sur tous les axes. Le tout en vue &agrave; la premi&egrave;re personne. L'int&eacute;r&ecirc;t de &ccedil;a, vous l'aurez peut-&ecirc;tre compris, c'est de pouvoir se d&eacute;placer comme dans l'espace ...&lt;/p&gt;
+&lt;p&gt;
+	La premi&egrave;re chose que j'ai faite en me lan&ccedil;ant dans le WebGL, c'est aller lire les rares tutos qu'on trouve sur Internet.&lt;/p&gt;
+&lt;p&gt;
+	J'ai commenc&eacute; par celui qu'on trouve sur &lt;a href=&quot;http://learningwebgl.com/blog/?p=28&quot;&gt;learningwebgl.com&lt;/a&gt;, qui avait l'air assez complet. Sauf que :&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;
+		Le code qui y est pr&eacute;sent&eacute; n'est absolument pas structur&eacute; (tout est fait &agrave; base de fonctions et &agrave; coup de dizaines de variables globales)&lt;/li&gt;
+	&lt;li&gt;
+		Le code qui est expliqu&eacute; dans le tutoriel n'est pas &agrave; jour avec ce qui est dans la d&eacute;mo.&lt;/li&gt;
+	&lt;li&gt;
+		Quand on essaye de suivre le tuto en parall&egrave;le de la r&eacute;daction du code, on se rend compte que c'est tr&egrave;s mal expliqu&eacute; ou encore qu'on ne sait pas o&ugrave; va telle ou telle ligne. Il manque aussi r&eacute;guli&egrave;rement des petits bouts de code, comme des d&eacute;clarations de variables globales. C'est tr&egrave;s frustrant parce qu'on est oblig&eacute; de se concentrer sur la forme plut&ocirc;t que sur le fond, et on perd trop r&eacute;guli&egrave;rement le fil.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+	J'ai donc d&eacute;cid&eacute; de chercher un tutoriel de meilleure qualit&eacute;, et je suis tomb&eacute; sur le site de &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/WebGL/Getting_started_with_WebGL&quot;&gt;Mozilla&lt;/a&gt;. Il ressemble de tr&egrave;s pr&egrave;s au pr&eacute;c&eacute;dent (trop pour que ce soit une co&iuml;ncidence), tout en corrigeant beaucoup de ses d&eacute;fauts. Il n'est pas parfait, mais si vous cherchez &agrave; apprendre le WebGL depuis le d&eacute;but, je vous recommande celui-ci.&lt;/p&gt;
+&lt;p&gt;
+	Je n'ai pas suivi tout le tutoriel, car j'ai rapidement compris le fonctionnement, ce qui m'a permis de m'en &eacute;loigner (tout en prenant leur code comme base). J'en ai profit&eacute; pour r&eacute;organiser et restructurer correctement mon code, chose qui n'est toujours pas termin&eacute;e.&lt;/p&gt;
+&lt;p&gt;
+	L'&eacute;tape suivante, relativement int&eacute;ressante, a consist&eacute; &agrave; d&eacute;terrer de ma m&eacute;moire les cours de Maths de ma premi&egrave;re ann&eacute;e de DUT, sur les calculs matriciels (j'ai enfin trouv&eacute; une utilit&eacute; concr&egrave;te, c'est plus motivant que de la th&eacute;orie pure !). Globalement, je m'y suis retrouv&eacute; assez facilement puisque je ne suis pas trop rentr&eacute; dans le d&eacute;tail.&lt;/p&gt;
+&lt;p&gt;
+	D'ailleurs, le plus simple pour &ccedil;a, c'est d'utiliser une API qui fournit toutes les op&eacute;rations de base. Parmi les plus populaires, on retrouve Sylvester, EWGL, mjs ou glMatrix. C'est sur cette derni&egrave;re que mon choix s'est port&eacute;. Son API est un peu d&eacute;routante au d&eacute;but, mais elle est tr&egrave;s compl&egrave;te et efficace. Je crois d'ailleurs qu'elle est recommand&eacute;e par les tutos cit&eacute;s plus haut (Attention : les d&eacute;mos ne sont pas du tout &agrave; jour et il y a eu beaucoup de changements, donc privil&eacute;giez la version t&eacute;l&eacute;chargeable sur le &lt;a href=&quot;http://glmatrix.net/&quot;&gt;site officiel&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;
+	L&agrave; o&ugrave; j'ai le plus gal&eacute;r&eacute; au final, c'est pour r&eacute;ussir la rotation sur trois axes. C'est principalement un probl&egrave;me algorithmique, mais malheureusement on trouve surtout de la documentation tr&egrave;s th&eacute;orique et peu de concret. Je suis aussi rest&eacute; longtemps bloqu&eacute; sur un probl&egrave;me dit de &quot;blocage de cardan&quot;, ou Gimbal Lock. D'autre part, le WebGL est encore tr&egrave;s r&eacute;cent, et la documentation tr&egrave;s rare. C'est pour ca que je vous conseille de faire vos recherches sur l'OpenGL plut&ocirc;t que le WebGL, les deux APIs &eacute;tant de toute mani&egrave;re identiques.&lt;/p&gt;
+&lt;p&gt;
+	La plupart de la documentation qu'on peut trouver consiste &agrave; &eacute;crire soi m&ecirc;mes les formules de rotations et translations. En r&eacute;alit&eacute;, tout peut se faire directement avec glMatrix : un vecteur qui d&eacute;termine la position de la cam&eacute;ra, et un quaternion qui d&eacute;termine l'angle de vue. C'est l&agrave; que j'ai test&eacute; un nombre incalculable de codes diff&eacute;rents, jusqu'&agrave; ce que je tombe sur un post soulignant une information cl&eacute; : En OpenGL, la cam&eacute;ra ne bouge pas. C'est le monde qui bouge et tourne autour de la cam&eacute;ra pour donner l'illusion d'un mouvement. Il suffisait donc simplement d'inverser la rotation (au sens math&eacute;matique du terme), puis de combiner la matrice et le quaternion correctement.&lt;/p&gt;
+&lt;p&gt;
+	Plus concr&egrave;tement, dans ma gestion du clavier, je renvoie un vecteur contenant trois valeurs (le mouvement sur trois axes), le d&eacute;placement se faisant &agrave; l'aide des fl&egrave;ches (pour avancer, reculer et faire des pas lat&eacute;raux) et des touches page haut et page bas (pour monter ou descendre). Le vecteur en question se nomme moveSpeed.&lt;/p&gt;
+&lt;p&gt;
+	Du c&ocirc;t&eacute; de la souris, c'est tr&egrave;s similaire avec un vecteur de rotation nomm&eacute; rotationRate. La rotation en X et Y se fait comme dans un FPS, et la rotation Z se fait en maintenant la roulette enfonc&eacute;e.&lt;/p&gt;
+&lt;p&gt;
+	Dans ma fonction &quot;animate&quot; (d&eacute;clench&eacute;e &agrave; chaque frame, ce que je compte am&eacute;liorer via un WebWorker), je calcule les d&eacute;placements de cette mani&egrave;re (la variable elapsed repr&eacute;sente le temps pass&eacute; depuis la derni&egrave;re frame) :&lt;/p&gt;
+&lt;pre class=&quot;brush:jscript;&quot;&gt;
+var moveDistance = vec3.fromValues(
+	moveSpeed[0] * elapsed,
+	moveSpeed[1] * elapsed,
+	moveSpeed[2] * elapsed
+);
+vec3.transformQuat(moveDistance, moveDistance, rotation);
+vec3.subtract(position, position, moveDistance);&lt;/pre&gt;
+&lt;p&gt;
+	La premi&egrave;re et la troisi&egrave;me ligne sont relativement simples &agrave; comprendre. La seconde (c'est l&agrave; que glMatrix entre en jeu) consiste tout simplement &agrave; calculer le d&eacute;placement absolu (par rapport au point d'origine de &quot;l'univers&quot;) induit par le d&eacute;placement demand&eacute;, en fonction de l'angle de vue courant (ce qui veut dire que si je regarde vers la droite par rapport au point d'origine, je dois avancer face &agrave; moi quand j'appuie sur la fl&egrave;che du haut, et non pas vers la gauche).&lt;/p&gt;
+&lt;p&gt;
+	Du c&ocirc;t&eacute; de la rotation c'est tout aussi simple puisque je demande simplement &agrave; glMatrix d'appliquer mon vecteur de rotation &agrave; la rotation absolue. Ensuite, je convertis mon quaternion en matrice afin de pouvoir l'inverser.&lt;/p&gt;
+&lt;pre class=&quot;brush:jscript;&quot;&gt;
+quat.rotateX(rotation, rotation, degToRad(rotationRate[0] * elapsed));
+quat.rotateY(rotation, rotation, degToRad(rotationRate[1] * elapsed));
+quat.rotateZ(rotation, rotation, degToRad(rotationRate[2] * elapsed));
+
+mat4.fromQuat(invertedRotation, rotation);
+mat4.invert(invertedRotation, invertedRotation);&lt;/pre&gt;
+&lt;p&gt;
+	Il ne reste plus qu'a combiner correctement tous ces &eacute;l&eacute;ments dans ma fonction de dessin (drawScene) :&lt;/p&gt;
+&lt;pre class=&quot;brush:jscript;&quot;&gt;
+var mvMatrix = mat4.create();
+
+mat4.identity(mvMatrix);
+mat4.multiply(mvMatrix, mvMatrix, invertedRotation);
+mat4.translate(mvMatrix, mvMatrix, position);&lt;/pre&gt;
+&lt;p&gt;
+	Voil&agrave; voil&agrave; ... Je tenais &agrave; partager ce bout de code au cas o&ugrave; &ccedil;a pourrait servir &agrave; quelqu'un, parce que la documentation se fait rare quand on cherche &agrave; mettre en place un tel d&eacute;placement. Dans l'imm&eacute;diat, je suis en train de r&eacute;organiser le code (c'est donc le bon moment pour le partager, puisque actuellement il ressemble encore beaucoup au tuto). J'essayerais de publier une vid&eacute;o d&egrave;s que j'aurais un peu plus de contenu dans mon monde (pour le moment il n'y a qu'un cube avec une texture ...).&lt;/p&gt;
+</description>
+				<pubDate>2013-02-27T18:31:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Publication sources du jeu multijoueurs</title>
+				<link>http://www.sebastien-caparros.name/publication-sources-du-jeu-multijoueurs.html</link>
+				<guid>http://www.sebastien-caparros.name/publication-sources-du-jeu-multijoueurs.html</guid>
+				<description>&lt;time datetime=&quot;2013-02-10T12:33:00&quot;&gt;Le 10/02/2013 &agrave; 12:33:00&lt;/time&gt;
+&lt;h1&gt;Publication sources du jeu multijoueurs&lt;/h1&gt;
+
+&lt;p&gt;
+	Ca fait un moment que je n'y ai pas touch&eacute;, et &agrave; vrai dire, il est abandonn&eacute; vu que je suis sur tout autre chose.&lt;/p&gt;
+&lt;p&gt;
+	Du coup, plut&ocirc;t que de le laisser moisir au fin fond d'un disque dur, je publie les sources, en esp&eacute;rant que ca puisse &ecirc;tre utile &agrave; quelqu'un ...&lt;/p&gt;
+&lt;p&gt;
+	Je le publie sous licence GPL (v3), avec les fichiers du projet Netbeans d&eacute;j&agrave; configur&eacute;.&lt;/p&gt;
+&lt;p&gt;
+	Il suffit de lancer le fichier src/Main.java pour d&eacute;marrer le c&ocirc;t&eacute; serveur. Ensuite, on peut y acc&eacute;der via un navigateur sur http://localhost:12345/. Le port peut &ecirc;tre configur&eacute; dans le fichier config.ini.&lt;/p&gt;
+&lt;p&gt;
+	Vous trouverez les sources &lt;u&gt;&lt;a href=&quot;documents/Jeu_JS.zip&quot;&gt;ici&lt;/a&gt;&lt;/u&gt;.&lt;/p&gt;
+&lt;p&gt;
+	&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;
+	A part ca, je me suis mis &agrave; tester WebGL, et je dois dire que c'est assez int&eacute;r&eacute;ssant car j'apprend beaucoup de choses, m&ecirc;me si je m'arrache souvent les cheveux pour les comprendre. J'ai &eacute;galement d&eacute;cid&eacute; de me mettre au langage Ruby, qui me servira pour le c&ocirc;t&eacute; serveur.&lt;/p&gt;
+&lt;p&gt;
+	J'essayerais de publier des articles l&agrave; dessus.&lt;/p&gt;
+</description>
+				<pubDate>2013-02-10T12:33:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Joyeuses fêtes</title>
+				<link>http://www.sebastien-caparros.name/joyeuses-fetes.html</link>
+				<guid>http://www.sebastien-caparros.name/joyeuses-fetes.html</guid>
+				<description>&lt;time datetime=&quot;2012-12-27T11:41:00&quot;&gt;Le 27/12/2012 &agrave; 11:41:00&lt;/time&gt;
+&lt;h1&gt;Joyeuses f&ecirc;tes&lt;/h1&gt;
+
+&lt;p&gt;
+	Avec un peu de retard, je vous souhaite de joyeuses f&ecirc;tes !&lt;/p&gt;
+&lt;p&gt;
+	Ca fait un moment que je n'ai pas fait d'article. Non, le blog n'est pas abandonn&eacute;, c'est juste que je n'ai pas grand chose &agrave; dire.&lt;/p&gt;
+&lt;p&gt;
+	Pour &ecirc;tre honn&ecirc;te, je suis en train de bosser sur la r&eacute;daction d'un dossier pour un jeu tr&egrave;s ambitieux, mais je ne souhaite pas trop m'&eacute;tendre dessus pour le moment. Tout ce que je peux dire, c'est que ca sera un &lt;strike&gt;monde&lt;/strike&gt; univers totalement ouvert et &acirc;x&eacute; sur le d&eacute;veloppement d'un vaisseau spatial.&lt;/p&gt;
+&lt;p&gt;
+	Je ne sais pas si ca aboutira r&eacute;ellement cette fois-ci non plus, mais c'est un sujet passionnant et qui m'amuse beaucoup. C'est le principal.&lt;/p&gt;
+</description>
+				<pubDate>2012-12-27T11:41:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Retour sur jMonkeyEngine</title>
+				<link>http://www.sebastien-caparros.name/retour-sur-jmonkeyengine.html</link>
+				<guid>http://www.sebastien-caparros.name/retour-sur-jmonkeyengine.html</guid>
+				<description>&lt;time datetime=&quot;2012-10-07T18:40:00&quot;&gt;Le 07/10/2012 &agrave; 18:40:00&lt;/time&gt;
+&lt;h1&gt;Retour sur jMonkeyEngine&lt;/h1&gt;
+
+&lt;p&gt;
+	Il y a maintenant quelques ann&eacute;es, je m'&eacute;tais essay&eacute; &agrave; la 3D. J'avais opt&eacute; pour le moteur jMonkeyEngine (en Java), qui est puissant et int&egrave;gre notamment un moteur physique.&lt;/p&gt;
+&lt;p&gt;
+	Je m'y &eacute;tais int&eacute;r&eacute;ss&eacute; avant tout pour m'amuser. J'avais donc commenc&eacute; &agrave; suivre les tutos officiels et &agrave; les combiner &agrave; des scripts partag&eacute;s par la communaut&eacute;. J'avais obtenu un r&eacute;sultat sympathique, mais pas du tout gratifiant puisque je n'avais pas fait grand chose pour y arriver (sans compter le fait que n'ayant pas du tout certaines connaissances de bases en 3D, je ne comprenais pas la moiti&eacute; du code copi&eacute;-coll&eacute;), et j'avais fini par laisser tomber.&lt;/p&gt;
+&lt;p&gt;
+	Voici quelques copies d'&eacute;cran :&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;
+	&lt;a href=&quot;images/jmonkeyengine/Capture-2.png&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Aper&ccedil;u 1 de jMonkeyEngine&quot; src=&quot;images/jmonkeyengine/Capture-2.png&quot; style=&quot;width: 480px; height: 374px;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;
+	&lt;a href=&quot;images/jmonkeyengine/Capture-1.png&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Aper&ccedil;u 2 de jMonkeyEngine&quot; src=&quot;images/jmonkeyengine/Capture-1.png&quot; style=&quot;width: 480px; height: 377px;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;
+	&lt;a href=&quot;images/jmonkeyengine/Capture.png&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Aper&ccedil;u 3 de jMonkeyEngine&quot; src=&quot;images/jmonkeyengine/Capture.png&quot; style=&quot;width: 480px; height: 375px;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+	La 3D &eacute;tant quand m&ecirc;me un domaine tr&egrave;s int&eacute;r&eacute;ssant, j'ai quand m&ecirc;me fini par m'y remettre il y a quelques jours. Cette fois-ci, je commence par les bases et j'ai pour objectif de me familiariser directement avec WebGL.&lt;/p&gt;
+</description>
+				<pubDate>2012-10-07T18:40:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Expérimentation d'un moteur de particules</title>
+				<link>http://www.sebastien-caparros.name/experimentation-moteur-particules.html</link>
+				<guid>http://www.sebastien-caparros.name/experimentation-moteur-particules.html</guid>
+				<description>&lt;time datetime=&quot;2012-09-29T15:55:00&quot;&gt;Le 29/09/2012 &agrave; 15:55:00&lt;/time&gt;
+&lt;h1&gt;Exp&eacute;rimentation d'un moteur de particules&lt;/h1&gt;
+
+&lt;p&gt;
+	Petite vid&eacute;o pour pr&eacute;senter l'avancement du jeu et les premiers tests du moteur de particules.&lt;/p&gt;
+&lt;p&gt;
+	Il reste quelques petits bugs au niveau de la physique, mais dans l'ensemble ca commence &agrave; marcher pas trop mal (la vid&eacute;o n'est pas tr&egrave;s fluide, mais le jeu est correct dans la r&eacute;alit&eacute;).&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;
+	&lt;iframe allowfullscreen=&quot;&quot; frameborder=&quot;0&quot; src=&quot;http://www.youtube.com/embed/PkGUlvfqktI?rel=0&quot; width=&quot;600&quot; height=&quot;380&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
+</description>
+				<pubDate>2012-09-29T15:55:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Le projet du moment</title>
+				<link>http://www.sebastien-caparros.name/le-projet-du-moment.html</link>
+				<guid>http://www.sebastien-caparros.name/le-projet-du-moment.html</guid>
+				<description>&lt;time datetime=&quot;2012-09-24T01:24:00&quot;&gt;Le 24/09/2012 &agrave; 01:24:00&lt;/time&gt;
+&lt;h1&gt;Le projet du moment&lt;/h1&gt;
+
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Depuis quelque temps maintenant, je bosse sur le d&eacute;veloppement d'un jeu multijoueurs en 2D (style plateforme).&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Je n'ai encore d&eacute;fini aucun &eacute;l&eacute;ment de gameplay pr&eacute;cis, mais j'ai quelques id&eacute;es de r&eacute;alisations techniques int&eacute;r&eacute;ssantes.&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;
+	&lt;a href=&quot;images/jeu1/aspect du jeu.png&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Aspect du jeu&quot; src=&quot;images/jeu1/aspect%20du%20jeu.png&quot; style=&quot;width: 480px; height: 270px;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	C&ocirc;t&eacute; client, le jeu est d&eacute;velopp&eacute; en HTML5 pur. Le rendu est assur&eacute; par un canvas.&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	J'ai d'ailleurs pu exp&eacute;rimenter un bon paquet de fonctionnalit&eacute;s int&eacute;r&eacute;ssantes de HTML5, comme l'API fullscreen, les diff&eacute;rentes fonctionnalit&eacute;s audio (ainsi que leurs &lt;a href=&quot;http://www.wewantogg.com/&quot;&gt;probl&egrave;mes actuels&lt;/a&gt; pour lesquels nous pouvons remercier Microsoft et Apple ...), le localStorage, la fonction requestAnimationFrame (qui permet de synchroniser la fr&eacute;quence d'affichage d'un &eacute;l&eacute;ment - Canvas par exemple - avec la fr&eacute;quence d'affichage du navigateur) et surtout les WebSockets.&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	J'assure la compatibilit&eacute; avec l'ensemble des navigateurs &agrave; grand renfort de polyfills. Cette m&eacute;thode &agrave; l'avantage de garder des sources propres et standards et de bien s&eacute;parer le code en lui m&ecirc;me de ce qui sert &agrave; la compatibilit&eacute;. Par contre je n'ai toujours pas test&eacute; sous Safari ou IE, il faudra que je m'en occupe un jour (mais il est peu probable que je perde mon temps avec IE8).&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	La map du jeu est constitu&eacute;e de deux fichiers qui sont des images gif tout ce qu'il y a de plus standard. L'une contient la partie visible de la map (le d&eacute;cor) tandis que l'autre est son &quot;ombre&quot; en quelque sorte, qui servira a g&eacute;rer la physique. Aujourd'hui, ce second fichier contient du noir pour les parties solides, et du transparent pour le vide. En jouant sur les codes couleur, je pourrais par la suite ajouter facilement des fonctionnalit&eacute;s un peu plus pouss&eacute;es (zones qui peuvent &ecirc;tre d&eacute;truites, zones d'eau, zones mortelles ...).&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;
+	&lt;a href=&quot;images/jeu1/scene.gif&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Partie visible de la map&quot; src=&quot;images/jeu1/scene.gif&quot; style=&quot;width: 250px;&quot; /&gt;&lt;/a&gt; &lt;a href=&quot;images/jeu1/walls.gif&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Partie invisible de la map&quot; src=&quot;images/jeu1/walls.gif&quot; style=&quot;width: 250px;&quot; /&gt;&lt;/a&gt;&lt;br /&gt;
+	&lt;span style=&quot;font-size: 10px;&quot;&gt;A gauche la partie visible de la map. A droite, celle permettant la gestion de la physique.&lt;/span&gt;&lt;br /&gt;
+	&lt;span style=&quot;font-size: 10px;&quot;&gt;(L'image n'est pas de moi, elle vient d'&lt;a href=&quot;http://opengameart.org/content/several-scrolling-backgrounds-and-layerable-runners&quot;&gt;ici&lt;/a&gt;.&lt;/span&gt;)&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	C&ocirc;t&eacute; serveur, c'est du Java. Le serveur HTTP est int&eacute;gr&eacute; dans l'application (pas besoin d'installer Apache ou autre) pour permettre notamment le chargement dynamique des deux images de la map lorsqu'un client se connecte en cours de partie (je pr&eacute;vois que le terrain puisse subir des d&eacute;g&acirc;ts). Avec un serveur externe, ca aurait &eacute;t&eacute; plus compliqu&eacute; &agrave; mettre en oeuvre.&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Au d&eacute;but, j'avais opt&eacute; pour un serveur HTTP tr&egrave;s simple et fait &agrave; la main, avec une librairie pour g&eacute;rer les websockets. Le probl&egrave;me de cette solution, c'est qu'il fallait occuper deux ports pour les deux serveurs (alors que le protocole websockets s'implante normalement sur HTTP), que je ne connaissait absolument pas le fonctionnement interne de la librairie, et qu'il allait falloir g&eacute;rer le multi-threading du serveur HTTP (c'&eacute;tait des sockets en java.io).&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Apr&egrave;s quelques prises de t&ecirc;te avec java.nio (qui peut faire des sockets de mani&egrave;re asynchrone, et donc sans devoir cr&eacute;er un thread par client), j'ai finalement opt&eacute; pour la librairie Grizzly. Son utilisation est simple, elle utilise java.nio et elle s'int&egrave;gre comme une simple librairie, sans devoir cr&eacute;er 50 fichiers de configuration ou &eacute;crire trois pages de code suppl&eacute;mentaires.&lt;/p&gt;
+</description>
+				<pubDate>2012-09-24T01:24:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+					<item>
+				<title>Démarrage du blog</title>
+				<link>http://www.sebastien-caparros.name/demarrage-du-blog.html</link>
+				<guid>http://www.sebastien-caparros.name/demarrage-du-blog.html</guid>
+				<description>&lt;time datetime=&quot;2012-09-22T19:58:00&quot;&gt;Le 22/09/2012 &agrave; 19:58:00&lt;/time&gt;
+&lt;h1&gt;D&eacute;marrage du blog&lt;/h1&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;
+	&lt;a href=&quot;images/Raspberry%20PI.jpg&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Photo du Raspberry PI&quot; src=&quot;images/Raspberry%20PI.jpg&quot; style=&quot;width: 320px; height: 203px;&quot; /&gt;&lt;/a&gt;&lt;br /&gt;
+	&lt;span style=&quot;font-size:9px;&quot;&gt;(Photo honteusement copi&eacute;e sur Wikip&eacute;dia puisque j'ai la flemme d'en prendre une ...)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Maintenant que je dispose de mon Raspberry PI, qu'il est install&eacute; et configur&eacute;, il est temps de m'atteler &agrave; la cr&eacute;ation de ce blog.&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Apr&egrave;s quelques recherches, j'ai opt&eacute; pour PluXML qui &agrave; l'avantage d'&ecirc;tre simple et l&eacute;ger, mais quand m&ecirc;me assez complet puisqu'il propose m&ecirc;me un syst&egrave;me de plugins.&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Il va &ecirc;tre install&eacute; sur un serveur Lighttpd accompagn&eacute; de PHP, sur la distribution Raspian. J'aurais bien voulu en profiter pour essayer s&eacute;rieusement SliTaz (pour ceux qui ne connaissent pas, c'est une distribution linux de 32 Mo et qui contient vraiment tout ce qu'il faut, y compris une interface graphique compl&egrave;te), mais ce n'est pas (encore) adapt&eacute; pour ce type de machine (je crois qu'ils n'ont tout simplement pas de binaires pour les processeurs ARM).&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Au d&eacute;but, j'avais envisag&eacute; d'utiliser un g&eacute;n&eacute;rateur de blogs statiques (du style Pelican), accompagn&eacute; de Disqus ou IntenseDebate pour les commentaires. Ca m'aurait permis d'&eacute;viter la surcouche PHP pour &eacute;conomiser encore plus les ressources, mais c'est plut&ocirc;t gal&egrave;re &agrave; installer et &agrave; maintenir. Et si je peux &eacute;viter de d&eacute;dier le syst&egrave;me de commentaires &agrave; un service externe, c'est pas plus mal.&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	En dehors de pr&eacute;senter l'actualit&eacute; de mes activit&eacute;s en mati&egrave;re de d&eacute;veloppement de jeux, j'ai aussi pr&eacute;vu de pr&eacute;senter&amp;nbsp; tout ce que j'ai d&eacute;j&agrave; fait. Il va me falloir beaucoup de temps pour rattraper le retard, du coup je ne sais pas encore si je vais tout faire d'un seul coup ou si je le ferais petit &agrave; petit.&lt;/p&gt;
+</description>
+				<pubDate>2012-09-22T19:58:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
 					<item>
 				<title>Qui suis-je ?</title>
 				<link>http://www.sebastien-caparros.name/qui-suis-je.html</link>

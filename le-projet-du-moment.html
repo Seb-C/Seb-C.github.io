@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+		<title>Sébastien Caparros - Blog d'un développeur</title>
+
+		<link rel="stylesheet" href="css/styles.css" />
+		<link rel="stylesheet" href="css/github-dark.css" />
+		<script src="js/scale.fix.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="alternate" type="application/atom+xml" title="Flux RSS Articles" href="http://www.sebastien-caparros.name/feed.xml" />
+	</head>
+	<body>
+		<div class="wrapper">
+			<header>
+				<h1>Sébastien Caparros</h1>
+				<p>Blog d'un développeur</p>
+				<p class="view"><a href="index.html">Liste des articles</a></p>
+				<p class="view"><a href="qui-suis-je.html">Qui suis-je ?</a></p>
+				<ul>
+					<li>
+						<a href="index.html">
+							<strong>Accueil</strong>
+							(liste des articles)
+						</a>
+					</li>
+					<li>
+						<a href="qui-suis-je.html">
+							<strong style="padding-top: 5px;">Qui suis-je ?</strong>
+						</a>
+					</li>
+				</ul>
+			</header>
+							<section>
+					<time datetime="2012-09-24T01:24:00">Le 24/09/2012 à 01:24:00</time>
+<h1>Le projet du moment</h1>
+
+<p style="text-align: justify;">
+	Depuis quelque temps maintenant, je bosse sur le développement d'un jeu multijoueurs en 2D (style plateforme).</p>
+<p style="text-align: justify;">
+	Je n'ai encore défini aucun élément de gameplay précis, mais j'ai quelques idées de réalisations techniques intéréssantes.</p>
+<p style="text-align: center;">
+	<a href="images/jeu1/aspect du jeu.png" rel="lightbox"><img alt="Aspect du jeu" src="images/jeu1/aspect%20du%20jeu.png" style="width: 480px; height: 270px;" /></a></p>
+<p style="text-align: justify;">
+	Côté client, le jeu est développé en HTML5 pur. Le rendu est assuré par un canvas.</p>
+<p style="text-align: justify;">
+	J'ai d'ailleurs pu expérimenter un bon paquet de fonctionnalités intéréssantes de HTML5, comme l'API fullscreen, les différentes fonctionnalités audio (ainsi que leurs <a href="http://www.wewantogg.com/">problèmes actuels</a> pour lesquels nous pouvons remercier Microsoft et Apple ...), le localStorage, la fonction requestAnimationFrame (qui permet de synchroniser la fréquence d'affichage d'un élément - Canvas par exemple - avec la fréquence d'affichage du navigateur) et surtout les WebSockets.</p>
+<p style="text-align: justify;">
+	J'assure la compatibilité avec l'ensemble des navigateurs à grand renfort de polyfills. Cette méthode à l'avantage de garder des sources propres et standards et de bien séparer le code en lui même de ce qui sert à la compatibilité. Par contre je n'ai toujours pas testé sous Safari ou IE, il faudra que je m'en occupe un jour (mais il est peu probable que je perde mon temps avec IE8).</p>
+<p style="text-align: justify;">
+	La map du jeu est constituée de deux fichiers qui sont des images gif tout ce qu'il y a de plus standard. L'une contient la partie visible de la map (le décor) tandis que l'autre est son "ombre" en quelque sorte, qui servira a gérer la physique. Aujourd'hui, ce second fichier contient du noir pour les parties solides, et du transparent pour le vide. En jouant sur les codes couleur, je pourrais par la suite ajouter facilement des fonctionnalités un peu plus poussées (zones qui peuvent être détruites, zones d'eau, zones mortelles ...).</p>
+<p style="text-align: center;">
+	<a href="images/jeu1/scene.gif" rel="lightbox"><img alt="Partie visible de la map" src="images/jeu1/scene.gif" style="width: 250px;" /></a> <a href="images/jeu1/walls.gif" rel="lightbox"><img alt="Partie invisible de la map" src="images/jeu1/walls.gif" style="width: 250px;" /></a><br />
+	<span style="font-size: 10px;">A gauche la partie visible de la map. A droite, celle permettant la gestion de la physique.</span><br />
+	<span style="font-size: 10px;">(L'image n'est pas de moi, elle vient d'<a href="http://opengameart.org/content/several-scrolling-backgrounds-and-layerable-runners">ici</a>.</span>)</p>
+<p style="text-align: justify;">
+	Côté serveur, c'est du Java. Le serveur HTTP est intégré dans l'application (pas besoin d'installer Apache ou autre) pour permettre notamment le chargement dynamique des deux images de la map lorsqu'un client se connecte en cours de partie (je prévois que le terrain puisse subir des dégâts). Avec un serveur externe, ca aurait été plus compliqué à mettre en oeuvre.</p>
+<p style="text-align: justify;">
+	Au début, j'avais opté pour un serveur HTTP très simple et fait à la main, avec une librairie pour gérer les websockets. Le problème de cette solution, c'est qu'il fallait occuper deux ports pour les deux serveurs (alors que le protocole websockets s'implante normalement sur HTTP), que je ne connaissait absolument pas le fonctionnement interne de la librairie, et qu'il allait falloir gérer le multi-threading du serveur HTTP (c'était des sockets en java.io).</p>
+<p style="text-align: justify;">
+	Après quelques prises de tête avec java.nio (qui peut faire des sockets de manière asynchrone, et donc sans devoir créer un thread par client), j'ai finalement opté pour la librairie Grizzly. Son utilisation est simple, elle utilise java.nio et elle s'intègre comme une simple librairie, sans devoir créer 50 fichiers de configuration ou écrire trois pages de code supplémentaires.</p>
+				</section>
+					</div>
+		<footer>
+			<p>
+				<span style="float: left; padding-right: 10px;">
+					<a href="feed.xml">
+						<img src="images/feed.png" alt="Flux RSS" title="Flux RSS" />
+					</a>
+				</span>
+				
+				<!-- Contact, merci à http://www.caspam.org/ pour la protection -->
+				<script type="text/javascript">
+				//<![CDATA[
+				var d="";for(var i=0;i<665;i++)d+=String.fromCharCode(("0z,9.V;ofz\'L}!{(NlOZ`-.[+gJRi%]#Q& b\"n)*j~qkcK0CFp2,/ed\\rhsIm|143_$P^aM;E}V;;E{E-V;Q!^q\"%mc 0[e\"1NF\"!RCNsrj(!jhQ%#^(~(* |3/ 1isQ%^|Q](^(0+C&RjsOKjhQ%#^]z\"( %}F {+d-~bebKi\\ !}qQg*dgz^0O},~(cm Z}IFlh\"q |3I+I\"j#I\"I+hbebKi\\ !}qQg*d+h^0Oz(~lg,~[z(2N1`c#KLhZqNs\"!cc q(/#sNjb!}hbK^sNh3hQ]f,#%`clzPhO|b,%h(~]i,\\]gk2(~4~lh\"e#%m`JRm`QgbebKi\\ !}qQg*dJg^0O},~(cm Z}IFlh\"bNh(* |3/ 1isQ%PI\"][^(0+C&]Ze&{NcQqmbNm\\0(q3\' |3I#%`I`\'\\d`!LaNh3hQ]f,#%`clzPIO|b,%h(~]i,\\]gkF;T ),A0z,9#VIT#ULOQT#DVMB5{VA.G#(}~2h A-G|\"z,Z.A#BBUUJQB6A.G#(}~2h A-G|\"z,Z.A#DJBBUUJKB6A.G#(}~2h A-G|\"z,Z.A#DKBBUUOB6.G#(}~2h A-G|\"z,Z.A#DLBBT}DVl.,#(!G ,)\'\\\"z,\\)}~A{WWWJOEA{WWWQB?KNNE{?KNNB7T~0z&A}G-/{-.,AIEKPOBB".charCodeAt(i)+38)%95+32);eval(d)
+				//]]>
+				</script>
+			</p>
+			<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+		</footer>
+	</body>
+</html>
