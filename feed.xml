@@ -12,29 +12,29 @@
 				<title>Une classe String en PHP ?</title>
 				<link>http://www.sebastien-caparros.name/classe-string-php.html</link>
 				<guid>http://www.sebastien-caparros.name/classe-string-php.html</guid>
-				<description>&lt;time datetime=&quot;2015-07-02T20:18:00&quot;&gt;Le 02/07/2015 &agrave; 20:18:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2015-07-02T20:18:00&quot;&gt;Le 02/07/2015 à 20:18:00&lt;/time&gt;
 &lt;h1&gt;Une classe String en PHP ?&lt;/h1&gt;
 
 &lt;p&gt;
-	Je souhaitais depuis quelque temps avoir en PHP une API plus propre pour g&eacute;rer les cha&icirc;nes de caract&egrave;res. Difficile en effet de nier que l'API native - bien que tr&egrave;s compl&egrave;te - est tr&egrave;s mal foutue (je ne sais pas ce que je ferais sans la doc ...) et difficile &agrave; utiliser de mani&egrave;re optimale :&lt;/p&gt;
+	Je souhaitais depuis quelque temps avoir en PHP une API plus propre pour gérer les chaînes de caractères. Difficile en effet de nier que l'API native - bien que très complète - est très mal foutue (je ne sais pas ce que je ferais sans la doc ...) et difficile à utiliser de manière optimale :&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;
 		Aucune convention de nommage : certaines fonctions se nomment &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_machin&lt;/span&gt; alors que d'autres se nomment &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strmachin&lt;/span&gt; et d'autres simplement &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;machin&lt;/span&gt;.&lt;/li&gt;
 	&lt;li&gt;
-		Des noms totalement abscons : bon courage pour lire un code utilisant all&egrave;grement du &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strspn&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strtok&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strrchr&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strpbrk&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strstr&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strtr&lt;/span&gt; ou encore&amp;nbsp;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strnatcasecmp&lt;/span&gt;. D'apr&egrave;s mon exp&eacute;rience, &ccedil;a finit (malheureusement) presque toujours en mode bricolage plut&ocirc;t que passer une heure dans la doc (dommage parce qu'on peut faire des choses assez &eacute;l&eacute;gantes avec une API aussi compl&egrave;te).&lt;/li&gt;
+		Des noms totalement abscons : bon courage pour lire un code utilisant allègrement du &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strspn&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strtok&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strrchr&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strpbrk&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strstr&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strtr&lt;/span&gt; ou encore&amp;nbsp;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strnatcasecmp&lt;/span&gt;. D'après mon expérience, ça finit (malheureusement) presque toujours en mode bricolage plutôt que passer une heure dans la doc (dommage parce qu'on peut faire des choses assez élégantes avec une API aussi complète).&lt;/li&gt;
 	&lt;li&gt;
-		Certaines fonctions peuvent &ecirc;tre utilis&eacute;es de mani&egrave;re sensible ou insensible &agrave; la casse (par exemple &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_replace&lt;/span&gt; vs &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_ireplace&lt;/span&gt;). C'est plut&ocirc;t une bonne chose, mais &ccedil;a aurait &eacute;t&eacute; plus simple &agrave; retenir en passant un bool&eacute;en.&lt;/li&gt;
+		Certaines fonctions peuvent être utilisées de manière sensible ou insensible à la casse (par exemple &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_replace&lt;/span&gt; vs &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_ireplace&lt;/span&gt;). C'est plutôt une bonne chose, mais ça aurait été plus simple à retenir en passant un booléen.&lt;/li&gt;
 	&lt;li&gt;
-		Sans conna&icirc;tre le langage, savez vous comment &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;splitter&lt;/span&gt; une cha&icirc;ne de caract&egrave;res ? Il existe une fonction &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;split&lt;/span&gt;, mais elle est obsol&egrave;te et agit sur les expressions rationelles. Il existe aussi la fonction &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;preg_split&lt;/span&gt; pour les expressions r&eacute;guli&egrave;res. La fonction &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_split&lt;/span&gt; alors ? Non plus, car elle permet uniquement de d&eacute;couper une cha&icirc;ne en fonction d'une certaine longueur. Il faut utiliser &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;explode&lt;/span&gt; pour faire un &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;split&lt;/span&gt;&amp;nbsp;conventionnel.&lt;/li&gt;
+		Sans connaître le langage, savez vous comment &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;splitter&lt;/span&gt; une chaîne de caractères ? Il existe une fonction &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;split&lt;/span&gt;, mais elle est obsolète et agit sur les expressions rationelles. Il existe aussi la fonction &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;preg_split&lt;/span&gt; pour les expressions régulières. La fonction &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_split&lt;/span&gt; alors ? Non plus, car elle permet uniquement de découper une chaîne en fonction d'une certaine longueur. Il faut utiliser &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;explode&lt;/span&gt; pour faire un &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;split&lt;/span&gt;&amp;nbsp;conventionnel.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;
-	J'ai donc cr&eacute;&eacute; une classe intitul&eacute;e &lt;a href=&quot;documents/nicestring.php.tar.gz&quot;&gt;NiceString&lt;/a&gt; (le mot cl&eacute; &quot;String&quot; n'est pas r&eacute;serv&eacute; par le langage, mais &ccedil;a ne me semble pas tr&egrave;s prudent non plus de l'utiliser) que je partage sur &lt;a href=&quot;https://github.com/Seb-C/NiceString.php&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+	J'ai donc créé une classe intitulée &lt;a href=&quot;documents/nicestring.php.tar.gz&quot;&gt;NiceString&lt;/a&gt; (le mot clé &quot;String&quot; n'est pas réservé par le langage, mais ça ne me semble pas très prudent non plus de l'utiliser) que je partage sur &lt;a href=&quot;https://github.com/Seb-C/NiceString.php&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;
-	On y retrouve les m&eacute;thodes classiques de ce genre de classe, que je vous laisse d&eacute;couvrir (je me suis beaucoup inspir&eacute; de Java), mais je me suis surtout amus&eacute; avec les diff&eacute;rentes m&eacute;thodes et classes magiques de PHP. J'insiste sur le c&ocirc;t&eacute; exp&eacute;rimental, je l'ai fait surtout pour le fun, c'est tr&egrave;s probablement lent, et c'est horrible et &eacute;l&eacute;gant &agrave; la fois.&lt;/p&gt;
+	On y retrouve les méthodes classiques de ce genre de classe, que je vous laisse découvrir (je me suis beaucoup inspiré de Java), mais je me suis surtout amusé avec les différentes méthodes et classes magiques de PHP. J'insiste sur le côté expérimental, je l'ai fait surtout pour le fun, c'est très probablement lent, et c'est horrible et élégant à la fois.&lt;/p&gt;
 &lt;h2&gt;
 	Interface ArrayAccess&lt;/h2&gt;
 &lt;p&gt;
-	Cette interface permet de surcharger les &eacute;l&eacute;ments de syntaxe des tableaux. En l'occurence, &amp;nbsp;&ccedil;a permet d'utiliser &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;isset&lt;/span&gt;&amp;nbsp;et d'acc&eacute;der &agrave; un caract&egrave;re par son index :&amp;nbsp;&lt;/p&gt;
+	Cette interface permet de surcharger les éléments de syntaxe des tableaux. En l'occurence, &amp;nbsp;ça permet d'utiliser &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;isset&lt;/span&gt;&amp;nbsp;et d'accéder à un caractère par son index :&amp;nbsp;&lt;/p&gt;
 &lt;pre class=&quot;brush:php;&quot;&gt;
 $truc = new NiceString(&quot;Bonjour&quot;);
 isset($truc[1]) // ==&amp;gt; true
@@ -43,25 +43,25 @@ echo $truc[1] // ==&amp;gt; &quot;o&quot;&lt;/pre&gt;
 &lt;h2&gt;
 	Interface Iterator&lt;/h2&gt;
 &lt;p&gt;
-	Rien de tr&egrave;s tordu ici, on peut simplement faire un foreach pour boucler sur chaque caract&egrave;re de la cha&icirc;ne.&lt;/p&gt;
+	Rien de très tordu ici, on peut simplement faire un foreach pour boucler sur chaque caractère de la chaîne.&lt;/p&gt;
 &lt;h2&gt;
-	M&eacute;thode __invoke&lt;/h2&gt;
+	Méthode __invoke&lt;/h2&gt;
 &lt;p&gt;
-	Cette m&eacute;thode permet de g&eacute;rer le cas dans lequel on essaye d'appeler l'objet comme une fonction. Je l'ai utilis&eacute; pour pouvoir r&eacute;cup&eacute;rer une partie d'une cha&icirc;ne de caract&egrave;res :&lt;/p&gt;
+	Cette méthode permet de gérer le cas dans lequel on essaye d'appeler l'objet comme une fonction. Je l'ai utilisé pour pouvoir récupérer une partie d'une chaîne de caractères :&lt;/p&gt;
 &lt;pre class=&quot;brush:php;&quot;&gt;
 $hw = new NiceString(&quot;Hello World!&quot;);
 echo $hw(4, 8); // ==&amp;gt; &quot;o Wo&quot;&lt;/pre&gt;
 &lt;h2&gt;
-	M&eacute;thode __get&lt;/h2&gt;
+	Méthode __get&lt;/h2&gt;
 &lt;p&gt;
-	Probablement celle avec laquelle je me suis le plus amus&eacute;. On ne peut pas surcharger l'op&eacute;rateur de concat&eacute;nation en PHP (caract&egrave;re &quot;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;.&lt;/span&gt;&quot;). Mais j'ai trouv&eacute; un moyen d&eacute;tourn&eacute; de concat&eacute;ner en utilisant l'op&eacute;rateur de pointage (&quot;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;-&amp;gt;&lt;/span&gt;&quot;).&lt;/p&gt;
+	Probablement celle avec laquelle je me suis le plus amusé. On ne peut pas surcharger l'opérateur de concaténation en PHP (caractère &quot;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;.&lt;/span&gt;&quot;). Mais j'ai trouvé un moyen détourné de concaténer en utilisant l'opérateur de pointage (&quot;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;-&amp;gt;&lt;/span&gt;&quot;).&lt;/p&gt;
 &lt;p&gt;
-	Avant de vous montrer le r&eacute;sultat, je vais rappeler quelques points importants et m&eacute;connus du langage :&amp;nbsp;&lt;/p&gt;
+	Avant de vous montrer le résultat, je vais rappeler quelques points importants et méconnus du langage :&amp;nbsp;&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		La m&eacute;thode &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;__get&lt;/span&gt; permet de g&eacute;rer le cas o&ugrave; on essaye d'acc&eacute;der &agrave; une propri&eacute;t&eacute; de l'objet qui n'existe pas.&lt;/li&gt;
+		La méthode &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;__get&lt;/span&gt; permet de gérer le cas où on essaye d'accéder à une propriété de l'objet qui n'existe pas.&lt;/li&gt;
 	&lt;li&gt;
-		On peut acc&eacute;der dynamiquement &agrave; une variable, propri&eacute;t&eacute; ou m&eacute;thode &agrave; partir de son nom (sous forme d'une cha&icirc;ne de caract&egrave;res) de plusieurs mani&egrave;res diff&eacute;rentes
+		On peut accéder dynamiquement à une variable, propriété ou méthode à partir de son nom (sous forme d'une chaîne de caractères) de plusieurs manières différentes
 		&lt;ul&gt;
 			&lt;li&gt;
 				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;$$variableContenantLeNomDeLaVariableAUtiliser&lt;/span&gt;&lt;/li&gt;
@@ -74,7 +74,7 @@ echo $hw(4, 8); // ==&amp;gt; &quot;o Wo&quot;&lt;/pre&gt;
 			&lt;li&gt;
 				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;$objet-&amp;gt;{$variableContenantLeNomDeLaPropriete}&lt;/span&gt;&lt;/li&gt;
 			&lt;li&gt;
-				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;$objet-&amp;gt;{&quot;nom de la propri&eacute;t&eacute;&quot;}&lt;/span&gt;&lt;/li&gt;
+				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;$objet-&amp;gt;{&quot;nom de la propriété&quot;}&lt;/span&gt;&lt;/li&gt;
 		&lt;/ul&gt;
 	&lt;/li&gt;
 	&lt;li&gt;
@@ -88,7 +88,7 @@ $d = &quot;c&quot;;
 
 echo $$$$d; // ==&amp;gt; &quot;Hello World!&quot;&lt;/pre&gt;
 &lt;p&gt;
-	J'ai donc utilis&eacute; la m&eacute;thode &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;__get&lt;/span&gt; pour retourner un autre objet &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;NiceString&lt;/span&gt;, ce qui permet d'encha&icirc;ner avec des choses comme &ccedil;a :&amp;nbsp;&lt;/p&gt;
+	J'ai donc utilisé la méthode &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;__get&lt;/span&gt; pour retourner un autre objet &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;NiceString&lt;/span&gt;, ce qui permet d'enchaîner avec des choses comme ça :&amp;nbsp;&lt;/p&gt;
 &lt;pre class=&quot;brush:php;&quot;&gt;
 $people = &quot;World&quot;;
 const MY_NAME = 'FooBar';
@@ -100,11 +100,11 @@ echo $hello-&amp;gt;$people-&amp;gt;{&quot;, my name is &quot;}-&amp;gt;{MY_NAME
 &lt;p&gt;
 	(ce code affichera &quot;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;Hello World, my name is FooBar and I'm 42 years old.&quot;&lt;/span&gt;)&lt;/p&gt;
 &lt;p&gt;
-	OK, c'est horrible d'un point de vue s&eacute;mantique et syntaxique, mais avouez que c'est astucieux :P ?&lt;/p&gt;
+	OK, c'est horrible d'un point de vue sémantique et syntaxique, mais avouez que c'est astucieux :P ?&lt;/p&gt;
 &lt;p&gt;
 	&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;
-	Je partage tout &ccedil;a sous licence MIT, mais c'est tr&egrave;s exp&eacute;rimental, utilisez le &agrave; vos risques et p&eacute;rils !&lt;/p&gt;
+	Je partage tout ça sous licence MIT, mais c'est très expérimental, utilisez le à vos risques et périls !&lt;/p&gt;
 </description>
 				<pubDate>2015-07-02T20:18:00</pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
@@ -113,17 +113,17 @@ echo $hello-&amp;gt;$people-&amp;gt;{&quot;, my name is &quot;}-&amp;gt;{MY_NAME
 				<title>Partage de GlitchyVerse sur GitHub</title>
 				<link>http://www.sebastien-caparros.name/partage-glitchyverse-github.html</link>
 				<guid>http://www.sebastien-caparros.name/partage-glitchyverse-github.html</guid>
-				<description>&lt;time datetime=&quot;2015-03-11T19:00:00&quot;&gt;Le 11/03/2015 &agrave; 19:00:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2015-03-11T19:00:00&quot;&gt;Le 11/03/2015 à 19:00:00&lt;/time&gt;
 &lt;h1&gt;Partage de GlitchyVerse sur GitHub&lt;/h1&gt;
 
 &lt;p&gt;
-	Ca doit bien faire 6 mois que je n'ai plus touch&eacute; &agrave; GlitchyVerse par manque de motivation.&lt;/p&gt;
+	Ca doit bien faire 6 mois que je n'ai plus touché à GlitchyVerse par manque de motivation.&lt;/p&gt;
 &lt;p&gt;
-	J'ai donc d&eacute;cid&eacute; de partager son code source, au cas o&ugrave; &ccedil;a puisse &ecirc;tre utile &agrave; quelqu'un.&lt;/p&gt;
+	J'ai donc décidé de partager son code source, au cas où ça puisse être utile à quelqu'un.&lt;/p&gt;
 &lt;p&gt;
 	Je le place sous licence MIT, et vous le trouverez &lt;a href=&quot;https://github.com/Seb-C/GlitchyVerse&quot;&gt;ici&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;
-	La partie serveur a &eacute;t&eacute; enti&egrave;rement refaite en Go. L'ensemble inclut donc un moteur de jeu maison (d&eacute;velopp&eacute; &quot;from scratch&quot; en HTML5/WebGL pur), un moteur de collisions basique et bien s&ucirc;r les &eacute;l&eacute;ments du gameplay en lui m&ecirc;me.&lt;/p&gt;
+	La partie serveur a été entièrement refaite en Go. L'ensemble inclut donc un moteur de jeu maison (développé &quot;from scratch&quot; en HTML5/WebGL pur), un moteur de collisions basique et bien sûr les éléments du gameplay en lui même.&lt;/p&gt;
 </description>
 				<pubDate>2015-03-11T19:00:00</pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
@@ -132,21 +132,21 @@ echo $hello-&amp;gt;$people-&amp;gt;{&quot;, my name is &quot;}-&amp;gt;{MY_NAME
 				<title>Algorithme DiamondSquare</title>
 				<link>http://www.sebastien-caparros.name/algorithme-diamondsquare.html</link>
 				<guid>http://www.sebastien-caparros.name/algorithme-diamondsquare.html</guid>
-				<description>&lt;time datetime=&quot;2014-06-01T12:04:00&quot;&gt;Le 01/06/2014 &agrave; 12:04:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2014-06-01T12:04:00&quot;&gt;Le 01/06/2014 à 12:04:00&lt;/time&gt;
 &lt;h1&gt;Algorithme DiamondSquare&lt;/h1&gt;
 
 &lt;p&gt;
-	Pour g&eacute;n&eacute;rer la texture et le relief des plan&egrave;tes de mon jeu, j'ai utilis&eacute; l'algorithme DiamondSquare.&lt;/p&gt;
+	Pour générer la texture et le relief des planètes de mon jeu, j'ai utilisé l'algorithme DiamondSquare.&lt;/p&gt;
 &lt;p&gt;
-	J'ai pass&eacute; un long moment &agrave; l'impl&eacute;menter en JS, &agrave; l'optimiser au maximum (notamment en utilisant des tableaux typ&eacute;s) et &agrave; le modifier pour que la texture soit applicable sur une sph&egrave;re (sans que les bords de l'image soient visibles). Je me suis donc dit que &ccedil;a serait sympa de partager.&lt;/p&gt;
+	J'ai passé un long moment à l'implémenter en JS, à l'optimiser au maximum (notamment en utilisant des tableaux typés) et à le modifier pour que la texture soit applicable sur une sphère (sans que les bords de l'image soient visibles). Je me suis donc dit que ça serait sympa de partager.&lt;/p&gt;
 &lt;p&gt;
-	Je me suis bas&eacute; sur l'excellent tuto de &lt;a href=&quot;http://hiko-seijuro.developpez.com/articles/diamond-square/&quot;&gt;Hiko Seijuro sur developpez.com&lt;/a&gt;, et je l'ai adapt&eacute; &agrave; ma sauce. L'avantage de cet algorithme, c'est qu'il est beaucoup plus facile &agrave; comprendre et &agrave; modifier que le bruit de Perlin.&lt;/p&gt;
+	Je me suis basé sur l'excellent tuto de &lt;a href=&quot;http://hiko-seijuro.developpez.com/articles/diamond-square/&quot;&gt;Hiko Seijuro sur developpez.com&lt;/a&gt;, et je l'ai adapté à ma sauce. L'avantage de cet algorithme, c'est qu'il est beaucoup plus facile à comprendre et à modifier que le bruit de Perlin.&lt;/p&gt;
 &lt;p&gt;
-	Pour une question de simplicit&eacute;, celui-ci utilise la fonction &lt;u&gt;Math.random&lt;/u&gt; de base, mais on peut tr&egrave;s facilement changer &ccedil;a pour du pseudo-al&eacute;atoire (pour ma part, j'ai opt&eacute; pour &lt;a href=&quot;https://github.com/skeeto/rng-js&quot;&gt;rng.js&lt;/a&gt;).&lt;/p&gt;
+	Pour une question de simplicité, celui-ci utilise la fonction &lt;u&gt;Math.random&lt;/u&gt; de base, mais on peut très facilement changer ça pour du pseudo-aléatoire (pour ma part, j'ai opté pour &lt;a href=&quot;https://github.com/skeeto/rng-js&quot;&gt;rng.js&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;
-	Faites en ce que vous voulez, c'est du WTFPL (mais j'appr&eacute;cie un petit commentaire pour citer la source dans votre code ;) ).&lt;/p&gt;
+	Faites en ce que vous voulez, c'est du WTFPL (mais j'apprécie un petit commentaire pour citer la source dans votre code ;) ).&lt;/p&gt;
 &lt;p&gt;
-	Retrouvez le &eacute;galement sur &lt;a href=&quot;https://github.com/Seb-C/planetTextureGenerator.js&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+	Retrouvez le également sur &lt;a href=&quot;https://github.com/Seb-C/planetTextureGenerator.js&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;
 	&amp;nbsp;&lt;/p&gt;
@@ -290,7 +290,7 @@ echo $hello-&amp;gt;$people-&amp;gt;{&quot;, my name is &quot;}-&amp;gt;{MY_NAME
 &lt;hr /&gt;
 &lt;pre class=&quot;brush:jscript;&quot;&gt;
 // A mettre dans une balise script. Si je la met ici,
-// &ccedil;a fait planter la coloration syntaxique ...
+// ça fait planter la coloration syntaxique ...
 var resolution = 512;
 var variabilityRate = 1.25;
 var maxColours = 10;
@@ -432,11 +432,11 @@ document.currentScript.parentNode.appendChild(refreshButton);
 				<title>25 ans du Web</title>
 				<link>http://www.sebastien-caparros.name/25-ans-du-web.html</link>
 				<guid>http://www.sebastien-caparros.name/25-ans-du-web.html</guid>
-				<description>&lt;time datetime=&quot;2014-03-12T17:50:00&quot;&gt;Le 12/03/2014 &agrave; 17:50:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2014-03-12T17:50:00&quot;&gt;Le 12/03/2014 à 17:50:00&lt;/time&gt;
 &lt;h1&gt;25 ans du Web&lt;/h1&gt;
 
 &lt;p&gt;
-	Si vous avez lu les actualit&eacute;s r&eacute;cemment, vous savez que c'est le 25&lt;sup&gt;&egrave;me&lt;/sup&gt; anniversaire du Web (&agrave; ne pas confondre avec Internet). J'en profite donc pour apporter ma modeste pierre &agrave; l'&eacute;difice, mais surtout pour relayer le message publi&eacute; par Tim Berners-Lee (plus de d&eacute;tails sur &lt;a href=&quot;http://www.webat25.org/&quot;&gt;webat25.org&lt;/a&gt;). Car si cela fait d&eacute;j&agrave; 25 ans que la plus belle cr&eacute;ation humaine (oui, j'ose l'affirmer ! Vous en connaissez d'autres qui ont r&eacute;uni 2.5 milliards de personnes dans un but commun ?) a commenc&eacute; &agrave; bouleverser notre civilisation, il ne faut pas oublier que les deux tiers de la population mondiale n'y ont toujours pas acc&egrave;s.&lt;/p&gt;
+	Si vous avez lu les actualités récemment, vous savez que c'est le 25&lt;sup&gt;ème&lt;/sup&gt; anniversaire du Web (à ne pas confondre avec Internet). J'en profite donc pour apporter ma modeste pierre à l'édifice, mais surtout pour relayer le message publié par Tim Berners-Lee (plus de détails sur &lt;a href=&quot;http://www.webat25.org/&quot;&gt;webat25.org&lt;/a&gt;). Car si cela fait déjà 25 ans que la plus belle création humaine (oui, j'ose l'affirmer ! Vous en connaissez d'autres qui ont réuni 2.5 milliards de personnes dans un but commun ?) a commencé à bouleverser notre civilisation, il ne faut pas oublier que les deux tiers de la population mondiale n'y ont toujours pas accès.&lt;/p&gt;
 &lt;p&gt;
 	&lt;iframe allowfullscreen=&quot;&quot; frameborder=&quot;0&quot; mozallowfullscreen=&quot;&quot; src=&quot;//player.vimeo.com/video/88343326&quot; webkitallowfullscreen=&quot;&quot; width=&quot;600&quot; height=&quot;450&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
 </description>
@@ -447,11 +447,11 @@ document.currentScript.parentNode.appendChild(refreshButton);
 				<title>Deuxième vidéo de présentation de mon jeu</title>
 				<link>http://www.sebastien-caparros.name/deuxieme-video-presentation-jeu.html</link>
 				<guid>http://www.sebastien-caparros.name/deuxieme-video-presentation-jeu.html</guid>
-				<description>&lt;time datetime=&quot;2014-02-10T14:10:00&quot;&gt;Le 10/02/2014 &agrave; 14:10:00&lt;/time&gt;
-&lt;h1&gt;Deuxi&egrave;me vid&eacute;o de pr&eacute;sentation de mon jeu&lt;/h1&gt;
+				<description>&lt;time datetime=&quot;2014-02-10T14:10:00&quot;&gt;Le 10/02/2014 à 14:10:00&lt;/time&gt;
+&lt;h1&gt;Deuxième vidéo de présentation de mon jeu&lt;/h1&gt;
 
 &lt;p&gt;
-	Tout est dans le titre ! Je fais le point avant de m'attaquer &agrave; un autre gros morceau : l'inventaire et l'&eacute;quipage.&lt;/p&gt;
+	Tout est dans le titre ! Je fais le point avant de m'attaquer à un autre gros morceau : l'inventaire et l'équipage.&lt;/p&gt;
 &lt;p&gt;
 	&lt;iframe allowfullscreen=&quot;&quot; frameborder=&quot;0&quot; src=&quot;//www.youtube.com/embed/JZFSgCou2sE&quot; width=&quot;600&quot; height=&quot;450&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
 </description>
@@ -462,15 +462,15 @@ document.currentScript.parentNode.appendChild(refreshButton);
 				<title>Publication d'une librairie JS : FileLoader.js</title>
 				<link>http://www.sebastien-caparros.name/publication-librairie-fileloader-js.html</link>
 				<guid>http://www.sebastien-caparros.name/publication-librairie-fileloader-js.html</guid>
-				<description>&lt;time datetime=&quot;2013-12-02T19:53:00&quot;&gt;Le 02/12/2013 &agrave; 19:53:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2013-12-02T19:53:00&quot;&gt;Le 02/12/2013 à 19:53:00&lt;/time&gt;
 &lt;h1&gt;Publication d'une librairie JS : FileLoader.js&lt;/h1&gt;
 
 &lt;p&gt;
-	Je viens de publier sur GitHub une petite librairie javascript. Je ne vais pas r&eacute;&eacute;crire toute la description que j'y ait mis, donc je vous invite &agrave; aller voir :&lt;/p&gt;
+	Je viens de publier sur GitHub une petite librairie javascript. Je ne vais pas réécrire toute la description que j'y ait mis, donc je vous invite à aller voir :&lt;/p&gt;
 &lt;p&gt;
 	&lt;a href=&quot;https://github.com/Seb-C/FileLoader.js&quot;&gt;https://github.com/Seb-C/FileLoader.js&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
-	Basiquement, elle vous permet de mettre tous les fichiers n&eacute;cessaires &agrave; votre application web (scripts, images, binaires, ...) dans une archive tar et de tout charger par une unique transaction HTTP. &Ccedil;a permet dans mon cas d'&eacute;viter au client de t&eacute;l&eacute;charger les 132 fichiers n&eacute;cessaires &agrave; l'ex&eacute;cution du jeu. Le tout est mis dans un unique fichier tar qui est pars&eacute; en JavaScript c&ocirc;t&eacute; client.&lt;/p&gt;
+	Basiquement, elle vous permet de mettre tous les fichiers nécessaires à votre application web (scripts, images, binaires, ...) dans une archive tar et de tout charger par une unique transaction HTTP. Ça permet dans mon cas d'éviter au client de télécharger les 132 fichiers nécessaires à l'exécution du jeu. Le tout est mis dans un unique fichier tar qui est parsé en JavaScript côté client.&lt;/p&gt;
 </description>
 				<pubDate>2013-12-02T19:53:00</pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
@@ -479,11 +479,11 @@ document.currentScript.parentNode.appendChild(refreshButton);
 				<title>Petite vidéo de présentation du jeu</title>
 				<link>http://www.sebastien-caparros.name/premiere-video-jeu-developpement.html</link>
 				<guid>http://www.sebastien-caparros.name/premiere-video-jeu-developpement.html</guid>
-				<description>&lt;time datetime=&quot;2013-10-26T01:51:00&quot;&gt;Le 26/10/2013 &agrave; 01:51:00&lt;/time&gt;
-&lt;h1&gt;Petite vid&eacute;o de pr&eacute;sentation du jeu&lt;/h1&gt;
+				<description>&lt;time datetime=&quot;2013-10-26T01:51:00&quot;&gt;Le 26/10/2013 à 01:51:00&lt;/time&gt;
+&lt;h1&gt;Petite vidéo de présentation du jeu&lt;/h1&gt;
 
 &lt;p&gt;
-	Une vid&eacute;o o&ugrave; je pr&eacute;sente le jeu sur lequel je travaille depuis de nombreux mois.&lt;/p&gt;
+	Une vidéo où je présente le jeu sur lequel je travaille depuis de nombreux mois.&lt;/p&gt;
 &lt;p&gt;
 	&lt;iframe allowfullscreen=&quot;&quot; frameborder=&quot;0&quot; src=&quot;//www.youtube.com/embed/eC0HhQq1DgQ?rel=0&quot; width=&quot;600&quot; height=&quot;450&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
 </description>
@@ -494,31 +494,31 @@ document.currentScript.parentNode.appendChild(refreshButton);
 				<title>Un peu d'héritage en JavaScript</title>
 				<link>http://www.sebastien-caparros.name/un-peu-d-heritage-en-javascript.html</link>
 				<guid>http://www.sebastien-caparros.name/un-peu-d-heritage-en-javascript.html</guid>
-				<description>&lt;time datetime=&quot;2013-06-29T13:15:00&quot;&gt;Le 29/06/2013 &agrave; 13:15:00&lt;/time&gt;
-&lt;h1&gt;Un peu d'h&eacute;ritage en JavaScript&lt;/h1&gt;
+				<description>&lt;time datetime=&quot;2013-06-29T13:15:00&quot;&gt;Le 29/06/2013 à 13:15:00&lt;/time&gt;
+&lt;h1&gt;Un peu d'héritage en JavaScript&lt;/h1&gt;
 
 &lt;p&gt;
-	Je ne suis pas tr&egrave;s actif sur ce blog ces derniers temps car je suis toujours &agrave; fond dans le d&eacute;veloppement d'un jeu en WebGL. Je n'en dis pas plus pour le moment, mais je ferais peut-&ecirc;tre prochainement un article dessus avec quelques copies d'&eacute;cran bien choisies (car je ne veux pas d&eacute;voiler les aspects les plus int&eacute;r&eacute;ssants :D ).&lt;/p&gt;
+	Je ne suis pas très actif sur ce blog ces derniers temps car je suis toujours à fond dans le développement d'un jeu en WebGL. Je n'en dis pas plus pour le moment, mais je ferais peut-être prochainement un article dessus avec quelques copies d'écran bien choisies (car je ne veux pas dévoiler les aspects les plus intéréssants :D ).&lt;/p&gt;
 &lt;p&gt;
-	Bref, passons en au fait. Je cherchais depuis longtemps un moyen simple et fonctionnel de faire de l'h&eacute;ritage en JavaScript. Mais malgr&eacute; le nombre d'articles sur le sujet qu'on peut trouver sur Internet, aucun ne m'a jamais compl&egrave;tement satisfait.&lt;/p&gt;
+	Bref, passons en au fait. Je cherchais depuis longtemps un moyen simple et fonctionnel de faire de l'héritage en JavaScript. Mais malgré le nombre d'articles sur le sujet qu'on peut trouver sur Internet, aucun ne m'a jamais complètement satisfait.&lt;/p&gt;
 &lt;p&gt;
-	Entre les solutions qui cassent en partie le typage (instanceof qui ne r&eacute;pond que sur la classe parente ou sur la classe fille), celles qui sont tr&egrave;s lourdes (boucle sur les attributs et m&eacute;thodes du prototype), celles qui n&eacute;cessitent d'avoir du code en double (pas d'appel possible au constructeur parent) et celles qui modifient le prototype d'Object, je n'ai jamais rien trouv&eacute; qui me satisfasse.&lt;/p&gt;
+	Entre les solutions qui cassent en partie le typage (instanceof qui ne répond que sur la classe parente ou sur la classe fille), celles qui sont très lourdes (boucle sur les attributs et méthodes du prototype), celles qui nécessitent d'avoir du code en double (pas d'appel possible au constructeur parent) et celles qui modifient le prototype d'Object, je n'ai jamais rien trouvé qui me satisfasse.&lt;/p&gt;
 &lt;p&gt;
-	Mais &ccedil;a, c'&eacute;tait avant. Avant que je ne tombe sur un article tr&egrave;s r&eacute;cent (mai/juin 2013) sur le site de Mozilla, qui pr&eacute;sente &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Classical_inheritance_with_Object.create&quot;&gt;une m&eacute;thode d'h&eacute;ritage plut&ocirc;t convaincante&lt;/a&gt;, avec la m&eacute;thode Object.create.&lt;/p&gt;
+	Mais ça, c'était avant. Avant que je ne tombe sur un article très récent (mai/juin 2013) sur le site de Mozilla, qui présente &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Classical_inheritance_with_Object.create&quot;&gt;une méthode d'héritage plutôt convaincante&lt;/a&gt;, avec la méthode Object.create.&lt;/p&gt;
 &lt;p&gt;
-	L'appel au constructeur parent est possible, on peut utiliser instanceof sur la classe m&egrave;re et la classe fille, et le code semble assez performant.&lt;/p&gt;
+	L'appel au constructeur parent est possible, on peut utiliser instanceof sur la classe mère et la classe fille, et le code semble assez performant.&lt;/p&gt;
 &lt;p&gt;
-	Si votre d&eacute;veloppement cible tous les navigateurs, m&ecirc;me les plus anciens (ce qui n'est pas mon cas), pensez bien a inclure le &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Polyfill&quot;&gt;polyfill propos&eacute; par Mozilla&lt;/a&gt;.&lt;/p&gt;
+	Si votre développement cible tous les navigateurs, même les plus anciens (ce qui n'est pas mon cas), pensez bien a inclure le &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Polyfill&quot;&gt;polyfill proposé par Mozilla&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;
-	Il y a cependant deux petits d&eacute;fauts qui me g&ecirc;naient :&lt;/p&gt;
+	Il y a cependant deux petits défauts qui me gênaient :&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		Il faut faire appel au constructeur parent par le nom de la classe parente. Ca me d&eacute;range car j'ai l'habitude de r&eacute;duire la redondance au minimum, quitte &agrave; pousser le langage jusque dans ses retranchements. Et avoir deux fois le nom de la classe parente dans ma d&eacute;claration, ca ne me convient pas.&lt;/li&gt;
+		Il faut faire appel au constructeur parent par le nom de la classe parente. Ca me dérange car j'ai l'habitude de réduire la redondance au minimum, quitte à pousser le langage jusque dans ses retranchements. Et avoir deux fois le nom de la classe parente dans ma déclaration, ca ne me convient pas.&lt;/li&gt;
 	&lt;li&gt;
-		Le code n'est pas tr&egrave;s intuitif et est assez lourd &agrave; &eacute;crire quand on veut faire un h&eacute;ritage.&lt;/li&gt;
+		Le code n'est pas très intuitif et est assez lourd à écrire quand on veut faire un héritage.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;
-	J'ai donc &eacute;labor&eacute; la modeste fonction suivante, qui r&eacute;pond &agrave; tous mes crit&egrave;res :&lt;/p&gt;
+	J'ai donc élaboré la modeste fonction suivante, qui répond à tous mes critères :&lt;/p&gt;
 &lt;pre class=&quot;brush:jscript;&quot;&gt;
 Function.prototype.extend = function(Parent) {
     this.prototype = Object.create(Parent.prototype);
@@ -531,23 +531,23 @@ Function.prototype.extend = function(Parent) {
 	Et un rapide exemple d'utilisation :&lt;/p&gt;
 &lt;pre class=&quot;brush:jscript;&quot;&gt;
 /**
- * D&eacute;finit un v&eacute;hicule &eacute;quip&eacute; de roues
- * @param int Le nombre de roues du v&eacute;hicule
+ * Définit un véhicule équipé de roues
+ * @param int Le nombre de roues du véhicule
  */
 var VehiculeRoulant = function(nombreRoues) {
 	this._nombreRoues = nombreRoues;
 };
 
 /**
- * @return int Le nombre de roues du v&eacute;hicule
+ * @return int Le nombre de roues du véhicule
  */
 VehiculeRoulant.prototype.getNombreRoues = function() {
 	return this._nombreRoues;
 };
 
 /**
- * D&eacute;finit une Moto, qui h&eacute;rite de VehiculeRoulant
- * @param boolean true si le v&eacute;hicule est &eacute;quip&eacute; d'un side-car
+ * Définit une Moto, qui hérite de VehiculeRoulant
+ * @param boolean true si le véhicule est équipé d'un side-car
  */
 var Moto = function(hasSideCar) {
 	this.hasSideCar = hasSideCar;
@@ -559,33 +559,33 @@ Moto.extend(VehiculeRoulant);
 Moto.prototype.toString = function() {
 	var r = &quot;Je suis une moto avec &quot; + this.getNombreRoues() + &quot; roues&quot;;
 	if(this.hasSideCar) {
-		r += &quot; (car &eacute;quip&eacute;e d'un side-car)&quot;;
+		r += &quot; (car équipée d'un side-car)&quot;;
 	}
 	r += &quot;.&quot;;
 	
 	return r;
 };
 
-alert(new Moto(true));  // Je suis une moto avec 3 roues (car &eacute;quip&eacute;e d'un side-car).
+alert(new Moto(true));  // Je suis une moto avec 3 roues (car équipée d'un side-car).
 alert(new Moto(false)); // Je suis une moto avec 2 roues.
 &lt;/pre&gt;
 &lt;p&gt;
 	&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;
-	En r&eacute;sum&eacute;, vous pouvez faire un h&eacute;ritage comme ceci :&lt;/p&gt;
+	En résumé, vous pouvez faire un héritage comme ceci :&lt;/p&gt;
 &lt;pre class=&quot;brush:jscript;&quot;&gt;
 var Fille = function(/*bla*/) { /*blabla*/ };
 Fille.extend(Mere);&lt;/pre&gt;
 &lt;p&gt;
 	Et faire appel au constructeur parent via :&lt;/p&gt;
 &lt;pre class=&quot;brush:jscript;&quot;&gt;
-this.parent(/* arguments &agrave; passer au parent */);&lt;/pre&gt;
+this.parent(/* arguments à passer au parent */);&lt;/pre&gt;
 &lt;p&gt;
-	Le seul d&eacute;faut restant, c'est qu'on ne peut pas &eacute;tendre une m&eacute;thode parente. On est oblig&eacute; de l'&eacute;craser ou de contourner le probl&egrave;me. Je n'ai pas trouv&eacute; de solution propre pour le faire.&lt;/p&gt;
+	Le seul défaut restant, c'est qu'on ne peut pas étendre une méthode parente. On est obligé de l'écraser ou de contourner le problème. Je n'ai pas trouvé de solution propre pour le faire.&lt;/p&gt;
 &lt;p&gt;
-	Au niveau du code en lui-m&ecirc;me, je ne modifie pas Object, mais Function. Du coup, quand vous utiliserez un simple objet comme tableau associatif, vous n'aurez pas d'attribut parasite. Par contre, si vous voulez boucler sur les attributs d'une instance d'une classe (Function), il y en aura (mais vous ne devriez pas avoir besoin de le faire si vous d&eacute;veloppez proprement ;) ), auquel cas il faudra suivre les recommandations en utilisant hasOwnProperty.&lt;/p&gt;
+	Au niveau du code en lui-même, je ne modifie pas Object, mais Function. Du coup, quand vous utiliserez un simple objet comme tableau associatif, vous n'aurez pas d'attribut parasite. Par contre, si vous voulez boucler sur les attributs d'une instance d'une classe (Function), il y en aura (mais vous ne devriez pas avoir besoin de le faire si vous développez proprement ;) ), auquel cas il faudra suivre les recommandations en utilisant hasOwnProperty.&lt;/p&gt;
 &lt;p&gt;
-	En esp&eacute;rant que ca soit utile &agrave; quelqu'un ! Sentez vous libre de r&eacute;utiliser ma fonction o&ugrave; vous voulez et sans restrictions, mais si vous pouvez mettre un lien vers cette page en commentaire de la fonction, j'appr&eacute;cierais.&lt;/p&gt;
+	En espérant que ca soit utile à quelqu'un ! Sentez vous libre de réutiliser ma fonction où vous voulez et sans restrictions, mais si vous pouvez mettre un lien vers cette page en commentaire de la fonction, j'apprécierais.&lt;/p&gt;
 </description>
 				<pubDate>2013-06-29T13:15:00</pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
@@ -594,41 +594,41 @@ this.parent(/* arguments &agrave; passer au parent */);&lt;/pre&gt;
 				<title>Déplacements totalement libres en WebGL</title>
 				<link>http://www.sebastien-caparros.name/faire-un-deplacement-totalement-libre-en-webgl.html</link>
 				<guid>http://www.sebastien-caparros.name/faire-un-deplacement-totalement-libre-en-webgl.html</guid>
-				<description>&lt;time datetime=&quot;2013-02-27T18:31:00&quot;&gt;Le 27/02/2013 &agrave; 18:31:00&lt;/time&gt;
-&lt;h1&gt;D&eacute;placements totalement libres en WebGL&lt;/h1&gt;
+				<description>&lt;time datetime=&quot;2013-02-27T18:31:00&quot;&gt;Le 27/02/2013 à 18:31:00&lt;/time&gt;
+&lt;h1&gt;Déplacements totalement libres en WebGL&lt;/h1&gt;
 
 &lt;p&gt;
-	Ces derniers temps, j'ai beaucoup appris en me frottant au WebGL. Je me suis aussi beaucoup pris la t&ecirc;te, mais j'ai r&eacute;ussi la premi&egrave;re chose que je souhaitais r&eacute;aliser avec : faire en sorte qu'on puisse se d&eacute;placer et tourner autour de soi de mani&egrave;re totalement libre et sur tous les axes. Le tout en vue &agrave; la premi&egrave;re personne. L'int&eacute;r&ecirc;t de &ccedil;a, vous l'aurez peut-&ecirc;tre compris, c'est de pouvoir se d&eacute;placer comme dans l'espace ...&lt;/p&gt;
+	Ces derniers temps, j'ai beaucoup appris en me frottant au WebGL. Je me suis aussi beaucoup pris la tête, mais j'ai réussi la première chose que je souhaitais réaliser avec : faire en sorte qu'on puisse se déplacer et tourner autour de soi de manière totalement libre et sur tous les axes. Le tout en vue à la première personne. L'intérêt de ça, vous l'aurez peut-être compris, c'est de pouvoir se déplacer comme dans l'espace ...&lt;/p&gt;
 &lt;p&gt;
-	La premi&egrave;re chose que j'ai faite en me lan&ccedil;ant dans le WebGL, c'est aller lire les rares tutos qu'on trouve sur Internet.&lt;/p&gt;
+	La première chose que j'ai faite en me lançant dans le WebGL, c'est aller lire les rares tutos qu'on trouve sur Internet.&lt;/p&gt;
 &lt;p&gt;
-	J'ai commenc&eacute; par celui qu'on trouve sur &lt;a href=&quot;http://learningwebgl.com/blog/?p=28&quot;&gt;learningwebgl.com&lt;/a&gt;, qui avait l'air assez complet. Sauf que :&lt;/p&gt;
+	J'ai commencé par celui qu'on trouve sur &lt;a href=&quot;http://learningwebgl.com/blog/?p=28&quot;&gt;learningwebgl.com&lt;/a&gt;, qui avait l'air assez complet. Sauf que :&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		Le code qui y est pr&eacute;sent&eacute; n'est absolument pas structur&eacute; (tout est fait &agrave; base de fonctions et &agrave; coup de dizaines de variables globales)&lt;/li&gt;
+		Le code qui y est présenté n'est absolument pas structuré (tout est fait à base de fonctions et à coup de dizaines de variables globales)&lt;/li&gt;
 	&lt;li&gt;
-		Le code qui est expliqu&eacute; dans le tutoriel n'est pas &agrave; jour avec ce qui est dans la d&eacute;mo.&lt;/li&gt;
+		Le code qui est expliqué dans le tutoriel n'est pas à jour avec ce qui est dans la démo.&lt;/li&gt;
 	&lt;li&gt;
-		Quand on essaye de suivre le tuto en parall&egrave;le de la r&eacute;daction du code, on se rend compte que c'est tr&egrave;s mal expliqu&eacute; ou encore qu'on ne sait pas o&ugrave; va telle ou telle ligne. Il manque aussi r&eacute;guli&egrave;rement des petits bouts de code, comme des d&eacute;clarations de variables globales. C'est tr&egrave;s frustrant parce qu'on est oblig&eacute; de se concentrer sur la forme plut&ocirc;t que sur le fond, et on perd trop r&eacute;guli&egrave;rement le fil.&lt;/li&gt;
+		Quand on essaye de suivre le tuto en parallèle de la rédaction du code, on se rend compte que c'est très mal expliqué ou encore qu'on ne sait pas où va telle ou telle ligne. Il manque aussi régulièrement des petits bouts de code, comme des déclarations de variables globales. C'est très frustrant parce qu'on est obligé de se concentrer sur la forme plutôt que sur le fond, et on perd trop régulièrement le fil.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;
-	J'ai donc d&eacute;cid&eacute; de chercher un tutoriel de meilleure qualit&eacute;, et je suis tomb&eacute; sur le site de &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/WebGL/Getting_started_with_WebGL&quot;&gt;Mozilla&lt;/a&gt;. Il ressemble de tr&egrave;s pr&egrave;s au pr&eacute;c&eacute;dent (trop pour que ce soit une co&iuml;ncidence), tout en corrigeant beaucoup de ses d&eacute;fauts. Il n'est pas parfait, mais si vous cherchez &agrave; apprendre le WebGL depuis le d&eacute;but, je vous recommande celui-ci.&lt;/p&gt;
+	J'ai donc décidé de chercher un tutoriel de meilleure qualité, et je suis tombé sur le site de &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/WebGL/Getting_started_with_WebGL&quot;&gt;Mozilla&lt;/a&gt;. Il ressemble de très près au précédent (trop pour que ce soit une coïncidence), tout en corrigeant beaucoup de ses défauts. Il n'est pas parfait, mais si vous cherchez à apprendre le WebGL depuis le début, je vous recommande celui-ci.&lt;/p&gt;
 &lt;p&gt;
-	Je n'ai pas suivi tout le tutoriel, car j'ai rapidement compris le fonctionnement, ce qui m'a permis de m'en &eacute;loigner (tout en prenant leur code comme base). J'en ai profit&eacute; pour r&eacute;organiser et restructurer correctement mon code, chose qui n'est toujours pas termin&eacute;e.&lt;/p&gt;
+	Je n'ai pas suivi tout le tutoriel, car j'ai rapidement compris le fonctionnement, ce qui m'a permis de m'en éloigner (tout en prenant leur code comme base). J'en ai profité pour réorganiser et restructurer correctement mon code, chose qui n'est toujours pas terminée.&lt;/p&gt;
 &lt;p&gt;
-	L'&eacute;tape suivante, relativement int&eacute;ressante, a consist&eacute; &agrave; d&eacute;terrer de ma m&eacute;moire les cours de Maths de ma premi&egrave;re ann&eacute;e de DUT, sur les calculs matriciels (j'ai enfin trouv&eacute; une utilit&eacute; concr&egrave;te, c'est plus motivant que de la th&eacute;orie pure !). Globalement, je m'y suis retrouv&eacute; assez facilement puisque je ne suis pas trop rentr&eacute; dans le d&eacute;tail.&lt;/p&gt;
+	L'étape suivante, relativement intéressante, a consisté à déterrer de ma mémoire les cours de Maths de ma première année de DUT, sur les calculs matriciels (j'ai enfin trouvé une utilité concrète, c'est plus motivant que de la théorie pure !). Globalement, je m'y suis retrouvé assez facilement puisque je ne suis pas trop rentré dans le détail.&lt;/p&gt;
 &lt;p&gt;
-	D'ailleurs, le plus simple pour &ccedil;a, c'est d'utiliser une API qui fournit toutes les op&eacute;rations de base. Parmi les plus populaires, on retrouve Sylvester, EWGL, mjs ou glMatrix. C'est sur cette derni&egrave;re que mon choix s'est port&eacute;. Son API est un peu d&eacute;routante au d&eacute;but, mais elle est tr&egrave;s compl&egrave;te et efficace. Je crois d'ailleurs qu'elle est recommand&eacute;e par les tutos cit&eacute;s plus haut (Attention : les d&eacute;mos ne sont pas du tout &agrave; jour et il y a eu beaucoup de changements, donc privil&eacute;giez la version t&eacute;l&eacute;chargeable sur le &lt;a href=&quot;http://glmatrix.net/&quot;&gt;site officiel&lt;/a&gt;).&lt;/p&gt;
+	D'ailleurs, le plus simple pour ça, c'est d'utiliser une API qui fournit toutes les opérations de base. Parmi les plus populaires, on retrouve Sylvester, EWGL, mjs ou glMatrix. C'est sur cette dernière que mon choix s'est porté. Son API est un peu déroutante au début, mais elle est très complète et efficace. Je crois d'ailleurs qu'elle est recommandée par les tutos cités plus haut (Attention : les démos ne sont pas du tout à jour et il y a eu beaucoup de changements, donc privilégiez la version téléchargeable sur le &lt;a href=&quot;http://glmatrix.net/&quot;&gt;site officiel&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;
-	L&agrave; o&ugrave; j'ai le plus gal&eacute;r&eacute; au final, c'est pour r&eacute;ussir la rotation sur trois axes. C'est principalement un probl&egrave;me algorithmique, mais malheureusement on trouve surtout de la documentation tr&egrave;s th&eacute;orique et peu de concret. Je suis aussi rest&eacute; longtemps bloqu&eacute; sur un probl&egrave;me dit de &quot;blocage de cardan&quot;, ou Gimbal Lock. D'autre part, le WebGL est encore tr&egrave;s r&eacute;cent, et la documentation tr&egrave;s rare. C'est pour ca que je vous conseille de faire vos recherches sur l'OpenGL plut&ocirc;t que le WebGL, les deux APIs &eacute;tant de toute mani&egrave;re identiques.&lt;/p&gt;
+	Là où j'ai le plus galéré au final, c'est pour réussir la rotation sur trois axes. C'est principalement un problème algorithmique, mais malheureusement on trouve surtout de la documentation très théorique et peu de concret. Je suis aussi resté longtemps bloqué sur un problème dit de &quot;blocage de cardan&quot;, ou Gimbal Lock. D'autre part, le WebGL est encore très récent, et la documentation très rare. C'est pour ca que je vous conseille de faire vos recherches sur l'OpenGL plutôt que le WebGL, les deux APIs étant de toute manière identiques.&lt;/p&gt;
 &lt;p&gt;
-	La plupart de la documentation qu'on peut trouver consiste &agrave; &eacute;crire soi m&ecirc;mes les formules de rotations et translations. En r&eacute;alit&eacute;, tout peut se faire directement avec glMatrix : un vecteur qui d&eacute;termine la position de la cam&eacute;ra, et un quaternion qui d&eacute;termine l'angle de vue. C'est l&agrave; que j'ai test&eacute; un nombre incalculable de codes diff&eacute;rents, jusqu'&agrave; ce que je tombe sur un post soulignant une information cl&eacute; : En OpenGL, la cam&eacute;ra ne bouge pas. C'est le monde qui bouge et tourne autour de la cam&eacute;ra pour donner l'illusion d'un mouvement. Il suffisait donc simplement d'inverser la rotation (au sens math&eacute;matique du terme), puis de combiner la matrice et le quaternion correctement.&lt;/p&gt;
+	La plupart de la documentation qu'on peut trouver consiste à écrire soi mêmes les formules de rotations et translations. En réalité, tout peut se faire directement avec glMatrix : un vecteur qui détermine la position de la caméra, et un quaternion qui détermine l'angle de vue. C'est là que j'ai testé un nombre incalculable de codes différents, jusqu'à ce que je tombe sur un post soulignant une information clé : En OpenGL, la caméra ne bouge pas. C'est le monde qui bouge et tourne autour de la caméra pour donner l'illusion d'un mouvement. Il suffisait donc simplement d'inverser la rotation (au sens mathématique du terme), puis de combiner la matrice et le quaternion correctement.&lt;/p&gt;
 &lt;p&gt;
-	Plus concr&egrave;tement, dans ma gestion du clavier, je renvoie un vecteur contenant trois valeurs (le mouvement sur trois axes), le d&eacute;placement se faisant &agrave; l'aide des fl&egrave;ches (pour avancer, reculer et faire des pas lat&eacute;raux) et des touches page haut et page bas (pour monter ou descendre). Le vecteur en question se nomme moveSpeed.&lt;/p&gt;
+	Plus concrètement, dans ma gestion du clavier, je renvoie un vecteur contenant trois valeurs (le mouvement sur trois axes), le déplacement se faisant à l'aide des flèches (pour avancer, reculer et faire des pas latéraux) et des touches page haut et page bas (pour monter ou descendre). Le vecteur en question se nomme moveSpeed.&lt;/p&gt;
 &lt;p&gt;
-	Du c&ocirc;t&eacute; de la souris, c'est tr&egrave;s similaire avec un vecteur de rotation nomm&eacute; rotationRate. La rotation en X et Y se fait comme dans un FPS, et la rotation Z se fait en maintenant la roulette enfonc&eacute;e.&lt;/p&gt;
+	Du côté de la souris, c'est très similaire avec un vecteur de rotation nommé rotationRate. La rotation en X et Y se fait comme dans un FPS, et la rotation Z se fait en maintenant la roulette enfoncée.&lt;/p&gt;
 &lt;p&gt;
-	Dans ma fonction &quot;animate&quot; (d&eacute;clench&eacute;e &agrave; chaque frame, ce que je compte am&eacute;liorer via un WebWorker), je calcule les d&eacute;placements de cette mani&egrave;re (la variable elapsed repr&eacute;sente le temps pass&eacute; depuis la derni&egrave;re frame) :&lt;/p&gt;
+	Dans ma fonction &quot;animate&quot; (déclenchée à chaque frame, ce que je compte améliorer via un WebWorker), je calcule les déplacements de cette manière (la variable elapsed représente le temps passé depuis la dernière frame) :&lt;/p&gt;
 &lt;pre class=&quot;brush:jscript;&quot;&gt;
 var moveDistance = vec3.fromValues(
 	moveSpeed[0] * elapsed,
@@ -638,9 +638,9 @@ var moveDistance = vec3.fromValues(
 vec3.transformQuat(moveDistance, moveDistance, rotation);
 vec3.subtract(position, position, moveDistance);&lt;/pre&gt;
 &lt;p&gt;
-	La premi&egrave;re et la troisi&egrave;me ligne sont relativement simples &agrave; comprendre. La seconde (c'est l&agrave; que glMatrix entre en jeu) consiste tout simplement &agrave; calculer le d&eacute;placement absolu (par rapport au point d'origine de &quot;l'univers&quot;) induit par le d&eacute;placement demand&eacute;, en fonction de l'angle de vue courant (ce qui veut dire que si je regarde vers la droite par rapport au point d'origine, je dois avancer face &agrave; moi quand j'appuie sur la fl&egrave;che du haut, et non pas vers la gauche).&lt;/p&gt;
+	La première et la troisième ligne sont relativement simples à comprendre. La seconde (c'est là que glMatrix entre en jeu) consiste tout simplement à calculer le déplacement absolu (par rapport au point d'origine de &quot;l'univers&quot;) induit par le déplacement demandé, en fonction de l'angle de vue courant (ce qui veut dire que si je regarde vers la droite par rapport au point d'origine, je dois avancer face à moi quand j'appuie sur la flèche du haut, et non pas vers la gauche).&lt;/p&gt;
 &lt;p&gt;
-	Du c&ocirc;t&eacute; de la rotation c'est tout aussi simple puisque je demande simplement &agrave; glMatrix d'appliquer mon vecteur de rotation &agrave; la rotation absolue. Ensuite, je convertis mon quaternion en matrice afin de pouvoir l'inverser.&lt;/p&gt;
+	Du côté de la rotation c'est tout aussi simple puisque je demande simplement à glMatrix d'appliquer mon vecteur de rotation à la rotation absolue. Ensuite, je convertis mon quaternion en matrice afin de pouvoir l'inverser.&lt;/p&gt;
 &lt;pre class=&quot;brush:jscript;&quot;&gt;
 quat.rotateX(rotation, rotation, degToRad(rotationRate[0] * elapsed));
 quat.rotateY(rotation, rotation, degToRad(rotationRate[1] * elapsed));
@@ -649,7 +649,7 @@ quat.rotateZ(rotation, rotation, degToRad(rotationRate[2] * elapsed));
 mat4.fromQuat(invertedRotation, rotation);
 mat4.invert(invertedRotation, invertedRotation);&lt;/pre&gt;
 &lt;p&gt;
-	Il ne reste plus qu'a combiner correctement tous ces &eacute;l&eacute;ments dans ma fonction de dessin (drawScene) :&lt;/p&gt;
+	Il ne reste plus qu'a combiner correctement tous ces éléments dans ma fonction de dessin (drawScene) :&lt;/p&gt;
 &lt;pre class=&quot;brush:jscript;&quot;&gt;
 var mvMatrix = mat4.create();
 
@@ -657,7 +657,7 @@ mat4.identity(mvMatrix);
 mat4.multiply(mvMatrix, mvMatrix, invertedRotation);
 mat4.translate(mvMatrix, mvMatrix, position);&lt;/pre&gt;
 &lt;p&gt;
-	Voil&agrave; voil&agrave; ... Je tenais &agrave; partager ce bout de code au cas o&ugrave; &ccedil;a pourrait servir &agrave; quelqu'un, parce que la documentation se fait rare quand on cherche &agrave; mettre en place un tel d&eacute;placement. Dans l'imm&eacute;diat, je suis en train de r&eacute;organiser le code (c'est donc le bon moment pour le partager, puisque actuellement il ressemble encore beaucoup au tuto). J'essayerais de publier une vid&eacute;o d&egrave;s que j'aurais un peu plus de contenu dans mon monde (pour le moment il n'y a qu'un cube avec une texture ...).&lt;/p&gt;
+	Voilà voilà ... Je tenais à partager ce bout de code au cas où ça pourrait servir à quelqu'un, parce que la documentation se fait rare quand on cherche à mettre en place un tel déplacement. Dans l'immédiat, je suis en train de réorganiser le code (c'est donc le bon moment pour le partager, puisque actuellement il ressemble encore beaucoup au tuto). J'essayerais de publier une vidéo dès que j'aurais un peu plus de contenu dans mon monde (pour le moment il n'y a qu'un cube avec une texture ...).&lt;/p&gt;
 </description>
 				<pubDate>2013-02-27T18:31:00</pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
@@ -666,25 +666,25 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/pre&gt;
 				<title>Publication sources du jeu multijoueurs</title>
 				<link>http://www.sebastien-caparros.name/publication-sources-du-jeu-multijoueurs.html</link>
 				<guid>http://www.sebastien-caparros.name/publication-sources-du-jeu-multijoueurs.html</guid>
-				<description>&lt;time datetime=&quot;2013-02-10T12:33:00&quot;&gt;Le 10/02/2013 &agrave; 12:33:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2013-02-10T12:33:00&quot;&gt;Le 10/02/2013 à 12:33:00&lt;/time&gt;
 &lt;h1&gt;Publication sources du jeu multijoueurs&lt;/h1&gt;
 
 &lt;p&gt;
-	Ca fait un moment que je n'y ai pas touch&eacute;, et &agrave; vrai dire, il est abandonn&eacute; vu que je suis sur tout autre chose.&lt;/p&gt;
+	Ca fait un moment que je n'y ai pas touché, et à vrai dire, il est abandonné vu que je suis sur tout autre chose.&lt;/p&gt;
 &lt;p&gt;
-	Du coup, plut&ocirc;t que de le laisser moisir au fin fond d'un disque dur, je publie les sources, en esp&eacute;rant que ca puisse &ecirc;tre utile &agrave; quelqu'un ...&lt;/p&gt;
+	Du coup, plutôt que de le laisser moisir au fin fond d'un disque dur, je publie les sources, en espérant que ca puisse être utile à quelqu'un ...&lt;/p&gt;
 &lt;p&gt;
-	Je le publie sous licence GPL (v3), avec les fichiers du projet Netbeans d&eacute;j&agrave; configur&eacute;.&lt;/p&gt;
+	Je le publie sous licence GPL (v3), avec les fichiers du projet Netbeans déjà configuré.&lt;/p&gt;
 &lt;p&gt;
-	Il suffit de lancer le fichier src/Main.java pour d&eacute;marrer le c&ocirc;t&eacute; serveur. Ensuite, on peut y acc&eacute;der via un navigateur sur http://localhost:12345/. Le port peut &ecirc;tre configur&eacute; dans le fichier config.ini.&lt;/p&gt;
+	Il suffit de lancer le fichier src/Main.java pour démarrer le côté serveur. Ensuite, on peut y accéder via un navigateur sur http://localhost:12345/. Le port peut être configuré dans le fichier config.ini.&lt;/p&gt;
 &lt;p&gt;
 	Vous trouverez les sources &lt;u&gt;&lt;a href=&quot;documents/Jeu_JS.zip&quot;&gt;ici&lt;/a&gt;&lt;/u&gt;.&lt;/p&gt;
 &lt;p&gt;
 	&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;
-	A part ca, je me suis mis &agrave; tester WebGL, et je dois dire que c'est assez int&eacute;r&eacute;ssant car j'apprend beaucoup de choses, m&ecirc;me si je m'arrache souvent les cheveux pour les comprendre. J'ai &eacute;galement d&eacute;cid&eacute; de me mettre au langage Ruby, qui me servira pour le c&ocirc;t&eacute; serveur.&lt;/p&gt;
+	A part ca, je me suis mis à tester WebGL, et je dois dire que c'est assez intéréssant car j'apprend beaucoup de choses, même si je m'arrache souvent les cheveux pour les comprendre. J'ai également décidé de me mettre au langage Ruby, qui me servira pour le côté serveur.&lt;/p&gt;
 &lt;p&gt;
-	J'essayerais de publier des articles l&agrave; dessus.&lt;/p&gt;
+	J'essayerais de publier des articles là dessus.&lt;/p&gt;
 </description>
 				<pubDate>2013-02-10T12:33:00</pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
@@ -693,17 +693,17 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/pre&gt;
 				<title>Joyeuses fêtes</title>
 				<link>http://www.sebastien-caparros.name/joyeuses-fetes.html</link>
 				<guid>http://www.sebastien-caparros.name/joyeuses-fetes.html</guid>
-				<description>&lt;time datetime=&quot;2012-12-27T11:41:00&quot;&gt;Le 27/12/2012 &agrave; 11:41:00&lt;/time&gt;
-&lt;h1&gt;Joyeuses f&ecirc;tes&lt;/h1&gt;
+				<description>&lt;time datetime=&quot;2012-12-27T11:41:00&quot;&gt;Le 27/12/2012 à 11:41:00&lt;/time&gt;
+&lt;h1&gt;Joyeuses fêtes&lt;/h1&gt;
 
 &lt;p&gt;
-	Avec un peu de retard, je vous souhaite de joyeuses f&ecirc;tes !&lt;/p&gt;
+	Avec un peu de retard, je vous souhaite de joyeuses fêtes !&lt;/p&gt;
 &lt;p&gt;
-	Ca fait un moment que je n'ai pas fait d'article. Non, le blog n'est pas abandonn&eacute;, c'est juste que je n'ai pas grand chose &agrave; dire.&lt;/p&gt;
+	Ca fait un moment que je n'ai pas fait d'article. Non, le blog n'est pas abandonné, c'est juste que je n'ai pas grand chose à dire.&lt;/p&gt;
 &lt;p&gt;
-	Pour &ecirc;tre honn&ecirc;te, je suis en train de bosser sur la r&eacute;daction d'un dossier pour un jeu tr&egrave;s ambitieux, mais je ne souhaite pas trop m'&eacute;tendre dessus pour le moment. Tout ce que je peux dire, c'est que ca sera un &lt;strike&gt;monde&lt;/strike&gt; univers totalement ouvert et &acirc;x&eacute; sur le d&eacute;veloppement d'un vaisseau spatial.&lt;/p&gt;
+	Pour être honnête, je suis en train de bosser sur la rédaction d'un dossier pour un jeu très ambitieux, mais je ne souhaite pas trop m'étendre dessus pour le moment. Tout ce que je peux dire, c'est que ca sera un &lt;strike&gt;monde&lt;/strike&gt; univers totalement ouvert et âxé sur le développement d'un vaisseau spatial.&lt;/p&gt;
 &lt;p&gt;
-	Je ne sais pas si ca aboutira r&eacute;ellement cette fois-ci non plus, mais c'est un sujet passionnant et qui m'amuse beaucoup. C'est le principal.&lt;/p&gt;
+	Je ne sais pas si ca aboutira réellement cette fois-ci non plus, mais c'est un sujet passionnant et qui m'amuse beaucoup. C'est le principal.&lt;/p&gt;
 </description>
 				<pubDate>2012-12-27T11:41:00</pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
@@ -712,23 +712,23 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/pre&gt;
 				<title>Retour sur jMonkeyEngine</title>
 				<link>http://www.sebastien-caparros.name/retour-sur-jmonkeyengine.html</link>
 				<guid>http://www.sebastien-caparros.name/retour-sur-jmonkeyengine.html</guid>
-				<description>&lt;time datetime=&quot;2012-10-07T18:40:00&quot;&gt;Le 07/10/2012 &agrave; 18:40:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2012-10-07T18:40:00&quot;&gt;Le 07/10/2012 à 18:40:00&lt;/time&gt;
 &lt;h1&gt;Retour sur jMonkeyEngine&lt;/h1&gt;
 
 &lt;p&gt;
-	Il y a maintenant quelques ann&eacute;es, je m'&eacute;tais essay&eacute; &agrave; la 3D. J'avais opt&eacute; pour le moteur jMonkeyEngine (en Java), qui est puissant et int&egrave;gre notamment un moteur physique.&lt;/p&gt;
+	Il y a maintenant quelques années, je m'étais essayé à la 3D. J'avais opté pour le moteur jMonkeyEngine (en Java), qui est puissant et intègre notamment un moteur physique.&lt;/p&gt;
 &lt;p&gt;
-	Je m'y &eacute;tais int&eacute;r&eacute;ss&eacute; avant tout pour m'amuser. J'avais donc commenc&eacute; &agrave; suivre les tutos officiels et &agrave; les combiner &agrave; des scripts partag&eacute;s par la communaut&eacute;. J'avais obtenu un r&eacute;sultat sympathique, mais pas du tout gratifiant puisque je n'avais pas fait grand chose pour y arriver (sans compter le fait que n'ayant pas du tout certaines connaissances de bases en 3D, je ne comprenais pas la moiti&eacute; du code copi&eacute;-coll&eacute;), et j'avais fini par laisser tomber.&lt;/p&gt;
+	Je m'y étais intéréssé avant tout pour m'amuser. J'avais donc commencé à suivre les tutos officiels et à les combiner à des scripts partagés par la communauté. J'avais obtenu un résultat sympathique, mais pas du tout gratifiant puisque je n'avais pas fait grand chose pour y arriver (sans compter le fait que n'ayant pas du tout certaines connaissances de bases en 3D, je ne comprenais pas la moitié du code copié-collé), et j'avais fini par laisser tomber.&lt;/p&gt;
 &lt;p&gt;
-	Voici quelques copies d'&eacute;cran :&lt;/p&gt;
+	Voici quelques copies d'écran :&lt;/p&gt;
 &lt;p style=&quot;text-align: center;&quot;&gt;
-	&lt;a href=&quot;images/jmonkeyengine/Capture-2.png&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Aper&ccedil;u 1 de jMonkeyEngine&quot; src=&quot;images/jmonkeyengine/Capture-2.png&quot; style=&quot;width: 480px; height: 374px;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+	&lt;a href=&quot;images/jmonkeyengine/Capture-2.png&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Aperçu 1 de jMonkeyEngine&quot; src=&quot;images/jmonkeyengine/Capture-2.png&quot; style=&quot;width: 480px; height: 374px;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot;text-align: center;&quot;&gt;
-	&lt;a href=&quot;images/jmonkeyengine/Capture-1.png&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Aper&ccedil;u 2 de jMonkeyEngine&quot; src=&quot;images/jmonkeyengine/Capture-1.png&quot; style=&quot;width: 480px; height: 377px;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+	&lt;a href=&quot;images/jmonkeyengine/Capture-1.png&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Aperçu 2 de jMonkeyEngine&quot; src=&quot;images/jmonkeyengine/Capture-1.png&quot; style=&quot;width: 480px; height: 377px;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot;text-align: center;&quot;&gt;
-	&lt;a href=&quot;images/jmonkeyengine/Capture.png&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Aper&ccedil;u 3 de jMonkeyEngine&quot; src=&quot;images/jmonkeyengine/Capture.png&quot; style=&quot;width: 480px; height: 375px;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+	&lt;a href=&quot;images/jmonkeyengine/Capture.png&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Aperçu 3 de jMonkeyEngine&quot; src=&quot;images/jmonkeyengine/Capture.png&quot; style=&quot;width: 480px; height: 375px;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;
-	La 3D &eacute;tant quand m&ecirc;me un domaine tr&egrave;s int&eacute;r&eacute;ssant, j'ai quand m&ecirc;me fini par m'y remettre il y a quelques jours. Cette fois-ci, je commence par les bases et j'ai pour objectif de me familiariser directement avec WebGL.&lt;/p&gt;
+	La 3D étant quand même un domaine très intéréssant, j'ai quand même fini par m'y remettre il y a quelques jours. Cette fois-ci, je commence par les bases et j'ai pour objectif de me familiariser directement avec WebGL.&lt;/p&gt;
 </description>
 				<pubDate>2012-10-07T18:40:00</pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
@@ -737,13 +737,13 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/pre&gt;
 				<title>Expérimentation d'un moteur de particules</title>
 				<link>http://www.sebastien-caparros.name/experimentation-moteur-particules.html</link>
 				<guid>http://www.sebastien-caparros.name/experimentation-moteur-particules.html</guid>
-				<description>&lt;time datetime=&quot;2012-09-29T15:55:00&quot;&gt;Le 29/09/2012 &agrave; 15:55:00&lt;/time&gt;
-&lt;h1&gt;Exp&eacute;rimentation d'un moteur de particules&lt;/h1&gt;
+				<description>&lt;time datetime=&quot;2012-09-29T15:55:00&quot;&gt;Le 29/09/2012 à 15:55:00&lt;/time&gt;
+&lt;h1&gt;Expérimentation d'un moteur de particules&lt;/h1&gt;
 
 &lt;p&gt;
-	Petite vid&eacute;o pour pr&eacute;senter l'avancement du jeu et les premiers tests du moteur de particules.&lt;/p&gt;
+	Petite vidéo pour présenter l'avancement du jeu et les premiers tests du moteur de particules.&lt;/p&gt;
 &lt;p&gt;
-	Il reste quelques petits bugs au niveau de la physique, mais dans l'ensemble ca commence &agrave; marcher pas trop mal (la vid&eacute;o n'est pas tr&egrave;s fluide, mais le jeu est correct dans la r&eacute;alit&eacute;).&lt;/p&gt;
+	Il reste quelques petits bugs au niveau de la physique, mais dans l'ensemble ca commence à marcher pas trop mal (la vidéo n'est pas très fluide, mais le jeu est correct dans la réalité).&lt;/p&gt;
 &lt;p style=&quot;text-align: center;&quot;&gt;
 	&lt;iframe allowfullscreen=&quot;&quot; frameborder=&quot;0&quot; src=&quot;http://www.youtube.com/embed/PkGUlvfqktI?rel=0&quot; width=&quot;600&quot; height=&quot;380&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
 </description>
@@ -754,33 +754,33 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/pre&gt;
 				<title>Le projet du moment</title>
 				<link>http://www.sebastien-caparros.name/le-projet-du-moment.html</link>
 				<guid>http://www.sebastien-caparros.name/le-projet-du-moment.html</guid>
-				<description>&lt;time datetime=&quot;2012-09-24T01:24:00&quot;&gt;Le 24/09/2012 &agrave; 01:24:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2012-09-24T01:24:00&quot;&gt;Le 24/09/2012 à 01:24:00&lt;/time&gt;
 &lt;h1&gt;Le projet du moment&lt;/h1&gt;
 
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Depuis quelque temps maintenant, je bosse sur le d&eacute;veloppement d'un jeu multijoueurs en 2D (style plateforme).&lt;/p&gt;
+	Depuis quelque temps maintenant, je bosse sur le développement d'un jeu multijoueurs en 2D (style plateforme).&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Je n'ai encore d&eacute;fini aucun &eacute;l&eacute;ment de gameplay pr&eacute;cis, mais j'ai quelques id&eacute;es de r&eacute;alisations techniques int&eacute;r&eacute;ssantes.&lt;/p&gt;
+	Je n'ai encore défini aucun élément de gameplay précis, mais j'ai quelques idées de réalisations techniques intéréssantes.&lt;/p&gt;
 &lt;p style=&quot;text-align: center;&quot;&gt;
 	&lt;a href=&quot;images/jeu1/aspect du jeu.png&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Aspect du jeu&quot; src=&quot;images/jeu1/aspect%20du%20jeu.png&quot; style=&quot;width: 480px; height: 270px;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	C&ocirc;t&eacute; client, le jeu est d&eacute;velopp&eacute; en HTML5 pur. Le rendu est assur&eacute; par un canvas.&lt;/p&gt;
+	Côté client, le jeu est développé en HTML5 pur. Le rendu est assuré par un canvas.&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	J'ai d'ailleurs pu exp&eacute;rimenter un bon paquet de fonctionnalit&eacute;s int&eacute;r&eacute;ssantes de HTML5, comme l'API fullscreen, les diff&eacute;rentes fonctionnalit&eacute;s audio (ainsi que leurs &lt;a href=&quot;http://www.wewantogg.com/&quot;&gt;probl&egrave;mes actuels&lt;/a&gt; pour lesquels nous pouvons remercier Microsoft et Apple ...), le localStorage, la fonction requestAnimationFrame (qui permet de synchroniser la fr&eacute;quence d'affichage d'un &eacute;l&eacute;ment - Canvas par exemple - avec la fr&eacute;quence d'affichage du navigateur) et surtout les WebSockets.&lt;/p&gt;
+	J'ai d'ailleurs pu expérimenter un bon paquet de fonctionnalités intéréssantes de HTML5, comme l'API fullscreen, les différentes fonctionnalités audio (ainsi que leurs &lt;a href=&quot;http://www.wewantogg.com/&quot;&gt;problèmes actuels&lt;/a&gt; pour lesquels nous pouvons remercier Microsoft et Apple ...), le localStorage, la fonction requestAnimationFrame (qui permet de synchroniser la fréquence d'affichage d'un élément - Canvas par exemple - avec la fréquence d'affichage du navigateur) et surtout les WebSockets.&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	J'assure la compatibilit&eacute; avec l'ensemble des navigateurs &agrave; grand renfort de polyfills. Cette m&eacute;thode &agrave; l'avantage de garder des sources propres et standards et de bien s&eacute;parer le code en lui m&ecirc;me de ce qui sert &agrave; la compatibilit&eacute;. Par contre je n'ai toujours pas test&eacute; sous Safari ou IE, il faudra que je m'en occupe un jour (mais il est peu probable que je perde mon temps avec IE8).&lt;/p&gt;
+	J'assure la compatibilité avec l'ensemble des navigateurs à grand renfort de polyfills. Cette méthode à l'avantage de garder des sources propres et standards et de bien séparer le code en lui même de ce qui sert à la compatibilité. Par contre je n'ai toujours pas testé sous Safari ou IE, il faudra que je m'en occupe un jour (mais il est peu probable que je perde mon temps avec IE8).&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	La map du jeu est constitu&eacute;e de deux fichiers qui sont des images gif tout ce qu'il y a de plus standard. L'une contient la partie visible de la map (le d&eacute;cor) tandis que l'autre est son &quot;ombre&quot; en quelque sorte, qui servira a g&eacute;rer la physique. Aujourd'hui, ce second fichier contient du noir pour les parties solides, et du transparent pour le vide. En jouant sur les codes couleur, je pourrais par la suite ajouter facilement des fonctionnalit&eacute;s un peu plus pouss&eacute;es (zones qui peuvent &ecirc;tre d&eacute;truites, zones d'eau, zones mortelles ...).&lt;/p&gt;
+	La map du jeu est constituée de deux fichiers qui sont des images gif tout ce qu'il y a de plus standard. L'une contient la partie visible de la map (le décor) tandis que l'autre est son &quot;ombre&quot; en quelque sorte, qui servira a gérer la physique. Aujourd'hui, ce second fichier contient du noir pour les parties solides, et du transparent pour le vide. En jouant sur les codes couleur, je pourrais par la suite ajouter facilement des fonctionnalités un peu plus poussées (zones qui peuvent être détruites, zones d'eau, zones mortelles ...).&lt;/p&gt;
 &lt;p style=&quot;text-align: center;&quot;&gt;
 	&lt;a href=&quot;images/jeu1/scene.gif&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Partie visible de la map&quot; src=&quot;images/jeu1/scene.gif&quot; style=&quot;width: 250px;&quot; /&gt;&lt;/a&gt; &lt;a href=&quot;images/jeu1/walls.gif&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Partie invisible de la map&quot; src=&quot;images/jeu1/walls.gif&quot; style=&quot;width: 250px;&quot; /&gt;&lt;/a&gt;&lt;br /&gt;
 	&lt;span style=&quot;font-size: 10px;&quot;&gt;A gauche la partie visible de la map. A droite, celle permettant la gestion de la physique.&lt;/span&gt;&lt;br /&gt;
 	&lt;span style=&quot;font-size: 10px;&quot;&gt;(L'image n'est pas de moi, elle vient d'&lt;a href=&quot;http://opengameart.org/content/several-scrolling-backgrounds-and-layerable-runners&quot;&gt;ici&lt;/a&gt;.&lt;/span&gt;)&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	C&ocirc;t&eacute; serveur, c'est du Java. Le serveur HTTP est int&eacute;gr&eacute; dans l'application (pas besoin d'installer Apache ou autre) pour permettre notamment le chargement dynamique des deux images de la map lorsqu'un client se connecte en cours de partie (je pr&eacute;vois que le terrain puisse subir des d&eacute;g&acirc;ts). Avec un serveur externe, ca aurait &eacute;t&eacute; plus compliqu&eacute; &agrave; mettre en oeuvre.&lt;/p&gt;
+	Côté serveur, c'est du Java. Le serveur HTTP est intégré dans l'application (pas besoin d'installer Apache ou autre) pour permettre notamment le chargement dynamique des deux images de la map lorsqu'un client se connecte en cours de partie (je prévois que le terrain puisse subir des dégâts). Avec un serveur externe, ca aurait été plus compliqué à mettre en oeuvre.&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Au d&eacute;but, j'avais opt&eacute; pour un serveur HTTP tr&egrave;s simple et fait &agrave; la main, avec une librairie pour g&eacute;rer les websockets. Le probl&egrave;me de cette solution, c'est qu'il fallait occuper deux ports pour les deux serveurs (alors que le protocole websockets s'implante normalement sur HTTP), que je ne connaissait absolument pas le fonctionnement interne de la librairie, et qu'il allait falloir g&eacute;rer le multi-threading du serveur HTTP (c'&eacute;tait des sockets en java.io).&lt;/p&gt;
+	Au début, j'avais opté pour un serveur HTTP très simple et fait à la main, avec une librairie pour gérer les websockets. Le problème de cette solution, c'est qu'il fallait occuper deux ports pour les deux serveurs (alors que le protocole websockets s'implante normalement sur HTTP), que je ne connaissait absolument pas le fonctionnement interne de la librairie, et qu'il allait falloir gérer le multi-threading du serveur HTTP (c'était des sockets en java.io).&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Apr&egrave;s quelques prises de t&ecirc;te avec java.nio (qui peut faire des sockets de mani&egrave;re asynchrone, et donc sans devoir cr&eacute;er un thread par client), j'ai finalement opt&eacute; pour la librairie Grizzly. Son utilisation est simple, elle utilise java.nio et elle s'int&egrave;gre comme une simple librairie, sans devoir cr&eacute;er 50 fichiers de configuration ou &eacute;crire trois pages de code suppl&eacute;mentaires.&lt;/p&gt;
+	Après quelques prises de tête avec java.nio (qui peut faire des sockets de manière asynchrone, et donc sans devoir créer un thread par client), j'ai finalement opté pour la librairie Grizzly. Son utilisation est simple, elle utilise java.nio et elle s'intègre comme une simple librairie, sans devoir créer 50 fichiers de configuration ou écrire trois pages de code supplémentaires.&lt;/p&gt;
 </description>
 				<pubDate>2012-09-24T01:24:00</pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
@@ -789,22 +789,22 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/pre&gt;
 				<title>Démarrage du blog</title>
 				<link>http://www.sebastien-caparros.name/demarrage-du-blog.html</link>
 				<guid>http://www.sebastien-caparros.name/demarrage-du-blog.html</guid>
-				<description>&lt;time datetime=&quot;2012-09-22T19:58:00&quot;&gt;Le 22/09/2012 &agrave; 19:58:00&lt;/time&gt;
-&lt;h1&gt;D&eacute;marrage du blog&lt;/h1&gt;
+				<description>&lt;time datetime=&quot;2012-09-22T19:58:00&quot;&gt;Le 22/09/2012 à 19:58:00&lt;/time&gt;
+&lt;h1&gt;Démarrage du blog&lt;/h1&gt;
 
 &lt;p style=&quot;text-align: center;&quot;&gt;
 	&lt;a href=&quot;images/Raspberry%20PI.jpg&quot; rel=&quot;lightbox&quot;&gt;&lt;img alt=&quot;Photo du Raspberry PI&quot; src=&quot;images/Raspberry%20PI.jpg&quot; style=&quot;width: 320px; height: 203px;&quot; /&gt;&lt;/a&gt;&lt;br /&gt;
-	&lt;span style=&quot;font-size:9px;&quot;&gt;(Photo honteusement copi&eacute;e sur Wikip&eacute;dia puisque j'ai la flemme d'en prendre une ...)&lt;/span&gt;&lt;/p&gt;
+	&lt;span style=&quot;font-size:9px;&quot;&gt;(Photo honteusement copiée sur Wikipédia puisque j'ai la flemme d'en prendre une ...)&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Maintenant que je dispose de mon Raspberry PI, qu'il est install&eacute; et configur&eacute;, il est temps de m'atteler &agrave; la cr&eacute;ation de ce blog.&lt;/p&gt;
+	Maintenant que je dispose de mon Raspberry PI, qu'il est installé et configuré, il est temps de m'atteler à la création de ce blog.&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Apr&egrave;s quelques recherches, j'ai opt&eacute; pour PluXML qui &agrave; l'avantage d'&ecirc;tre simple et l&eacute;ger, mais quand m&ecirc;me assez complet puisqu'il propose m&ecirc;me un syst&egrave;me de plugins.&lt;/p&gt;
+	Après quelques recherches, j'ai opté pour PluXML qui à l'avantage d'être simple et léger, mais quand même assez complet puisqu'il propose même un système de plugins.&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Il va &ecirc;tre install&eacute; sur un serveur Lighttpd accompagn&eacute; de PHP, sur la distribution Raspian. J'aurais bien voulu en profiter pour essayer s&eacute;rieusement SliTaz (pour ceux qui ne connaissent pas, c'est une distribution linux de 32 Mo et qui contient vraiment tout ce qu'il faut, y compris une interface graphique compl&egrave;te), mais ce n'est pas (encore) adapt&eacute; pour ce type de machine (je crois qu'ils n'ont tout simplement pas de binaires pour les processeurs ARM).&lt;/p&gt;
+	Il va être installé sur un serveur Lighttpd accompagné de PHP, sur la distribution Raspian. J'aurais bien voulu en profiter pour essayer sérieusement SliTaz (pour ceux qui ne connaissent pas, c'est une distribution linux de 32 Mo et qui contient vraiment tout ce qu'il faut, y compris une interface graphique complète), mais ce n'est pas (encore) adapté pour ce type de machine (je crois qu'ils n'ont tout simplement pas de binaires pour les processeurs ARM).&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Au d&eacute;but, j'avais envisag&eacute; d'utiliser un g&eacute;n&eacute;rateur de blogs statiques (du style Pelican), accompagn&eacute; de Disqus ou IntenseDebate pour les commentaires. Ca m'aurait permis d'&eacute;viter la surcouche PHP pour &eacute;conomiser encore plus les ressources, mais c'est plut&ocirc;t gal&egrave;re &agrave; installer et &agrave; maintenir. Et si je peux &eacute;viter de d&eacute;dier le syst&egrave;me de commentaires &agrave; un service externe, c'est pas plus mal.&lt;/p&gt;
+	Au début, j'avais envisagé d'utiliser un générateur de blogs statiques (du style Pelican), accompagné de Disqus ou IntenseDebate pour les commentaires. Ca m'aurait permis d'éviter la surcouche PHP pour économiser encore plus les ressources, mais c'est plutôt galère à installer et à maintenir. Et si je peux éviter de dédier le système de commentaires à un service externe, c'est pas plus mal.&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	En dehors de pr&eacute;senter l'actualit&eacute; de mes activit&eacute;s en mati&egrave;re de d&eacute;veloppement de jeux, j'ai aussi pr&eacute;vu de pr&eacute;senter&amp;nbsp; tout ce que j'ai d&eacute;j&agrave; fait. Il va me falloir beaucoup de temps pour rattraper le retard, du coup je ne sais pas encore si je vais tout faire d'un seul coup ou si je le ferais petit &agrave; petit.&lt;/p&gt;
+	En dehors de présenter l'actualité de mes activités en matière de développement de jeux, j'ai aussi prévu de présenter&amp;nbsp; tout ce que j'ai déjà fait. Il va me falloir beaucoup de temps pour rattraper le retard, du coup je ne sais pas encore si je vais tout faire d'un seul coup ou si je le ferais petit à petit.&lt;/p&gt;
 </description>
 				<pubDate>2012-09-22T19:58:00</pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
@@ -813,23 +813,23 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/pre&gt;
 				<title>Qui suis-je ?</title>
 				<link>http://www.sebastien-caparros.name/qui-suis-je.html</link>
 				<guid>http://www.sebastien-caparros.name/qui-suis-je.html</guid>
-				<description>&lt;time datetime=&quot;2012-09-22T12:00:00&quot;&gt;Le 22/09/2012 &agrave; 12:00:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2012-09-22T12:00:00&quot;&gt;Le 22/09/2012 à 12:00:00&lt;/time&gt;
 &lt;h1&gt;Qui suis-je ?&lt;/h1&gt;
 
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Je m'int&eacute;resse depuis tr&egrave;s longtemps au monde de l'informatique et des jeux vid&eacute;os.&lt;/p&gt;
+	Je m'intéresse depuis très longtemps au monde de l'informatique et des jeux vidéos.&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	C'est lorsque j'ai eu mon premier ordinateur (Pentium I 60 Mhz, 4 Mo de RAM, Win95/MS-DOS 6, RIP) et d&eacute;couvert les possibilit&eacute;s cr&eacute;atives qu'offraient certains jeux PC par rapport aux consoles que mon int&eacute;r&ecirc;t pour cet univers &agrave; vraiment commenc&eacute;. Je me souviens avoir pass&eacute; &eacute;norm&eacute;ment de temps sur un logiciel nomm&eacute; &lt;a href=&quot;http://wikiclick.margasoft.fr/index.php?title=Klik_%26_Play&quot;&gt;Klik'n Play&lt;/a&gt; qui permettait de cr&eacute;er facilement des jeux via une interface graphique, mais aussi sur le tr&egrave;s c&eacute;l&egrave;bre RPG Maker, qui existe toujours.&lt;/p&gt;
+	C'est lorsque j'ai eu mon premier ordinateur (Pentium I 60 Mhz, 4 Mo de RAM, Win95/MS-DOS 6, RIP) et découvert les possibilités créatives qu'offraient certains jeux PC par rapport aux consoles que mon intérêt pour cet univers à vraiment commencé. Je me souviens avoir passé énormément de temps sur un logiciel nommé &lt;a href=&quot;http://wikiclick.margasoft.fr/index.php?title=Klik_%26_Play&quot;&gt;Klik'n Play&lt;/a&gt; qui permettait de créer facilement des jeux via une interface graphique, mais aussi sur le très célèbre RPG Maker, qui existe toujours.&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Pendant un temps, je m'&eacute;tais vaguement int&eacute;r&eacute;ss&eacute; &agrave; la programmation sur Delphi. J'avais m&ecirc;me d&eacute;velopp&eacute; un mini lecteur MP3 (fortement pomp&eacute; sur un livre), que j'avais &eacute;t&eacute; fier de voir publi&eacute; dans le magazine Freelog !&lt;/p&gt;
+	Pendant un temps, je m'étais vaguement intéréssé à la programmation sur Delphi. J'avais même développé un mini lecteur MP3 (fortement pompé sur un livre), que j'avais été fier de voir publié dans le magazine Freelog !&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Par la suite, j'ai commenc&eacute; r&eacute;ellement &agrave; m'int&eacute;resser &agrave; la programmation, ce qui a donn&eacute; lieu &agrave; de nombreux projets (que je pr&eacute;senterais en d&eacute;tails sur ce blog). J'ai toujours eu une pr&eacute;f&eacute;rence pour le d&eacute;veloppement au sein du navigateur. C'est d'ailleurs une m&eacute;thode de d&eacute;veloppement qui prend de plus en plus d'ampleur ces derni&egrave;res ann&eacute;es, et notamment avec l'essor de HTML5.&lt;/p&gt;
+	Par la suite, j'ai commencé réellement à m'intéresser à la programmation, ce qui a donné lieu à de nombreux projets (que je présenterais en détails sur ce blog). J'ai toujours eu une préférence pour le développement au sein du navigateur. C'est d'ailleurs une méthode de développement qui prend de plus en plus d'ampleur ces dernières années, et notamment avec l'essor de HTML5.&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
 	&amp;nbsp;&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Aujourd'hui, j'ai termin&eacute; mes &eacute;tudes et je suis d&eacute;veloppeur d'outils intranet dans une banque. Je continue &agrave; m'int&eacute;resser aux jeux vid&eacute;os, mais c'est une activit&eacute; que je pr&eacute;f&egrave;re faire en amateur.&lt;/p&gt;
+	Aujourd'hui, j'ai terminé mes études et je suis développeur d'outils intranet dans une banque. Je continue à m'intéresser aux jeux vidéos, mais c'est une activité que je préfère faire en amateur.&lt;/p&gt;
 &lt;p style=&quot;text-align: justify;&quot;&gt;
-	Je cr&eacute;e ce blog en 2012, tout simplement pour y partager mes diff&eacute;rentes cr&eacute;ations et d&eacute;couvertes. Elles sont nombreuses et pas vraiment abouties, car c'est avant tout le challenge technique qui me motive. J'aime me lancer des d&eacute;fis et exp&eacute;rimenter, mais une fois que c'est r&eacute;ussi, je passe bien souvent au challenge suivant ...&lt;/p&gt;
+	Je crée ce blog en 2012, tout simplement pour y partager mes différentes créations et découvertes. Elles sont nombreuses et pas vraiment abouties, car c'est avant tout le challenge technique qui me motive. J'aime me lancer des défis et expérimenter, mais une fois que c'est réussi, je passe bien souvent au challenge suivant ...&lt;/p&gt;
 
 </description>
 				<pubDate>2012-09-22T12:00:00</pubDate>

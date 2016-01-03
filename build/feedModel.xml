@@ -13,7 +13,7 @@
 				<title><?php echo $article['title']; ?></title>
 				<link>http://www.sebastien-caparros.name/<?php echo $article['filename']; ?></link>
 				<guid>http://www.sebastien-caparros.name/<?php echo $article['filename']; ?></guid>
-				<description><?php echo htmlentities($article['content']); ?></description>
+				<description><?php echo htmlspecialchars($article['content']); ?></description>
 				<pubDate><?php echo $article['datetime']; ?></pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
 			</item>
