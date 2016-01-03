@@ -19,13 +19,13 @@
 	Je souhaitais depuis quelque temps avoir en PHP une API plus propre pour gérer les chaînes de caractères. Difficile en effet de nier que l'API native - bien que très complète - est très mal foutue (je ne sais pas ce que je ferais sans la doc ...) et difficile à utiliser de manière optimale :&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		Aucune convention de nommage : certaines fonctions se nomment &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_machin&lt;/span&gt; alors que d'autres se nomment &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strmachin&lt;/span&gt; et d'autres simplement &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;machin&lt;/span&gt;.&lt;/li&gt;
+		Aucune convention de nommage : certaines fonctions se nomment &lt;code&gt;str_machin&lt;/code&gt; alors que d'autres se nomment &lt;code&gt;strmachin&lt;/code&gt; et d'autres simplement &lt;code&gt;machin&lt;/code&gt;.&lt;/li&gt;
 	&lt;li&gt;
-		Des noms totalement abscons : bon courage pour lire un code utilisant allègrement du &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strspn&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strtok&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strrchr&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strpbrk&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strstr&lt;/span&gt;, &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strtr&lt;/span&gt; ou encore&amp;nbsp;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;strnatcasecmp&lt;/span&gt;. D'après mon expérience, ça finit (malheureusement) presque toujours en mode bricolage plutôt que passer une heure dans la doc (dommage parce qu'on peut faire des choses assez élégantes avec une API aussi complète).&lt;/li&gt;
+		Des noms totalement abscons : bon courage pour lire un code utilisant allègrement du &lt;code&gt;strspn&lt;/code&gt;, &lt;code&gt;strtok&lt;/code&gt;, &lt;code&gt;strrchr&lt;/code&gt;, &lt;code&gt;strpbrk&lt;/code&gt;, &lt;code&gt;strstr&lt;/code&gt;, &lt;code&gt;strtr&lt;/code&gt; ou encore&amp;nbsp;&lt;code&gt;strnatcasecmp&lt;/code&gt;. D'après mon expérience, ça finit (malheureusement) presque toujours en mode bricolage plutôt que passer une heure dans la doc (dommage parce qu'on peut faire des choses assez élégantes avec une API aussi complète).&lt;/li&gt;
 	&lt;li&gt;
-		Certaines fonctions peuvent être utilisées de manière sensible ou insensible à la casse (par exemple &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_replace&lt;/span&gt; vs &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_ireplace&lt;/span&gt;). C'est plutôt une bonne chose, mais ça aurait été plus simple à retenir en passant un booléen.&lt;/li&gt;
+		Certaines fonctions peuvent être utilisées de manière sensible ou insensible à la casse (par exemple &lt;code&gt;str_replace&lt;/code&gt; vs &lt;code&gt;str_ireplace&lt;/code&gt;). C'est plutôt une bonne chose, mais ça aurait été plus simple à retenir en passant un booléen.&lt;/li&gt;
 	&lt;li&gt;
-		Sans connaître le langage, savez vous comment &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;splitter&lt;/span&gt; une chaîne de caractères ? Il existe une fonction &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;split&lt;/span&gt;, mais elle est obsolète et agit sur les expressions rationelles. Il existe aussi la fonction &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;preg_split&lt;/span&gt; pour les expressions régulières. La fonction &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;str_split&lt;/span&gt; alors ? Non plus, car elle permet uniquement de découper une chaîne en fonction d'une certaine longueur. Il faut utiliser &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;explode&lt;/span&gt; pour faire un &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;split&lt;/span&gt;&amp;nbsp;conventionnel.&lt;/li&gt;
+		Sans connaître le langage, savez vous comment &lt;code&gt;splitter&lt;/code&gt; une chaîne de caractères ? Il existe une fonction &lt;code&gt;split&lt;/code&gt;, mais elle est obsolète et agit sur les expressions rationelles. Il existe aussi la fonction &lt;code&gt;preg_split&lt;/code&gt; pour les expressions régulières. La fonction &lt;code&gt;str_split&lt;/code&gt; alors ? Non plus, car elle permet uniquement de découper une chaîne en fonction d'une certaine longueur. Il faut utiliser &lt;code&gt;explode&lt;/code&gt; pour faire un &lt;code&gt;split&lt;/code&gt;&amp;nbsp;conventionnel.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;
 	J'ai donc créé une classe intitulée &lt;a href=&quot;documents/nicestring.php.tar.gz&quot;&gt;NiceString&lt;/a&gt; (le mot clé &quot;String&quot; n'est pas réservé par le langage, mais ça ne me semble pas très prudent non plus de l'utiliser) que je partage sur &lt;a href=&quot;https://github.com/Seb-C/NiceString.php&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
@@ -34,12 +34,11 @@
 &lt;h2&gt;
 	Interface ArrayAccess&lt;/h2&gt;
 &lt;p&gt;
-	Cette interface permet de surcharger les éléments de syntaxe des tableaux. En l'occurence, &amp;nbsp;ça permet d'utiliser &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;isset&lt;/span&gt;&amp;nbsp;et d'accéder à un caractère par son index :&amp;nbsp;&lt;/p&gt;
-&lt;pre class=&quot;brush:php;&quot;&gt;
-$truc = new NiceString(&quot;Bonjour&quot;);
+	Cette interface permet de surcharger les éléments de syntaxe des tableaux. En l'occurence, &amp;nbsp;ça permet d'utiliser &lt;code&gt;isset&lt;/code&gt;&amp;nbsp;et d'accéder à un caractère par son index :&amp;nbsp;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-php&quot;&gt;$truc = new NiceString(&quot;Bonjour&quot;);
 isset($truc[1]) // ==&amp;gt; true
 isset($truc[10]) // ==&amp;gt; false
-echo $truc[1] // ==&amp;gt; &quot;o&quot;&lt;/pre&gt;
+echo $truc[1] // ==&amp;gt; &quot;o&quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;
 	Interface Iterator&lt;/h2&gt;
 &lt;p&gt;
@@ -48,57 +47,54 @@ echo $truc[1] // ==&amp;gt; &quot;o&quot;&lt;/pre&gt;
 	Méthode __invoke&lt;/h2&gt;
 &lt;p&gt;
 	Cette méthode permet de gérer le cas dans lequel on essaye d'appeler l'objet comme une fonction. Je l'ai utilisé pour pouvoir récupérer une partie d'une chaîne de caractères :&lt;/p&gt;
-&lt;pre class=&quot;brush:php;&quot;&gt;
-$hw = new NiceString(&quot;Hello World!&quot;);
-echo $hw(4, 8); // ==&amp;gt; &quot;o Wo&quot;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-php&quot;&gt;$hw = new NiceString(&quot;Hello World!&quot;);
+echo $hw(4, 8); // ==&amp;gt; &quot;o Wo&quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;
 	Méthode __get&lt;/h2&gt;
 &lt;p&gt;
-	Probablement celle avec laquelle je me suis le plus amusé. On ne peut pas surcharger l'opérateur de concaténation en PHP (caractère &quot;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;.&lt;/span&gt;&quot;). Mais j'ai trouvé un moyen détourné de concaténer en utilisant l'opérateur de pointage (&quot;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;-&amp;gt;&lt;/span&gt;&quot;).&lt;/p&gt;
+	Probablement celle avec laquelle je me suis le plus amusé. On ne peut pas surcharger l'opérateur de concaténation en PHP (caractère &quot;&lt;code&gt;.&lt;/code&gt;&quot;). Mais j'ai trouvé un moyen détourné de concaténer en utilisant l'opérateur de pointage (&quot;&lt;code&gt;-&amp;gt;&lt;/code&gt;&quot;).&lt;/p&gt;
 &lt;p&gt;
 	Avant de vous montrer le résultat, je vais rappeler quelques points importants et méconnus du langage :&amp;nbsp;&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;
-		La méthode &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;__get&lt;/span&gt; permet de gérer le cas où on essaye d'accéder à une propriété de l'objet qui n'existe pas.&lt;/li&gt;
+		La méthode &lt;code&gt;__get&lt;/code&gt; permet de gérer le cas où on essaye d'accéder à une propriété de l'objet qui n'existe pas.&lt;/li&gt;
 	&lt;li&gt;
 		On peut accéder dynamiquement à une variable, propriété ou méthode à partir de son nom (sous forme d'une chaîne de caractères) de plusieurs manières différentes
 		&lt;ul&gt;
 			&lt;li&gt;
-				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;$$variableContenantLeNomDeLaVariableAUtiliser&lt;/span&gt;&lt;/li&gt;
+				&lt;code&gt;$$variableContenantLeNomDeLaVariableAUtiliser&lt;/code&gt;&lt;/li&gt;
 			&lt;li&gt;
-				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;${$variableContenantLeNomDeLaVariableAUtiliser}&lt;/span&gt;&lt;/li&gt;
+				&lt;code&gt;${$variableContenantLeNomDeLaVariableAUtiliser}&lt;/code&gt;&lt;/li&gt;
 			&lt;li&gt;
-				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;${&quot;nom de la variable&quot;}&lt;/span&gt;&lt;/li&gt;
+				&lt;code&gt;${&quot;nom de la variable&quot;}&lt;/code&gt;&lt;/li&gt;
 			&lt;li&gt;
-				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;$objet-&amp;gt;$variableContenantLeNomDeLaPropriete&lt;/span&gt;&lt;/li&gt;
+				&lt;code&gt;$objet-&amp;gt;$variableContenantLeNomDeLaPropriete&lt;/code&gt;&lt;/li&gt;
 			&lt;li&gt;
-				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;$objet-&amp;gt;{$variableContenantLeNomDeLaPropriete}&lt;/span&gt;&lt;/li&gt;
+				&lt;code&gt;$objet-&amp;gt;{$variableContenantLeNomDeLaPropriete}&lt;/code&gt;&lt;/li&gt;
 			&lt;li&gt;
-				&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;$objet-&amp;gt;{&quot;nom de la propriété&quot;}&lt;/span&gt;&lt;/li&gt;
+				&lt;code&gt;$objet-&amp;gt;{&quot;nom de la propriété&quot;}&lt;/code&gt;&lt;/li&gt;
 		&lt;/ul&gt;
 	&lt;/li&gt;
 	&lt;li&gt;
 		On peut d'ailleurs &quot;empiler&quot; cette syntaxe, par exemple :&amp;nbsp;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;pre class=&quot;brush:php;&quot;&gt;
-$a = &quot;Hello World!&quot;;
+&lt;pre&gt;&lt;code class=&quot;language-php&quot;&gt;$a = &quot;Hello World!&quot;;
 $b = &quot;a&quot;;
 $c = &quot;b&quot;;
 $d = &quot;c&quot;;
 
-echo $$$$d; // ==&amp;gt; &quot;Hello World!&quot;&lt;/pre&gt;
+echo $$$$d; // ==&amp;gt; &quot;Hello World!&quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
-	J'ai donc utilisé la méthode &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;__get&lt;/span&gt; pour retourner un autre objet &lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;NiceString&lt;/span&gt;, ce qui permet d'enchaîner avec des choses comme ça :&amp;nbsp;&lt;/p&gt;
-&lt;pre class=&quot;brush:php;&quot;&gt;
-$people = &quot;World&quot;;
+	J'ai donc utilisé la méthode &lt;code&gt;__get&lt;/code&gt; pour retourner un autre objet &lt;code&gt;NiceString&lt;/code&gt;, ce qui permet d'enchaîner avec des choses comme ça :&amp;nbsp;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-php&quot;&gt;$people = &quot;World&quot;;
 const MY_NAME = 'FooBar';
 $age = 42;
 
 $hello = new NiceString(&quot;Hello &quot;);
 
-echo $hello-&amp;gt;$people-&amp;gt;{&quot;, my name is &quot;}-&amp;gt;{MY_NAME}-&amp;gt;{&quot; and I'm &quot;}-&amp;gt;$age-&amp;gt;{&quot; years old.\n&quot;};&lt;/pre&gt;
+echo $hello-&amp;gt;$people-&amp;gt;{&quot;, my name is &quot;}-&amp;gt;{MY_NAME}-&amp;gt;{&quot; and I'm &quot;}-&amp;gt;$age-&amp;gt;{&quot; years old.\n&quot;};&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
-	(ce code affichera &quot;&lt;span style=&quot;font-family:courier new,courier,monospace;&quot;&gt;Hello World, my name is FooBar and I'm 42 years old.&quot;&lt;/span&gt;)&lt;/p&gt;
+	(ce code affichera &quot;&lt;code&gt;Hello World, my name is FooBar and I'm 42 years old.&quot;&lt;/code&gt;)&lt;/p&gt;
 &lt;p&gt;
 	OK, c'est horrible d'un point de vue sémantique et syntaxique, mais avouez que c'est astucieux :P ?&lt;/p&gt;
 &lt;p&gt;
@@ -288,8 +284,7 @@ echo $hello-&amp;gt;$people-&amp;gt;{&quot;, my name is &quot;}-&amp;gt;{MY_NAME
 &lt;p&gt;
 	&amp;nbsp;&lt;/p&gt;
 &lt;hr /&gt;
-&lt;pre class=&quot;brush:jscript;&quot;&gt;
-// A mettre dans une balise script. Si je la met ici,
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;// A mettre dans une balise script. Si je la met ici,
 // ça fait planter la coloration syntaxique ...
 var resolution = 512;
 var variabilityRate = 1.25;
@@ -423,7 +418,7 @@ refreshButton.setAttribute(&quot;type&quot;, &quot;button&quot;);
 refreshButton.setAttribute(&quot;value&quot;, &quot;Nouvelle texture&quot;);
 refreshButton.addEventListener(&quot;click&quot;, refreshTexture);
 document.currentScript.parentNode.appendChild(refreshButton);
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 </description>
 				<pubDate>2014-06-01T12:04:00</pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
@@ -519,18 +514,16 @@ document.currentScript.parentNode.appendChild(refreshButton);
 &lt;/ul&gt;
 &lt;p&gt;
 	J'ai donc élaboré la modeste fonction suivante, qui répond à tous mes critères :&lt;/p&gt;
-&lt;pre class=&quot;brush:jscript;&quot;&gt;
-Function.prototype.extend = function(Parent) {
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;Function.prototype.extend = function(Parent) {
     this.prototype = Object.create(Parent.prototype);
     this.prototype.constructor = this;
     this.prototype.parent = function(/* any args */) {
         Parent.apply(this, arguments);
     };
-};&lt;/pre&gt;
+};&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
 	Et un rapide exemple d'utilisation :&lt;/p&gt;
-&lt;pre class=&quot;brush:jscript;&quot;&gt;
-/**
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;/**
  * Définit un véhicule équipé de roues
  * @param int Le nombre de roues du véhicule
  */
@@ -568,18 +561,16 @@ Moto.prototype.toString = function() {
 
 alert(new Moto(true));  // Je suis une moto avec 3 roues (car équipée d'un side-car).
 alert(new Moto(false)); // Je suis une moto avec 2 roues.
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
 	&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;
 	En résumé, vous pouvez faire un héritage comme ceci :&lt;/p&gt;
-&lt;pre class=&quot;brush:jscript;&quot;&gt;
-var Fille = function(/*bla*/) { /*blabla*/ };
-Fille.extend(Mere);&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;var Fille = function(/*bla*/) { /*blabla*/ };
+Fille.extend(Mere);&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
 	Et faire appel au constructeur parent via :&lt;/p&gt;
-&lt;pre class=&quot;brush:jscript;&quot;&gt;
-this.parent(/* arguments à passer au parent */);&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;this.parent(/* arguments à passer au parent */);&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
 	Le seul défaut restant, c'est qu'on ne peut pas étendre une méthode parente. On est obligé de l'écraser ou de contourner le problème. Je n'ai pas trouvé de solution propre pour le faire.&lt;/p&gt;
 &lt;p&gt;
@@ -629,33 +620,30 @@ this.parent(/* arguments à passer au parent */);&lt;/pre&gt;
 	Du côté de la souris, c'est très similaire avec un vecteur de rotation nommé rotationRate. La rotation en X et Y se fait comme dans un FPS, et la rotation Z se fait en maintenant la roulette enfoncée.&lt;/p&gt;
 &lt;p&gt;
 	Dans ma fonction &quot;animate&quot; (déclenchée à chaque frame, ce que je compte améliorer via un WebWorker), je calcule les déplacements de cette manière (la variable elapsed représente le temps passé depuis la dernière frame) :&lt;/p&gt;
-&lt;pre class=&quot;brush:jscript;&quot;&gt;
-var moveDistance = vec3.fromValues(
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;var moveDistance = vec3.fromValues(
 	moveSpeed[0] * elapsed,
 	moveSpeed[1] * elapsed,
 	moveSpeed[2] * elapsed
 );
 vec3.transformQuat(moveDistance, moveDistance, rotation);
-vec3.subtract(position, position, moveDistance);&lt;/pre&gt;
+vec3.subtract(position, position, moveDistance);&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
 	La première et la troisième ligne sont relativement simples à comprendre. La seconde (c'est là que glMatrix entre en jeu) consiste tout simplement à calculer le déplacement absolu (par rapport au point d'origine de &quot;l'univers&quot;) induit par le déplacement demandé, en fonction de l'angle de vue courant (ce qui veut dire que si je regarde vers la droite par rapport au point d'origine, je dois avancer face à moi quand j'appuie sur la flèche du haut, et non pas vers la gauche).&lt;/p&gt;
 &lt;p&gt;
 	Du côté de la rotation c'est tout aussi simple puisque je demande simplement à glMatrix d'appliquer mon vecteur de rotation à la rotation absolue. Ensuite, je convertis mon quaternion en matrice afin de pouvoir l'inverser.&lt;/p&gt;
-&lt;pre class=&quot;brush:jscript;&quot;&gt;
-quat.rotateX(rotation, rotation, degToRad(rotationRate[0] * elapsed));
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;quat.rotateX(rotation, rotation, degToRad(rotationRate[0] * elapsed));
 quat.rotateY(rotation, rotation, degToRad(rotationRate[1] * elapsed));
 quat.rotateZ(rotation, rotation, degToRad(rotationRate[2] * elapsed));
 
 mat4.fromQuat(invertedRotation, rotation);
-mat4.invert(invertedRotation, invertedRotation);&lt;/pre&gt;
+mat4.invert(invertedRotation, invertedRotation);&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
 	Il ne reste plus qu'a combiner correctement tous ces éléments dans ma fonction de dessin (drawScene) :&lt;/p&gt;
-&lt;pre class=&quot;brush:jscript;&quot;&gt;
-var mvMatrix = mat4.create();
+&lt;pre&gt;&lt;code class=&quot;language-js&quot;&gt;var mvMatrix = mat4.create();
 
 mat4.identity(mvMatrix);
 mat4.multiply(mvMatrix, mvMatrix, invertedRotation);
-mat4.translate(mvMatrix, mvMatrix, position);&lt;/pre&gt;
+mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
 	Voilà voilà ... Je tenais à partager ce bout de code au cas où ça pourrait servir à quelqu'un, parce que la documentation se fait rare quand on cherche à mettre en place un tel déplacement. Dans l'immédiat, je suis en train de réorganiser le code (c'est donc le bon moment pour le partager, puisque actuellement il ressemble encore beaucoup au tuto). J'essayerais de publier une vidéo dès que j'aurais un peu plus de contenu dans mon monde (pour le moment il n'y a qu'un cube avec une texture ...).&lt;/p&gt;
 </description>

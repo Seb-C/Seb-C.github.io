@@ -33,32 +33,29 @@
 	Du côté de la souris, c'est très similaire avec un vecteur de rotation nommé rotationRate. La rotation en X et Y se fait comme dans un FPS, et la rotation Z se fait en maintenant la roulette enfoncée.</p>
 <p>
 	Dans ma fonction "animate" (déclenchée à chaque frame, ce que je compte améliorer via un WebWorker), je calcule les déplacements de cette manière (la variable elapsed représente le temps passé depuis la dernière frame) :</p>
-<pre class="brush:jscript;">
-var moveDistance = vec3.fromValues(
+<pre><code class="language-js">var moveDistance = vec3.fromValues(
 	moveSpeed[0] * elapsed,
 	moveSpeed[1] * elapsed,
 	moveSpeed[2] * elapsed
 );
 vec3.transformQuat(moveDistance, moveDistance, rotation);
-vec3.subtract(position, position, moveDistance);</pre>
+vec3.subtract(position, position, moveDistance);</code></pre>
 <p>
 	La première et la troisième ligne sont relativement simples à comprendre. La seconde (c'est là que glMatrix entre en jeu) consiste tout simplement à calculer le déplacement absolu (par rapport au point d'origine de "l'univers") induit par le déplacement demandé, en fonction de l'angle de vue courant (ce qui veut dire que si je regarde vers la droite par rapport au point d'origine, je dois avancer face à moi quand j'appuie sur la flèche du haut, et non pas vers la gauche).</p>
 <p>
 	Du côté de la rotation c'est tout aussi simple puisque je demande simplement à glMatrix d'appliquer mon vecteur de rotation à la rotation absolue. Ensuite, je convertis mon quaternion en matrice afin de pouvoir l'inverser.</p>
-<pre class="brush:jscript;">
-quat.rotateX(rotation, rotation, degToRad(rotationRate[0] * elapsed));
+<pre><code class="language-js">quat.rotateX(rotation, rotation, degToRad(rotationRate[0] * elapsed));
 quat.rotateY(rotation, rotation, degToRad(rotationRate[1] * elapsed));
 quat.rotateZ(rotation, rotation, degToRad(rotationRate[2] * elapsed));
 
 mat4.fromQuat(invertedRotation, rotation);
-mat4.invert(invertedRotation, invertedRotation);</pre>
+mat4.invert(invertedRotation, invertedRotation);</code></pre>
 <p>
 	Il ne reste plus qu'a combiner correctement tous ces éléments dans ma fonction de dessin (drawScene) :</p>
-<pre class="brush:jscript;">
-var mvMatrix = mat4.create();
+<pre><code class="language-js">var mvMatrix = mat4.create();
 
 mat4.identity(mvMatrix);
 mat4.multiply(mvMatrix, mvMatrix, invertedRotation);
-mat4.translate(mvMatrix, mvMatrix, position);</pre>
+mat4.translate(mvMatrix, mvMatrix, position);</code></pre>
 <p>
 	Voilà voilà ... Je tenais à partager ce bout de code au cas où ça pourrait servir à quelqu'un, parce que la documentation se fait rare quand on cherche à mettre en place un tel déplacement. Dans l'immédiat, je suis en train de réorganiser le code (c'est donc le bon moment pour le partager, puisque actuellement il ressemble encore beaucoup au tuto). J'essayerais de publier une vidéo dès que j'aurais un peu plus de contenu dans mon monde (pour le moment il n'y a qu'un cube avec une texture ...).</p>
