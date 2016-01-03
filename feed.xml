@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Sébastien CAPARROS</title>
+		<link>http://www.sebastien-caparros.name/</link>
+		<language>fr</language>
+		<description>Blog d'un développeur</description>
+		<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://localhost/feed.php" />
+		<lastBuildDate>2012-09-22T12:00:00</lastBuildDate>
+		
+					<item>
+				<title>Qui suis-je ?</title>
+				<link>http://www.sebastien-caparros.name/qui-suis-je.html</link>
+				<guid>http://www.sebastien-caparros.name/qui-suis-je.html</guid>
+				<description>&lt;time datetime=&quot;2012-09-22T12:00:00&quot;&gt;Le 22/09/2012 &agrave; 12:00:00&lt;/time&gt;
+&lt;h1&gt;Qui suis-je ?&lt;/h1&gt;
+
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Je m'int&eacute;resse depuis tr&egrave;s longtemps au monde de l'informatique et des jeux vid&eacute;os.&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	C'est lorsque j'ai eu mon premier ordinateur (Pentium I 60 Mhz, 4 Mo de RAM, Win95/MS-DOS 6, RIP) et d&eacute;couvert les possibilit&eacute;s cr&eacute;atives qu'offraient certains jeux PC par rapport aux consoles que mon int&eacute;r&ecirc;t pour cet univers &agrave; vraiment commenc&eacute;. Je me souviens avoir pass&eacute; &eacute;norm&eacute;ment de temps sur un logiciel nomm&eacute; &lt;a href=&quot;http://wikiclick.margasoft.fr/index.php?title=Klik_%26_Play&quot;&gt;Klik'n Play&lt;/a&gt; qui permettait de cr&eacute;er facilement des jeux via une interface graphique, mais aussi sur le tr&egrave;s c&eacute;l&egrave;bre RPG Maker, qui existe toujours.&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Pendant un temps, je m'&eacute;tais vaguement int&eacute;r&eacute;ss&eacute; &agrave; la programmation sur Delphi. J'avais m&ecirc;me d&eacute;velopp&eacute; un mini lecteur MP3 (fortement pomp&eacute; sur un livre), que j'avais &eacute;t&eacute; fier de voir publi&eacute; dans le magazine Freelog !&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Par la suite, j'ai commenc&eacute; r&eacute;ellement &agrave; m'int&eacute;resser &agrave; la programmation, ce qui a donn&eacute; lieu &agrave; de nombreux projets (que je pr&eacute;senterais en d&eacute;tails sur ce blog). J'ai toujours eu une pr&eacute;f&eacute;rence pour le d&eacute;veloppement au sein du navigateur. C'est d'ailleurs une m&eacute;thode de d&eacute;veloppement qui prend de plus en plus d'ampleur ces derni&egrave;res ann&eacute;es, et notamment avec l'essor de HTML5.&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	&amp;nbsp;&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Aujourd'hui, j'ai termin&eacute; mes &eacute;tudes et je suis d&eacute;veloppeur d'outils intranet dans une banque. Je continue &agrave; m'int&eacute;resser aux jeux vid&eacute;os, mais c'est une activit&eacute; que je pr&eacute;f&egrave;re faire en amateur.&lt;/p&gt;
+&lt;p style=&quot;text-align: justify;&quot;&gt;
+	Je cr&eacute;e ce blog en 2012, tout simplement pour y partager mes diff&eacute;rentes cr&eacute;ations et d&eacute;couvertes. Elles sont nombreuses et pas vraiment abouties, car c'est avant tout le challenge technique qui me motive. J'aime me lancer des d&eacute;fis et exp&eacute;rimenter, mais une fois que c'est r&eacute;ussi, je passe bien souvent au challenge suivant ...&lt;/p&gt;
+
+</description>
+				<pubDate>2012-09-22T12:00:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
+		</channel>
+</rss>
