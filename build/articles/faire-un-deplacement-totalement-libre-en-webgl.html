@@ -1,0 +1,64 @@
+<time datetime="2013-02-27T18:31:00">Le 27/02/2013 à 18:31:00</time>
+<h1>Déplacements totalement libres en WebGL</h1>
+
+<p>
+	Ces derniers temps, j'ai beaucoup appris en me frottant au WebGL. Je me suis aussi beaucoup pris la tête, mais j'ai réussi la première chose que je souhaitais réaliser avec : faire en sorte qu'on puisse se déplacer et tourner autour de soi de manière totalement libre et sur tous les axes. Le tout en vue à la première personne. L'intérêt de ça, vous l'aurez peut-être compris, c'est de pouvoir se déplacer comme dans l'espace ...</p>
+<p>
+	La première chose que j'ai faite en me lançant dans le WebGL, c'est aller lire les rares tutos qu'on trouve sur Internet.</p>
+<p>
+	J'ai commencé par celui qu'on trouve sur <a href="http://learningwebgl.com/blog/?p=28">learningwebgl.com</a>, qui avait l'air assez complet. Sauf que :</p>
+<ul>
+	<li>
+		Le code qui y est présenté n'est absolument pas structuré (tout est fait à base de fonctions et à coup de dizaines de variables globales)</li>
+	<li>
+		Le code qui est expliqué dans le tutoriel n'est pas à jour avec ce qui est dans la démo.</li>
+	<li>
+		Quand on essaye de suivre le tuto en parallèle de la rédaction du code, on se rend compte que c'est très mal expliqué ou encore qu'on ne sait pas où va telle ou telle ligne. Il manque aussi régulièrement des petits bouts de code, comme des déclarations de variables globales. C'est très frustrant parce qu'on est obligé de se concentrer sur la forme plutôt que sur le fond, et on perd trop régulièrement le fil.</li>
+</ul>
+<p>
+	J'ai donc décidé de chercher un tutoriel de meilleure qualité, et je suis tombé sur le site de <a href="https://developer.mozilla.org/en-US/docs/WebGL/Getting_started_with_WebGL">Mozilla</a>. Il ressemble de très près au précédent (trop pour que ce soit une coïncidence), tout en corrigeant beaucoup de ses défauts. Il n'est pas parfait, mais si vous cherchez à apprendre le WebGL depuis le début, je vous recommande celui-ci.</p>
+<p>
+	Je n'ai pas suivi tout le tutoriel, car j'ai rapidement compris le fonctionnement, ce qui m'a permis de m'en éloigner (tout en prenant leur code comme base). J'en ai profité pour réorganiser et restructurer correctement mon code, chose qui n'est toujours pas terminée.</p>
+<p>
+	L'étape suivante, relativement intéressante, a consisté à déterrer de ma mémoire les cours de Maths de ma première année de DUT, sur les calculs matriciels (j'ai enfin trouvé une utilité concrète, c'est plus motivant que de la théorie pure !). Globalement, je m'y suis retrouvé assez facilement puisque je ne suis pas trop rentré dans le détail.</p>
+<p>
+	D'ailleurs, le plus simple pour ça, c'est d'utiliser une API qui fournit toutes les opérations de base. Parmi les plus populaires, on retrouve Sylvester, EWGL, mjs ou glMatrix. C'est sur cette dernière que mon choix s'est porté. Son API est un peu déroutante au début, mais elle est très complète et efficace. Je crois d'ailleurs qu'elle est recommandée par les tutos cités plus haut (Attention : les démos ne sont pas du tout à jour et il y a eu beaucoup de changements, donc privilégiez la version téléchargeable sur le <a href="http://glmatrix.net/">site officiel</a>).</p>
+<p>
+	Là où j'ai le plus galéré au final, c'est pour réussir la rotation sur trois axes. C'est principalement un problème algorithmique, mais malheureusement on trouve surtout de la documentation très théorique et peu de concret. Je suis aussi resté longtemps bloqué sur un problème dit de "blocage de cardan", ou Gimbal Lock. D'autre part, le WebGL est encore très récent, et la documentation très rare. C'est pour ca que je vous conseille de faire vos recherches sur l'OpenGL plutôt que le WebGL, les deux APIs étant de toute manière identiques.</p>
+<p>
+	La plupart de la documentation qu'on peut trouver consiste à écrire soi mêmes les formules de rotations et translations. En réalité, tout peut se faire directement avec glMatrix : un vecteur qui détermine la position de la caméra, et un quaternion qui détermine l'angle de vue. C'est là que j'ai testé un nombre incalculable de codes différents, jusqu'à ce que je tombe sur un post soulignant une information clé : En OpenGL, la caméra ne bouge pas. C'est le monde qui bouge et tourne autour de la caméra pour donner l'illusion d'un mouvement. Il suffisait donc simplement d'inverser la rotation (au sens mathématique du terme), puis de combiner la matrice et le quaternion correctement.</p>
+<p>
+	Plus concrètement, dans ma gestion du clavier, je renvoie un vecteur contenant trois valeurs (le mouvement sur trois axes), le déplacement se faisant à l'aide des flèches (pour avancer, reculer et faire des pas latéraux) et des touches page haut et page bas (pour monter ou descendre). Le vecteur en question se nomme moveSpeed.</p>
+<p>
+	Du côté de la souris, c'est très similaire avec un vecteur de rotation nommé rotationRate. La rotation en X et Y se fait comme dans un FPS, et la rotation Z se fait en maintenant la roulette enfoncée.</p>
+<p>
+	Dans ma fonction "animate" (déclenchée à chaque frame, ce que je compte améliorer via un WebWorker), je calcule les déplacements de cette manière (la variable elapsed représente le temps passé depuis la dernière frame) :</p>
+<pre class="brush:jscript;">
+var moveDistance = vec3.fromValues(
+	moveSpeed[0] * elapsed,
+	moveSpeed[1] * elapsed,
+	moveSpeed[2] * elapsed
+);
+vec3.transformQuat(moveDistance, moveDistance, rotation);
+vec3.subtract(position, position, moveDistance);</pre>
+<p>
+	La première et la troisième ligne sont relativement simples à comprendre. La seconde (c'est là que glMatrix entre en jeu) consiste tout simplement à calculer le déplacement absolu (par rapport au point d'origine de "l'univers") induit par le déplacement demandé, en fonction de l'angle de vue courant (ce qui veut dire que si je regarde vers la droite par rapport au point d'origine, je dois avancer face à moi quand j'appuie sur la flèche du haut, et non pas vers la gauche).</p>
+<p>
+	Du côté de la rotation c'est tout aussi simple puisque je demande simplement à glMatrix d'appliquer mon vecteur de rotation à la rotation absolue. Ensuite, je convertis mon quaternion en matrice afin de pouvoir l'inverser.</p>
+<pre class="brush:jscript;">
+quat.rotateX(rotation, rotation, degToRad(rotationRate[0] * elapsed));
+quat.rotateY(rotation, rotation, degToRad(rotationRate[1] * elapsed));
+quat.rotateZ(rotation, rotation, degToRad(rotationRate[2] * elapsed));
+
+mat4.fromQuat(invertedRotation, rotation);
+mat4.invert(invertedRotation, invertedRotation);</pre>
+<p>
+	Il ne reste plus qu'a combiner correctement tous ces éléments dans ma fonction de dessin (drawScene) :</p>
+<pre class="brush:jscript;">
+var mvMatrix = mat4.create();
+
+mat4.identity(mvMatrix);
+mat4.multiply(mvMatrix, mvMatrix, invertedRotation);
+mat4.translate(mvMatrix, mvMatrix, position);</pre>
+<p>
+	Voilà voilà ... Je tenais à partager ce bout de code au cas où ça pourrait servir à quelqu'un, parce que la documentation se fait rare quand on cherche à mettre en place un tel déplacement. Dans l'immédiat, je suis en train de réorganiser le code (c'est donc le bon moment pour le partager, puisque actuellement il ressemble encore beaucoup au tuto). J'essayerais de publier une vidéo dès que j'aurais un peu plus de contenu dans mon monde (pour le moment il n'y a qu'un cube avec une texture ...).</p>

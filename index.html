@@ -33,25 +33,183 @@
 				</ul>
 			</header>
 							<section>
-					<time datetime="2012-09-22T12:00:00">Le 22/09/2012 à 12:00:00</time>
-<h1>Qui suis-je ?</h1>
+					<time datetime="2015-07-02T20:18:00">Le 02/07/2015 à 20:18:00</time>
+<h1>Une classe String en PHP ?</h1>
 
-<p style="text-align: justify;">
-	Je m'intéresse depuis très longtemps au monde de l'informatique et des jeux vidéos.</p>
-<p style="text-align: justify;">
-	C'est lorsque j'ai eu mon premier ordinateur (Pentium I 60 Mhz, 4 Mo de RAM, Win95/MS-DOS 6, RIP) et découvert les possibilités créatives qu'offraient certains jeux PC par rapport aux consoles que mon intérêt pour cet univers à vraiment commencé. Je me souviens avoir passé énormément de temps sur un logiciel nommé <a href="http://wikiclick.margasoft.fr/index.php?title=Klik_%26_Play">Klik'n Play</a> qui permettait de créer facilement des jeux via une interface graphique, mais aussi sur le très célèbre RPG Maker, qui existe toujours.</p>
-<p style="text-align: justify;">
-	Pendant un temps, je m'étais vaguement intéréssé à la programmation sur Delphi. J'avais même développé un mini lecteur MP3 (fortement pompé sur un livre), que j'avais été fier de voir publié dans le magazine Freelog !</p>
-<p style="text-align: justify;">
-	Par la suite, j'ai commencé réellement à m'intéresser à la programmation, ce qui a donné lieu à de nombreux projets (que je présenterais en détails sur ce blog). J'ai toujours eu une préférence pour le développement au sein du navigateur. C'est d'ailleurs une méthode de développement qui prend de plus en plus d'ampleur ces dernières années, et notamment avec l'essor de HTML5.</p>
-<p style="text-align: justify;">
+<p>
+	Je souhaitais depuis quelque temps avoir en PHP une API plus propre pour gérer les chaînes de caractères. Difficile en effet de nier que l'API native - bien que très complète - est très mal foutue (je ne sais pas ce que je ferais sans la doc ...) et difficile à utiliser de manière optimale :</p>
+<ul>
+	<li>
+		Aucune convention de nommage : certaines fonctions se nomment <span style="font-family:courier new,courier,monospace;">str_machin</span> alors que d'autres se nomment <span style="font-family:courier new,courier,monospace;">strmachin</span> et d'autres simplement <span style="font-family:courier new,courier,monospace;">machin</span>.</li>
+	<li>
+		Des noms totalement abscons : bon courage pour lire un code utilisant allègrement du <span style="font-family:courier new,courier,monospace;">strspn</span>, <span style="font-family:courier new,courier,monospace;">strtok</span>, <span style="font-family:courier new,courier,monospace;">strrchr</span>, <span style="font-family:courier new,courier,monospace;">strpbrk</span>, <span style="font-family:courier new,courier,monospace;">strstr</span>, <span style="font-family:courier new,courier,monospace;">strtr</span> ou encore&nbsp;<span style="font-family:courier new,courier,monospace;">strnatcasecmp</span>. D'après mon expérience, ça finit (malheureusement) presque toujours en mode bricolage plutôt que passer une heure dans la doc (dommage parce qu'on peut faire des choses assez élégantes avec une API aussi complète).</li>
+	<li>
+		Certaines fonctions peuvent être utilisées de manière sensible ou insensible à la casse (par exemple <span style="font-family:courier new,courier,monospace;">str_replace</span> vs <span style="font-family:courier new,courier,monospace;">str_ireplace</span>). C'est plutôt une bonne chose, mais ça aurait été plus simple à retenir en passant un booléen.</li>
+	<li>
+		Sans connaître le langage, savez vous comment <span style="font-family:courier new,courier,monospace;">splitter</span> une chaîne de caractères ? Il existe une fonction <span style="font-family:courier new,courier,monospace;">split</span>, mais elle est obsolète et agit sur les expressions rationelles. Il existe aussi la fonction <span style="font-family:courier new,courier,monospace;">preg_split</span> pour les expressions régulières. La fonction <span style="font-family:courier new,courier,monospace;">str_split</span> alors ? Non plus, car elle permet uniquement de découper une chaîne en fonction d'une certaine longueur. Il faut utiliser <span style="font-family:courier new,courier,monospace;">explode</span> pour faire un <span style="font-family:courier new,courier,monospace;">split</span>&nbsp;conventionnel.</li>
+</ul>
+<p>
+	J'ai donc créé une classe intitulée <a href="documents/nicestring.php.tar.gz">NiceString</a> (le mot clé "String" n'est pas réservé par le langage, mais ça ne me semble pas très prudent non plus de l'utiliser) que je partage sur <a href="https://github.com/Seb-C/NiceString.php">GitHub</a>.</p>
+<p>
+	On y retrouve les méthodes classiques de ce genre de classe, que je vous laisse découvrir (je me suis beaucoup inspiré de Java), mais je me suis surtout amusé avec les différentes méthodes et classes magiques de PHP. J'insiste sur le côté expérimental, je l'ai fait surtout pour le fun, c'est très probablement lent, et c'est horrible et élégant à la fois.</p>
+<h2>
+	Interface ArrayAccess</h2>
+<p>
+	Cette interface permet de surcharger les éléments de syntaxe des tableaux. En l'occurence, &nbsp;ça permet d'utiliser <span style="font-family:courier new,courier,monospace;">isset</span>&nbsp;et d'accéder à un caractère par son index :&nbsp;</p>
+<pre class="brush:php;">
+$truc = new NiceString("Bonjour");
+isset($truc[1]) // ==&gt; true
+isset($truc[10]) // ==&gt; false
+echo $truc[1] // ==&gt; "o"</pre>
+<h2>
+	Interface Iterator</h2>
+<p>
+	Rien de très tordu ici, on peut simplement faire un foreach pour boucler sur chaque caractère de la chaîne.</p>
+<h2>
+	Méthode __invoke</h2>
+<p>
+	Cette méthode permet de gérer le cas dans lequel on essaye d'appeler l'objet comme une fonction. Je l'ai utilisé pour pouvoir récupérer une partie d'une chaîne de caractères :</p>
+<pre class="brush:php;">
+$hw = new NiceString("Hello World!");
+echo $hw(4, 8); // ==&gt; "o Wo"</pre>
+<h2>
+	Méthode __get</h2>
+<p>
+	Probablement celle avec laquelle je me suis le plus amusé. On ne peut pas surcharger l'opérateur de concaténation en PHP (caractère "<span style="font-family:courier new,courier,monospace;">.</span>"). Mais j'ai trouvé un moyen détourné de concaténer en utilisant l'opérateur de pointage ("<span style="font-family:courier new,courier,monospace;">-&gt;</span>").</p>
+<p>
+	Avant de vous montrer le résultat, je vais rappeler quelques points importants et méconnus du langage :&nbsp;</p>
+<ul>
+	<li>
+		La méthode <span style="font-family:courier new,courier,monospace;">__get</span> permet de gérer le cas où on essaye d'accéder à une propriété de l'objet qui n'existe pas.</li>
+	<li>
+		On peut accéder dynamiquement à une variable, propriété ou méthode à partir de son nom (sous forme d'une chaîne de caractères) de plusieurs manières différentes
+		<ul>
+			<li>
+				<span style="font-family:courier new,courier,monospace;">$$variableContenantLeNomDeLaVariableAUtiliser</span></li>
+			<li>
+				<span style="font-family:courier new,courier,monospace;">${$variableContenantLeNomDeLaVariableAUtiliser}</span></li>
+			<li>
+				<span style="font-family:courier new,courier,monospace;">${"nom de la variable"}</span></li>
+			<li>
+				<span style="font-family:courier new,courier,monospace;">$objet-&gt;$variableContenantLeNomDeLaPropriete</span></li>
+			<li>
+				<span style="font-family:courier new,courier,monospace;">$objet-&gt;{$variableContenantLeNomDeLaPropriete}</span></li>
+			<li>
+				<span style="font-family:courier new,courier,monospace;">$objet-&gt;{"nom de la propriété"}</span></li>
+		</ul>
+	</li>
+	<li>
+		On peut d'ailleurs "empiler" cette syntaxe, par exemple :&nbsp;</li>
+</ul>
+<pre class="brush:php;">
+$a = "Hello World!";
+$b = "a";
+$c = "b";
+$d = "c";
+
+echo $$$$d; // ==&gt; "Hello World!"</pre>
+<p>
+	J'ai donc utilisé la méthode <span style="font-family:courier new,courier,monospace;">__get</span> pour retourner un autre objet <span style="font-family:courier new,courier,monospace;">NiceString</span>, ce qui permet d'enchaîner avec des choses comme ça :&nbsp;</p>
+<pre class="brush:php;">
+$people = "World";
+const MY_NAME = 'FooBar';
+$age = 42;
+
+$hello = new NiceString("Hello ");
+
+echo $hello-&gt;$people-&gt;{", my name is "}-&gt;{MY_NAME}-&gt;{" and I'm "}-&gt;$age-&gt;{" years old.\n"};</pre>
+<p>
+	(ce code affichera "<span style="font-family:courier new,courier,monospace;">Hello World, my name is FooBar and I'm 42 years old."</span>)</p>
+<p>
+	OK, c'est horrible d'un point de vue sémantique et syntaxique, mais avouez que c'est astucieux :P ?</p>
+<p>
 	&nbsp;</p>
-<p style="text-align: justify;">
-	Aujourd'hui, j'ai terminé mes études et je suis développeur d'outils intranet dans une banque. Je continue à m'intéresser aux jeux vidéos, mais c'est une activité que je préfère faire en amateur.</p>
-<p style="text-align: justify;">
-	Je crée ce blog en 2012, tout simplement pour y partager mes différentes créations et découvertes. Elles sont nombreuses et pas vraiment abouties, car c'est avant tout le challenge technique qui me motive. J'aime me lancer des défis et expérimenter, mais une fois que c'est réussi, je passe bien souvent au challenge suivant ...</p>
-
+<p>
+	Je partage tout ça sous licence MIT, mais c'est très expérimental, utilisez le à vos risques et périls !</p>
 				</section>
+							<section>
+					<time datetime="2015-03-11T19:00:00">Le 11/03/2015 à 19:00:00</time>
+<h1>Partage de GlitchyVerse sur GitHub</h1>
+
+<p>
+	Ca doit bien faire 6 mois que je n'ai plus touché à GlitchyVerse par manque de motivation.</p>
+<p>
+	J'ai donc décidé de partager son code source, au cas où ça puisse être utile à quelqu'un.</p>
+<p>
+	Je le place sous licence MIT, et vous le trouverez <a href="https://github.com/Seb-C/GlitchyVerse">ici</a>.</p>
+<p>
+	La partie serveur a été entièrement refaite en Go. L'ensemble inclut donc un moteur de jeu maison (développé "from scratch" en HTML5/WebGL pur), un moteur de collisions basique et bien sûr les éléments du gameplay en lui même.</p>
+				</section>
+							<section>
+					
+			<time datetime="2014-06-01T12:04:00">Le 01/06/2014 à 12:04:00</time>
+			<a href="algorithme-diamondsquare.html"><h1>Algorithme DiamondSquare</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2014-03-12T17:50:00">Le 12/03/2014 à 17:50:00</time>
+			<a href="25-ans-du-web.html"><h1>25 ans du Web</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2014-02-10T14:10:00">Le 10/02/2014 à 14:10:00</time>
+			<a href="deuxieme-video-presentation-jeu.html"><h1>Deuxième vidéo de présentation de mon jeu</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2013-12-02T19:53:00">Le 02/12/2013 à 19:53:00</time>
+			<a href="publication-librairie-fileloader-js.html"><h1>Publication d'une librairie JS : FileLoader.js</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2013-10-26T01:51:00">Le 26/10/2013 à 01:51:00</time>
+			<a href="premiere-video-jeu-developpement.html"><h1>Petite vidéo de présentation du jeu</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2013-06-29T13:15:00">Le 29/06/2013 à 13:15:00</time>
+			<a href="un-peu-d-heritage-en-javascript.html"><h1>Un peu d'héritage en JavaScript</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2013-02-27T18:31:00">Le 27/02/2013 à 18:31:00</time>
+			<a href="faire-un-deplacement-totalement-libre-en-webgl.html"><h1>Déplacements totalement libres en WebGL</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2013-02-10T12:33:00">Le 10/02/2013 à 12:33:00</time>
+			<a href="publication-sources-du-jeu-multijoueurs.html"><h1>Publication sources du jeu multijoueurs</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2012-12-27T11:41:00">Le 27/12/2012 à 11:41:00</time>
+			<a href="joyeuses-fetes.html"><h1>Joyeuses fêtes</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2012-10-07T18:40:00">Le 07/10/2012 à 18:40:00</time>
+			<a href="retour-sur-jmonkeyengine.html"><h1>Retour sur jMonkeyEngine</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2012-09-29T15:55:00">Le 29/09/2012 à 15:55:00</time>
+			<a href="experimentation-moteur-particules.html"><h1>Expérimentation d'un moteur de particules</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2012-09-24T01:24:00">Le 24/09/2012 à 01:24:00</time>
+			<a href="le-projet-du-moment.html"><h1>Le projet du moment</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2012-09-22T19:58:00">Le 22/09/2012 à 19:58:00</time>
+			<a href="demarrage-du-blog.html"><h1>Démarrage du blog</h1></a>
+						</section>
+							<section>
+					
+			<time datetime="2012-09-22T12:00:00">Le 22/09/2012 à 12:00:00</time>
+			<a href="qui-suis-je.html"><h1>Qui suis-je ?</h1></a>
+						</section>
 					</div>
 		<footer>
 			<p>

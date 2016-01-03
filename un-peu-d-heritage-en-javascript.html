@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+		<title>Sébastien Caparros - Blog d'un développeur</title>
+
+		<link rel="stylesheet" href="css/styles.css" />
+		<link rel="stylesheet" href="css/github-dark.css" />
+		<script src="js/scale.fix.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="alternate" type="application/atom+xml" title="Flux RSS Articles" href="http://www.sebastien-caparros.name/feed.xml" />
+	</head>
+	<body>
+		<div class="wrapper">
+			<header>
+				<h1>Sébastien Caparros</h1>
+				<p>Blog d'un développeur</p>
+				<p class="view"><a href="index.html">Liste des articles</a></p>
+				<p class="view"><a href="qui-suis-je.html">Qui suis-je ?</a></p>
+				<ul>
+					<li>
+						<a href="index.html">
+							<strong>Accueil</strong>
+							(liste des articles)
+						</a>
+					</li>
+					<li>
+						<a href="qui-suis-je.html">
+							<strong style="padding-top: 5px;">Qui suis-je ?</strong>
+						</a>
+					</li>
+				</ul>
+			</header>
+							<section>
+					<time datetime="2013-06-29T13:15:00">Le 29/06/2013 à 13:15:00</time>
+<h1>Un peu d'héritage en JavaScript</h1>
+
+<p>
+	Je ne suis pas très actif sur ce blog ces derniers temps car je suis toujours à fond dans le développement d'un jeu en WebGL. Je n'en dis pas plus pour le moment, mais je ferais peut-être prochainement un article dessus avec quelques copies d'écran bien choisies (car je ne veux pas dévoiler les aspects les plus intéréssants :D ).</p>
+<p>
+	Bref, passons en au fait. Je cherchais depuis longtemps un moyen simple et fonctionnel de faire de l'héritage en JavaScript. Mais malgré le nombre d'articles sur le sujet qu'on peut trouver sur Internet, aucun ne m'a jamais complètement satisfait.</p>
+<p>
+	Entre les solutions qui cassent en partie le typage (instanceof qui ne répond que sur la classe parente ou sur la classe fille), celles qui sont très lourdes (boucle sur les attributs et méthodes du prototype), celles qui nécessitent d'avoir du code en double (pas d'appel possible au constructeur parent) et celles qui modifient le prototype d'Object, je n'ai jamais rien trouvé qui me satisfasse.</p>
+<p>
+	Mais ça, c'était avant. Avant que je ne tombe sur un article très récent (mai/juin 2013) sur le site de Mozilla, qui présente <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Classical_inheritance_with_Object.create">une méthode d'héritage plutôt convaincante</a>, avec la méthode Object.create.</p>
+<p>
+	L'appel au constructeur parent est possible, on peut utiliser instanceof sur la classe mère et la classe fille, et le code semble assez performant.</p>
+<p>
+	Si votre développement cible tous les navigateurs, même les plus anciens (ce qui n'est pas mon cas), pensez bien a inclure le <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Polyfill">polyfill proposé par Mozilla</a>.</p>
+<p>
+	Il y a cependant deux petits défauts qui me gênaient :</p>
+<ul>
+	<li>
+		Il faut faire appel au constructeur parent par le nom de la classe parente. Ca me dérange car j'ai l'habitude de réduire la redondance au minimum, quitte à pousser le langage jusque dans ses retranchements. Et avoir deux fois le nom de la classe parente dans ma déclaration, ca ne me convient pas.</li>
+	<li>
+		Le code n'est pas très intuitif et est assez lourd à écrire quand on veut faire un héritage.</li>
+</ul>
+<p>
+	J'ai donc élaboré la modeste fonction suivante, qui répond à tous mes critères :</p>
+<pre class="brush:jscript;">
+Function.prototype.extend = function(Parent) {
+    this.prototype = Object.create(Parent.prototype);
+    this.prototype.constructor = this;
+    this.prototype.parent = function(/* any args */) {
+        Parent.apply(this, arguments);
+    };
+};</pre>
+<p>
+	Et un rapide exemple d'utilisation :</p>
+<pre class="brush:jscript;">
+/**
+ * Définit un véhicule équipé de roues
+ * @param int Le nombre de roues du véhicule
+ */
+var VehiculeRoulant = function(nombreRoues) {
+	this._nombreRoues = nombreRoues;
+};
+
+/**
+ * @return int Le nombre de roues du véhicule
+ */
+VehiculeRoulant.prototype.getNombreRoues = function() {
+	return this._nombreRoues;
+};
+
+/**
+ * Définit une Moto, qui hérite de VehiculeRoulant
+ * @param boolean true si le véhicule est équipé d'un side-car
+ */
+var Moto = function(hasSideCar) {
+	this.hasSideCar = hasSideCar;
+	
+	this.parent(this.hasSideCar ? 3 : 2);
+}
+Moto.extend(VehiculeRoulant);
+
+Moto.prototype.toString = function() {
+	var r = "Je suis une moto avec " + this.getNombreRoues() + " roues";
+	if(this.hasSideCar) {
+		r += " (car équipée d'un side-car)";
+	}
+	r += ".";
+	
+	return r;
+};
+
+alert(new Moto(true));  // Je suis une moto avec 3 roues (car équipée d'un side-car).
+alert(new Moto(false)); // Je suis une moto avec 2 roues.
+</pre>
+<p>
+	&nbsp;</p>
+<p>
+	En résumé, vous pouvez faire un héritage comme ceci :</p>
+<pre class="brush:jscript;">
+var Fille = function(/*bla*/) { /*blabla*/ };
+Fille.extend(Mere);</pre>
+<p>
+	Et faire appel au constructeur parent via :</p>
+<pre class="brush:jscript;">
+this.parent(/* arguments à passer au parent */);</pre>
+<p>
+	Le seul défaut restant, c'est qu'on ne peut pas étendre une méthode parente. On est obligé de l'écraser ou de contourner le problème. Je n'ai pas trouvé de solution propre pour le faire.</p>
+<p>
+	Au niveau du code en lui-même, je ne modifie pas Object, mais Function. Du coup, quand vous utiliserez un simple objet comme tableau associatif, vous n'aurez pas d'attribut parasite. Par contre, si vous voulez boucler sur les attributs d'une instance d'une classe (Function), il y en aura (mais vous ne devriez pas avoir besoin de le faire si vous développez proprement ;) ), auquel cas il faudra suivre les recommandations en utilisant hasOwnProperty.</p>
+<p>
+	En espérant que ca soit utile à quelqu'un ! Sentez vous libre de réutiliser ma fonction où vous voulez et sans restrictions, mais si vous pouvez mettre un lien vers cette page en commentaire de la fonction, j'apprécierais.</p>
+				</section>
+					</div>
+		<footer>
+			<p>
+				<span style="float: left; padding-right: 10px;">
+					<a href="feed.xml">
+						<img src="images/feed.png" alt="Flux RSS" title="Flux RSS" />
+					</a>
+				</span>
+				
+				<!-- Contact, merci à http://www.caspam.org/ pour la protection -->
+				<script type="text/javascript">
+				//<![CDATA[
+				var d="";for(var i=0;i<665;i++)d+=String.fromCharCode(("0z,9.V;ofz\'L}!{(NlOZ`-.[+gJRi%]#Q& b\"n)*j~qkcK0CFp2,/ed\\rhsIm|143_$P^aM;E}V;;E{E-V;Q!^q\"%mc 0[e\"1NF\"!RCNsrj(!jhQ%#^(~(* |3/ 1isQ%^|Q](^(0+C&RjsOKjhQ%#^]z\"( %}F {+d-~bebKi\\ !}qQg*dgz^0O},~(cm Z}IFlh\"q |3I+I\"j#I\"I+hbebKi\\ !}qQg*d+h^0Oz(~lg,~[z(2N1`c#KLhZqNs\"!cc q(/#sNjb!}hbK^sNh3hQ]f,#%`clzPhO|b,%h(~]i,\\]gk2(~4~lh\"e#%m`JRm`QgbebKi\\ !}qQg*dJg^0O},~(cm Z}IFlh\"bNh(* |3/ 1isQ%PI\"][^(0+C&]Ze&{NcQqmbNm\\0(q3\' |3I#%`I`\'\\d`!LaNh3hQ]f,#%`clzPIO|b,%h(~]i,\\]gkF;T ),A0z,9#VIT#ULOQT#DVMB5{VA.G#(}~2h A-G|\"z,Z.A#BBUUJQB6A.G#(}~2h A-G|\"z,Z.A#DJBBUUJKB6A.G#(}~2h A-G|\"z,Z.A#DKBBUUOB6.G#(}~2h A-G|\"z,Z.A#DLBBT}DVl.,#(!G ,)\'\\\"z,\\)}~A{WWWJOEA{WWWQB?KNNE{?KNNB7T~0z&A}G-/{-.,AIEKPOBB".charCodeAt(i)+38)%95+32);eval(d)
+				//]]>
+				</script>
+			</p>
+			<p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+		</footer>
+	</body>
+</html>
