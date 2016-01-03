@@ -3,13 +3,18 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		<link rel="alternate" type="application/atom+xml" title="Flux RSS Articles" href="http://www.sebastien-caparros.name/feed.xml" />
+		
 		<title>Sébastien Caparros - Blog d'un développeur</title>
 
 		<link rel="stylesheet" href="css/styles.css" />
 		<link rel="stylesheet" href="css/github-dark.css" />
+		<link href="css/prism.css" rel="stylesheet" />
+			
 		<script src="js/scale.fix.js"></script>
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="alternate" type="application/atom+xml" title="Flux RSS Articles" href="http://www.sebastien-caparros.name/feed.xml" />
+		<script src="js/prism.js"></script>
 	</head>
 	<body>
 		<div class="wrapper">
@@ -58,18 +63,16 @@
 </ul>
 <p>
 	J'ai donc élaboré la modeste fonction suivante, qui répond à tous mes critères :</p>
-<pre class="brush:jscript;">
-Function.prototype.extend = function(Parent) {
+<pre><code class="language-js">Function.prototype.extend = function(Parent) {
     this.prototype = Object.create(Parent.prototype);
     this.prototype.constructor = this;
     this.prototype.parent = function(/* any args */) {
         Parent.apply(this, arguments);
     };
-};</pre>
+};</code></pre>
 <p>
 	Et un rapide exemple d'utilisation :</p>
-<pre class="brush:jscript;">
-/**
+<pre><code class="language-js">/**
  * Définit un véhicule équipé de roues
  * @param int Le nombre de roues du véhicule
  */
@@ -107,18 +110,16 @@ Moto.prototype.toString = function() {
 
 alert(new Moto(true));  // Je suis une moto avec 3 roues (car équipée d'un side-car).
 alert(new Moto(false)); // Je suis une moto avec 2 roues.
-</pre>
+</code></pre>
 <p>
 	&nbsp;</p>
 <p>
 	En résumé, vous pouvez faire un héritage comme ceci :</p>
-<pre class="brush:jscript;">
-var Fille = function(/*bla*/) { /*blabla*/ };
-Fille.extend(Mere);</pre>
+<pre><code class="language-js">var Fille = function(/*bla*/) { /*blabla*/ };
+Fille.extend(Mere);</code></pre>
 <p>
 	Et faire appel au constructeur parent via :</p>
-<pre class="brush:jscript;">
-this.parent(/* arguments à passer au parent */);</pre>
+<pre><code class="language-js">this.parent(/* arguments à passer au parent */);</code></pre>
 <p>
 	Le seul défaut restant, c'est qu'on ne peut pas étendre une méthode parente. On est obligé de l'écraser ou de contourner le problème. Je n'ai pas trouvé de solution propre pour le faire.</p>
 <p>
