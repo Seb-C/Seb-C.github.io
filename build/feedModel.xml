@@ -3,8 +3,8 @@
 	<channel>
 		<title>Sébastien CAPARROS</title>
 		<link>http://www.sebastien-caparros.name/</link>
-		<language>fr</language>
-		<description>Blog d'un développeur</description>
+		<language>en</language>
+		<description>Some developer's blog</description>
 		<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://localhost/feed.php" />
 		<lastBuildDate><?php echo $articles[0]['datetime']; ?></lastBuildDate>
 		
