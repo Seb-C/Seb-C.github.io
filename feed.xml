@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Sébastien CAPARROS</title>
-		<link>http://www.sebastien-caparros.name/</link>
+		<link>http://www.sebastien.caparros.me/</link>
 		<language>en</language>
 		<description>Some developer's blog</description>
 		<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://localhost/feed.php" />
@@ -9,8 +9,8 @@
 		
 					<item>
 				<title>Blogging in English</title>
-				<link>http://www.sebastien-caparros.name/blogging-in-english.html</link>
-				<guid>http://www.sebastien-caparros.name/blogging-in-english.html</guid>
+				<link>http://www.sebastien.caparros.me/blogging-in-english.html</link>
+				<guid>http://www.sebastien.caparros.me/blogging-in-english.html</guid>
 				<description>&lt;time datetime=&quot;2017-04-03T13:49:00&quot;&gt;03/04/2017 at 13:49:00&lt;/time&gt;
 &lt;h1&gt;Blogging in English&lt;/h1&gt;
 
@@ -26,8 +26,8 @@
 			</item>
 					<item>
 				<title>Déménagement du site</title>
-				<link>http://www.sebastien-caparros.name/demenagement-du-site.html</link>
-				<guid>http://www.sebastien-caparros.name/demenagement-du-site.html</guid>
+				<link>http://www.sebastien.caparros.me/demenagement-du-site.html</link>
+				<guid>http://www.sebastien.caparros.me/demenagement-du-site.html</guid>
 				<description>&lt;time datetime=&quot;2016-01-03T21:09:00&quot;&gt;03/01/2016 at 21:09:00&lt;/time&gt;
 &lt;h1&gt;Déménagement du site&lt;/h1&gt;
 
@@ -44,8 +44,8 @@
 			</item>
 					<item>
 				<title>Une classe String en PHP ?</title>
-				<link>http://www.sebastien-caparros.name/classe-string-php.html</link>
-				<guid>http://www.sebastien-caparros.name/classe-string-php.html</guid>
+				<link>http://www.sebastien.caparros.me/classe-string-php.html</link>
+				<guid>http://www.sebastien.caparros.me/classe-string-php.html</guid>
 				<description>&lt;time datetime=&quot;2015-07-02T20:18:00&quot;&gt;02/07/2015 at 20:18:00&lt;/time&gt;
 &lt;h1&gt;Une classe String en PHP ?&lt;/h1&gt;
 
@@ -141,8 +141,8 @@ echo $hello-&amp;gt;$people-&amp;gt;{&quot;, my name is &quot;}-&amp;gt;{MY_NAME
 			</item>
 					<item>
 				<title>Partage de GlitchyVerse sur GitHub</title>
-				<link>http://www.sebastien-caparros.name/partage-glitchyverse-github.html</link>
-				<guid>http://www.sebastien-caparros.name/partage-glitchyverse-github.html</guid>
+				<link>http://www.sebastien.caparros.me/partage-glitchyverse-github.html</link>
+				<guid>http://www.sebastien.caparros.me/partage-glitchyverse-github.html</guid>
 				<description>&lt;time datetime=&quot;2015-03-11T19:00:00&quot;&gt;11/03/2015 at 19:00:00&lt;/time&gt;
 &lt;h1&gt;Partage de GlitchyVerse sur GitHub&lt;/h1&gt;
 
@@ -160,8 +160,8 @@ echo $hello-&amp;gt;$people-&amp;gt;{&quot;, my name is &quot;}-&amp;gt;{MY_NAME
 			</item>
 					<item>
 				<title>Algorithme DiamondSquare</title>
-				<link>http://www.sebastien-caparros.name/algorithme-diamondsquare.html</link>
-				<guid>http://www.sebastien-caparros.name/algorithme-diamondsquare.html</guid>
+				<link>http://www.sebastien.caparros.me/algorithme-diamondsquare.html</link>
+				<guid>http://www.sebastien.caparros.me/algorithme-diamondsquare.html</guid>
 				<description>&lt;time datetime=&quot;2014-06-01T12:04:00&quot;&gt;01/06/2014 at 12:04:00&lt;/time&gt;
 &lt;h1&gt;Algorithme DiamondSquare&lt;/h1&gt;
 
@@ -459,8 +459,8 @@ document.currentScript.parentNode.appendChild(refreshButton);
 			</item>
 					<item>
 				<title>25 ans du Web</title>
-				<link>http://www.sebastien-caparros.name/25-ans-du-web.html</link>
-				<guid>http://www.sebastien-caparros.name/25-ans-du-web.html</guid>
+				<link>http://www.sebastien.caparros.me/25-ans-du-web.html</link>
+				<guid>http://www.sebastien.caparros.me/25-ans-du-web.html</guid>
 				<description>&lt;time datetime=&quot;2014-03-12T17:50:00&quot;&gt;12/03/2014 at 17:50:00&lt;/time&gt;
 &lt;h1&gt;25 ans du Web&lt;/h1&gt;
 
@@ -474,8 +474,8 @@ document.currentScript.parentNode.appendChild(refreshButton);
 			</item>
 					<item>
 				<title>Deuxième vidéo de présentation de mon jeu</title>
-				<link>http://www.sebastien-caparros.name/deuxieme-video-presentation-jeu.html</link>
-				<guid>http://www.sebastien-caparros.name/deuxieme-video-presentation-jeu.html</guid>
+				<link>http://www.sebastien.caparros.me/deuxieme-video-presentation-jeu.html</link>
+				<guid>http://www.sebastien.caparros.me/deuxieme-video-presentation-jeu.html</guid>
 				<description>&lt;time datetime=&quot;2014-02-10T14:10:00&quot;&gt;10/02/2014 at 14:10:00&lt;/time&gt;
 &lt;h1&gt;Deuxième vidéo de présentation de mon jeu&lt;/h1&gt;
 
@@ -489,8 +489,8 @@ document.currentScript.parentNode.appendChild(refreshButton);
 			</item>
 					<item>
 				<title>Publication d'une librairie JS : FileLoader.js</title>
-				<link>http://www.sebastien-caparros.name/publication-librairie-fileloader-js.html</link>
-				<guid>http://www.sebastien-caparros.name/publication-librairie-fileloader-js.html</guid>
+				<link>http://www.sebastien.caparros.me/publication-librairie-fileloader-js.html</link>
+				<guid>http://www.sebastien.caparros.me/publication-librairie-fileloader-js.html</guid>
 				<description>&lt;time datetime=&quot;2013-12-02T19:53:00&quot;&gt;02/12/2013 at 19:53:00&lt;/time&gt;
 &lt;h1&gt;Publication d'une librairie JS : FileLoader.js&lt;/h1&gt;
 
@@ -506,8 +506,8 @@ document.currentScript.parentNode.appendChild(refreshButton);
 			</item>
 					<item>
 				<title>Petite vidéo de présentation du jeu</title>
-				<link>http://www.sebastien-caparros.name/premiere-video-jeu-developpement.html</link>
-				<guid>http://www.sebastien-caparros.name/premiere-video-jeu-developpement.html</guid>
+				<link>http://www.sebastien.caparros.me/premiere-video-jeu-developpement.html</link>
+				<guid>http://www.sebastien.caparros.me/premiere-video-jeu-developpement.html</guid>
 				<description>&lt;time datetime=&quot;2013-10-26T01:51:00&quot;&gt;26/10/2013 at 01:51:00&lt;/time&gt;
 &lt;h1&gt;Petite vidéo de présentation du jeu&lt;/h1&gt;
 
@@ -521,8 +521,8 @@ document.currentScript.parentNode.appendChild(refreshButton);
 			</item>
 					<item>
 				<title>Un peu d'héritage en JavaScript</title>
-				<link>http://www.sebastien-caparros.name/un-peu-d-heritage-en-javascript.html</link>
-				<guid>http://www.sebastien-caparros.name/un-peu-d-heritage-en-javascript.html</guid>
+				<link>http://www.sebastien.caparros.me/un-peu-d-heritage-en-javascript.html</link>
+				<guid>http://www.sebastien.caparros.me/un-peu-d-heritage-en-javascript.html</guid>
 				<description>&lt;time datetime=&quot;2013-06-29T13:15:00&quot;&gt;29/06/2013 at 13:15:00&lt;/time&gt;
 &lt;h1&gt;Un peu d'héritage en JavaScript&lt;/h1&gt;
 
@@ -617,8 +617,8 @@ Fille.extend(Mere);&lt;/code&gt;&lt;/pre&gt;
 			</item>
 					<item>
 				<title>Déplacements totalement libres en WebGL</title>
-				<link>http://www.sebastien-caparros.name/faire-un-deplacement-totalement-libre-en-webgl.html</link>
-				<guid>http://www.sebastien-caparros.name/faire-un-deplacement-totalement-libre-en-webgl.html</guid>
+				<link>http://www.sebastien.caparros.me/faire-un-deplacement-totalement-libre-en-webgl.html</link>
+				<guid>http://www.sebastien.caparros.me/faire-un-deplacement-totalement-libre-en-webgl.html</guid>
 				<description>&lt;time datetime=&quot;2013-02-27T18:31:00&quot;&gt;27/02/2013 at 18:31:00&lt;/time&gt;
 &lt;h1&gt;Déplacements totalement libres en WebGL&lt;/h1&gt;
 
@@ -686,8 +686,8 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 			</item>
 					<item>
 				<title>Publication sources du jeu multijoueurs</title>
-				<link>http://www.sebastien-caparros.name/publication-sources-du-jeu-multijoueurs.html</link>
-				<guid>http://www.sebastien-caparros.name/publication-sources-du-jeu-multijoueurs.html</guid>
+				<link>http://www.sebastien.caparros.me/publication-sources-du-jeu-multijoueurs.html</link>
+				<guid>http://www.sebastien.caparros.me/publication-sources-du-jeu-multijoueurs.html</guid>
 				<description>&lt;time datetime=&quot;2013-02-10T12:33:00&quot;&gt;10/02/2013 at 12:33:00&lt;/time&gt;
 &lt;h1&gt;Publication sources du jeu multijoueurs&lt;/h1&gt;
 
@@ -713,8 +713,8 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 			</item>
 					<item>
 				<title>Joyeuses fêtes</title>
-				<link>http://www.sebastien-caparros.name/joyeuses-fetes.html</link>
-				<guid>http://www.sebastien-caparros.name/joyeuses-fetes.html</guid>
+				<link>http://www.sebastien.caparros.me/joyeuses-fetes.html</link>
+				<guid>http://www.sebastien.caparros.me/joyeuses-fetes.html</guid>
 				<description>&lt;time datetime=&quot;2012-12-27T11:41:00&quot;&gt;27/12/2012 at 11:41:00&lt;/time&gt;
 &lt;h1&gt;Joyeuses fêtes&lt;/h1&gt;
 
@@ -732,8 +732,8 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 			</item>
 					<item>
 				<title>Retour sur jMonkeyEngine</title>
-				<link>http://www.sebastien-caparros.name/retour-sur-jmonkeyengine.html</link>
-				<guid>http://www.sebastien-caparros.name/retour-sur-jmonkeyengine.html</guid>
+				<link>http://www.sebastien.caparros.me/retour-sur-jmonkeyengine.html</link>
+				<guid>http://www.sebastien.caparros.me/retour-sur-jmonkeyengine.html</guid>
 				<description>&lt;time datetime=&quot;2012-10-07T18:40:00&quot;&gt;07/10/2012 at 18:40:00&lt;/time&gt;
 &lt;h1&gt;Retour sur jMonkeyEngine&lt;/h1&gt;
 
@@ -757,8 +757,8 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 			</item>
 					<item>
 				<title>Expérimentation d'un moteur de particules</title>
-				<link>http://www.sebastien-caparros.name/experimentation-moteur-particules.html</link>
-				<guid>http://www.sebastien-caparros.name/experimentation-moteur-particules.html</guid>
+				<link>http://www.sebastien.caparros.me/experimentation-moteur-particules.html</link>
+				<guid>http://www.sebastien.caparros.me/experimentation-moteur-particules.html</guid>
 				<description>&lt;time datetime=&quot;2012-09-29T15:55:00&quot;&gt;29/09/2012 at 15:55:00&lt;/time&gt;
 &lt;h1&gt;Expérimentation d'un moteur de particules&lt;/h1&gt;
 
@@ -774,8 +774,8 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 			</item>
 					<item>
 				<title>Le projet du moment</title>
-				<link>http://www.sebastien-caparros.name/le-projet-du-moment.html</link>
-				<guid>http://www.sebastien-caparros.name/le-projet-du-moment.html</guid>
+				<link>http://www.sebastien.caparros.me/le-projet-du-moment.html</link>
+				<guid>http://www.sebastien.caparros.me/le-projet-du-moment.html</guid>
 				<description>&lt;time datetime=&quot;2012-09-24T01:24:00&quot;&gt;24/09/2012 at 01:24:00&lt;/time&gt;
 &lt;h1&gt;Le projet du moment&lt;/h1&gt;
 
@@ -809,8 +809,8 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 			</item>
 					<item>
 				<title>Démarrage du blog</title>
-				<link>http://www.sebastien-caparros.name/demarrage-du-blog.html</link>
-				<guid>http://www.sebastien-caparros.name/demarrage-du-blog.html</guid>
+				<link>http://www.sebastien.caparros.me/demarrage-du-blog.html</link>
+				<guid>http://www.sebastien.caparros.me/demarrage-du-blog.html</guid>
 				<description>&lt;time datetime=&quot;2012-09-22T19:58:00&quot;&gt;22/09/2012 at 19:58:00&lt;/time&gt;
 &lt;h1&gt;Démarrage du blog&lt;/h1&gt;
 

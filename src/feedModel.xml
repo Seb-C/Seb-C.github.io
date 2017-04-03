@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Sébastien CAPARROS</title>
-		<link>http://www.sebastien-caparros.name/</link>
+		<link>http://www.sebastien.caparros.me/</link>
 		<language>en</language>
 		<description>Some developer's blog</description>
 		<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://localhost/feed.php" />
@@ -11,8 +11,8 @@
 		<?php foreach($articles as $article): ?>
 			<item>
 				<title><?php echo $article['title']; ?></title>
-				<link>http://www.sebastien-caparros.name/<?php echo $article['filename']; ?></link>
-				<guid>http://www.sebastien-caparros.name/<?php echo $article['filename']; ?></guid>
+				<link>http://www.sebastien.caparros.me/<?php echo $article['filename']; ?></link>
+				<guid>http://www.sebastien.caparros.me/<?php echo $article['filename']; ?></guid>
 				<description><?php echo htmlspecialchars($article['content']); ?></description>
 				<pubDate><?php echo $article['datetime']; ?></pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
