@@ -1,18 +1,34 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+<?xml version="1.0" encoding="UTF-8" ?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Sébastien CAPARROS</title>
 		<link>http://www.sebastien-caparros.name/</link>
-		<language>fr</language>
-		<description>Blog d'un développeur</description>
+		<language>en</language>
+		<description>Some developer's blog</description>
 		<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://localhost/feed.php" />
-		<lastBuildDate>2016-01-03T21:09:00</lastBuildDate>
+		<lastBuildDate>2017-04-03T13:49:00</lastBuildDate>
 		
+					<item>
+				<title>Blogging in English</title>
+				<link>http://www.sebastien-caparros.name/blogging-in-english.html</link>
+				<guid>http://www.sebastien-caparros.name/blogging-in-english.html</guid>
+				<description>&lt;time datetime=&quot;2017-04-03T13:49:00&quot;&gt;03/04/2017 at 13:49:00&lt;/time&gt;
+&lt;h1&gt;Blogging in English&lt;/h1&gt;
+
+&lt;p&gt;
+    Since the beginning, this blog was written in French, because it's my native language. At this time, I also wasn't very confident with my English level.
+&lt;/p&gt;
+&lt;p&gt;
+    I have decided that I will now write new articles in English instead of French. I translated the main parts of the page (like menus, title... yeah, this blog is very simple 😂). I probably will also translate the old articles in the future, but for now, it will probably stay in French.
+&lt;/p&gt;
+</description>
+				<pubDate>2017-04-03T13:49:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
 					<item>
 				<title>Déménagement du site</title>
 				<link>http://www.sebastien-caparros.name/demenagement-du-site.html</link>
 				<guid>http://www.sebastien-caparros.name/demenagement-du-site.html</guid>
-				<description>&lt;time datetime=&quot;2016-01-03T21:09:00&quot;&gt;Le 03/01/2016 à 21:09:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2016-01-03T21:09:00&quot;&gt;03/01/2016 at 21:09:00&lt;/time&gt;
 &lt;h1&gt;Déménagement du site&lt;/h1&gt;
 
 &lt;p&gt;Vous avez peut-être remarqué que le site est resté inaccessible une dizaine de jours. J'ai en effet eu un souci avec la carte SD du Raspberry PI qui a lâchée. Ça tombe presque bien, car j'avais l'intention depuis quelque temps de revenir sur un hébergement &quot;normal&quot;, c'est à dire pas chez moi.&lt;/p&gt;
@@ -30,7 +46,7 @@
 				<title>Une classe String en PHP ?</title>
 				<link>http://www.sebastien-caparros.name/classe-string-php.html</link>
 				<guid>http://www.sebastien-caparros.name/classe-string-php.html</guid>
-				<description>&lt;time datetime=&quot;2015-07-02T20:18:00&quot;&gt;Le 02/07/2015 à 20:18:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2015-07-02T20:18:00&quot;&gt;02/07/2015 at 20:18:00&lt;/time&gt;
 &lt;h1&gt;Une classe String en PHP ?&lt;/h1&gt;
 
 &lt;p&gt;
@@ -127,7 +143,7 @@ echo $hello-&amp;gt;$people-&amp;gt;{&quot;, my name is &quot;}-&amp;gt;{MY_NAME
 				<title>Partage de GlitchyVerse sur GitHub</title>
 				<link>http://www.sebastien-caparros.name/partage-glitchyverse-github.html</link>
 				<guid>http://www.sebastien-caparros.name/partage-glitchyverse-github.html</guid>
-				<description>&lt;time datetime=&quot;2015-03-11T19:00:00&quot;&gt;Le 11/03/2015 à 19:00:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2015-03-11T19:00:00&quot;&gt;11/03/2015 at 19:00:00&lt;/time&gt;
 &lt;h1&gt;Partage de GlitchyVerse sur GitHub&lt;/h1&gt;
 
 &lt;p&gt;
@@ -146,7 +162,7 @@ echo $hello-&amp;gt;$people-&amp;gt;{&quot;, my name is &quot;}-&amp;gt;{MY_NAME
 				<title>Algorithme DiamondSquare</title>
 				<link>http://www.sebastien-caparros.name/algorithme-diamondsquare.html</link>
 				<guid>http://www.sebastien-caparros.name/algorithme-diamondsquare.html</guid>
-				<description>&lt;time datetime=&quot;2014-06-01T12:04:00&quot;&gt;Le 01/06/2014 à 12:04:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2014-06-01T12:04:00&quot;&gt;01/06/2014 at 12:04:00&lt;/time&gt;
 &lt;h1&gt;Algorithme DiamondSquare&lt;/h1&gt;
 
 &lt;p&gt;
@@ -445,7 +461,7 @@ document.currentScript.parentNode.appendChild(refreshButton);
 				<title>25 ans du Web</title>
 				<link>http://www.sebastien-caparros.name/25-ans-du-web.html</link>
 				<guid>http://www.sebastien-caparros.name/25-ans-du-web.html</guid>
-				<description>&lt;time datetime=&quot;2014-03-12T17:50:00&quot;&gt;Le 12/03/2014 à 17:50:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2014-03-12T17:50:00&quot;&gt;12/03/2014 at 17:50:00&lt;/time&gt;
 &lt;h1&gt;25 ans du Web&lt;/h1&gt;
 
 &lt;p&gt;
@@ -460,7 +476,7 @@ document.currentScript.parentNode.appendChild(refreshButton);
 				<title>Deuxième vidéo de présentation de mon jeu</title>
 				<link>http://www.sebastien-caparros.name/deuxieme-video-presentation-jeu.html</link>
 				<guid>http://www.sebastien-caparros.name/deuxieme-video-presentation-jeu.html</guid>
-				<description>&lt;time datetime=&quot;2014-02-10T14:10:00&quot;&gt;Le 10/02/2014 à 14:10:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2014-02-10T14:10:00&quot;&gt;10/02/2014 at 14:10:00&lt;/time&gt;
 &lt;h1&gt;Deuxième vidéo de présentation de mon jeu&lt;/h1&gt;
 
 &lt;p&gt;
@@ -475,7 +491,7 @@ document.currentScript.parentNode.appendChild(refreshButton);
 				<title>Publication d'une librairie JS : FileLoader.js</title>
 				<link>http://www.sebastien-caparros.name/publication-librairie-fileloader-js.html</link>
 				<guid>http://www.sebastien-caparros.name/publication-librairie-fileloader-js.html</guid>
-				<description>&lt;time datetime=&quot;2013-12-02T19:53:00&quot;&gt;Le 02/12/2013 à 19:53:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2013-12-02T19:53:00&quot;&gt;02/12/2013 at 19:53:00&lt;/time&gt;
 &lt;h1&gt;Publication d'une librairie JS : FileLoader.js&lt;/h1&gt;
 
 &lt;p&gt;
@@ -492,7 +508,7 @@ document.currentScript.parentNode.appendChild(refreshButton);
 				<title>Petite vidéo de présentation du jeu</title>
 				<link>http://www.sebastien-caparros.name/premiere-video-jeu-developpement.html</link>
 				<guid>http://www.sebastien-caparros.name/premiere-video-jeu-developpement.html</guid>
-				<description>&lt;time datetime=&quot;2013-10-26T01:51:00&quot;&gt;Le 26/10/2013 à 01:51:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2013-10-26T01:51:00&quot;&gt;26/10/2013 at 01:51:00&lt;/time&gt;
 &lt;h1&gt;Petite vidéo de présentation du jeu&lt;/h1&gt;
 
 &lt;p&gt;
@@ -507,7 +523,7 @@ document.currentScript.parentNode.appendChild(refreshButton);
 				<title>Un peu d'héritage en JavaScript</title>
 				<link>http://www.sebastien-caparros.name/un-peu-d-heritage-en-javascript.html</link>
 				<guid>http://www.sebastien-caparros.name/un-peu-d-heritage-en-javascript.html</guid>
-				<description>&lt;time datetime=&quot;2013-06-29T13:15:00&quot;&gt;Le 29/06/2013 à 13:15:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2013-06-29T13:15:00&quot;&gt;29/06/2013 at 13:15:00&lt;/time&gt;
 &lt;h1&gt;Un peu d'héritage en JavaScript&lt;/h1&gt;
 
 &lt;p&gt;
@@ -603,7 +619,7 @@ Fille.extend(Mere);&lt;/code&gt;&lt;/pre&gt;
 				<title>Déplacements totalement libres en WebGL</title>
 				<link>http://www.sebastien-caparros.name/faire-un-deplacement-totalement-libre-en-webgl.html</link>
 				<guid>http://www.sebastien-caparros.name/faire-un-deplacement-totalement-libre-en-webgl.html</guid>
-				<description>&lt;time datetime=&quot;2013-02-27T18:31:00&quot;&gt;Le 27/02/2013 à 18:31:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2013-02-27T18:31:00&quot;&gt;27/02/2013 at 18:31:00&lt;/time&gt;
 &lt;h1&gt;Déplacements totalement libres en WebGL&lt;/h1&gt;
 
 &lt;p&gt;
@@ -672,7 +688,7 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 				<title>Publication sources du jeu multijoueurs</title>
 				<link>http://www.sebastien-caparros.name/publication-sources-du-jeu-multijoueurs.html</link>
 				<guid>http://www.sebastien-caparros.name/publication-sources-du-jeu-multijoueurs.html</guid>
-				<description>&lt;time datetime=&quot;2013-02-10T12:33:00&quot;&gt;Le 10/02/2013 à 12:33:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2013-02-10T12:33:00&quot;&gt;10/02/2013 at 12:33:00&lt;/time&gt;
 &lt;h1&gt;Publication sources du jeu multijoueurs&lt;/h1&gt;
 
 &lt;p&gt;
@@ -699,7 +715,7 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 				<title>Joyeuses fêtes</title>
 				<link>http://www.sebastien-caparros.name/joyeuses-fetes.html</link>
 				<guid>http://www.sebastien-caparros.name/joyeuses-fetes.html</guid>
-				<description>&lt;time datetime=&quot;2012-12-27T11:41:00&quot;&gt;Le 27/12/2012 à 11:41:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2012-12-27T11:41:00&quot;&gt;27/12/2012 at 11:41:00&lt;/time&gt;
 &lt;h1&gt;Joyeuses fêtes&lt;/h1&gt;
 
 &lt;p&gt;
@@ -718,7 +734,7 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 				<title>Retour sur jMonkeyEngine</title>
 				<link>http://www.sebastien-caparros.name/retour-sur-jmonkeyengine.html</link>
 				<guid>http://www.sebastien-caparros.name/retour-sur-jmonkeyengine.html</guid>
-				<description>&lt;time datetime=&quot;2012-10-07T18:40:00&quot;&gt;Le 07/10/2012 à 18:40:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2012-10-07T18:40:00&quot;&gt;07/10/2012 at 18:40:00&lt;/time&gt;
 &lt;h1&gt;Retour sur jMonkeyEngine&lt;/h1&gt;
 
 &lt;p&gt;
@@ -743,7 +759,7 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 				<title>Expérimentation d'un moteur de particules</title>
 				<link>http://www.sebastien-caparros.name/experimentation-moteur-particules.html</link>
 				<guid>http://www.sebastien-caparros.name/experimentation-moteur-particules.html</guid>
-				<description>&lt;time datetime=&quot;2012-09-29T15:55:00&quot;&gt;Le 29/09/2012 à 15:55:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2012-09-29T15:55:00&quot;&gt;29/09/2012 at 15:55:00&lt;/time&gt;
 &lt;h1&gt;Expérimentation d'un moteur de particules&lt;/h1&gt;
 
 &lt;p&gt;
@@ -760,7 +776,7 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 				<title>Le projet du moment</title>
 				<link>http://www.sebastien-caparros.name/le-projet-du-moment.html</link>
 				<guid>http://www.sebastien-caparros.name/le-projet-du-moment.html</guid>
-				<description>&lt;time datetime=&quot;2012-09-24T01:24:00&quot;&gt;Le 24/09/2012 à 01:24:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2012-09-24T01:24:00&quot;&gt;24/09/2012 at 01:24:00&lt;/time&gt;
 &lt;h1&gt;Le projet du moment&lt;/h1&gt;
 
 &lt;p style=&quot;text-align: justify;&quot;&gt;
@@ -795,7 +811,7 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 				<title>Démarrage du blog</title>
 				<link>http://www.sebastien-caparros.name/demarrage-du-blog.html</link>
 				<guid>http://www.sebastien-caparros.name/demarrage-du-blog.html</guid>
-				<description>&lt;time datetime=&quot;2012-09-22T19:58:00&quot;&gt;Le 22/09/2012 à 19:58:00&lt;/time&gt;
+				<description>&lt;time datetime=&quot;2012-09-22T19:58:00&quot;&gt;22/09/2012 at 19:58:00&lt;/time&gt;
 &lt;h1&gt;Démarrage du blog&lt;/h1&gt;
 
 &lt;p style=&quot;text-align: center;&quot;&gt;
@@ -813,32 +829,6 @@ mat4.translate(mvMatrix, mvMatrix, position);&lt;/code&gt;&lt;/pre&gt;
 	En dehors de présenter l'actualité de mes activités en matière de développement de jeux, j'ai aussi prévu de présenter&amp;nbsp; tout ce que j'ai déjà fait. Il va me falloir beaucoup de temps pour rattraper le retard, du coup je ne sais pas encore si je vais tout faire d'un seul coup ou si je le ferais petit à petit.&lt;/p&gt;
 </description>
 				<pubDate>2012-09-22T19:58:00</pubDate>
-				<dc:creator>Sébastien CAPARROS</dc:creator>
-			</item>
-					<item>
-				<title>Qui suis-je ?</title>
-				<link>http://www.sebastien-caparros.name/qui-suis-je.html</link>
-				<guid>http://www.sebastien-caparros.name/qui-suis-je.html</guid>
-				<description>&lt;time datetime=&quot;2012-09-22T12:00:00&quot;&gt;Le 22/09/2012 à 12:00:00&lt;/time&gt;
-&lt;h1&gt;Qui suis-je ?&lt;/h1&gt;
-
-&lt;p style=&quot;text-align: justify;&quot;&gt;
-	Je m'intéresse depuis très longtemps au monde de l'informatique et des jeux vidéos.&lt;/p&gt;
-&lt;p style=&quot;text-align: justify;&quot;&gt;
-	C'est lorsque j'ai eu mon premier ordinateur (Pentium I 60 Mhz, 4 Mo de RAM, Win95/MS-DOS 6, RIP) et découvert les possibilités créatives qu'offraient certains jeux PC par rapport aux consoles que mon intérêt pour cet univers à vraiment commencé. Je me souviens avoir passé énormément de temps sur un logiciel nommé &lt;a href=&quot;http://wikiclick.margasoft.fr/index.php?title=Klik_%26_Play&quot;&gt;Klik'n Play&lt;/a&gt; qui permettait de créer facilement des jeux via une interface graphique, mais aussi sur le très célèbre RPG Maker, qui existe toujours.&lt;/p&gt;
-&lt;p style=&quot;text-align: justify;&quot;&gt;
-	Pendant un temps, je m'étais vaguement intéréssé à la programmation sur Delphi. J'avais même développé un mini lecteur MP3 (fortement pompé sur un livre), que j'avais été fier de voir publié dans le magazine Freelog !&lt;/p&gt;
-&lt;p style=&quot;text-align: justify;&quot;&gt;
-	Par la suite, j'ai commencé réellement à m'intéresser à la programmation, ce qui a donné lieu à de nombreux projets (que je présenterais en détails sur ce blog). J'ai toujours eu une préférence pour le développement au sein du navigateur. C'est d'ailleurs une méthode de développement qui prend de plus en plus d'ampleur ces dernières années, et notamment avec l'essor de HTML5.&lt;/p&gt;
-&lt;p style=&quot;text-align: justify;&quot;&gt;
-	&amp;nbsp;&lt;/p&gt;
-&lt;p style=&quot;text-align: justify;&quot;&gt;
-	Aujourd'hui, j'ai terminé mes études et je suis développeur d'outils intranet dans une banque. Je continue à m'intéresser aux jeux vidéos, mais c'est une activité que je préfère faire en amateur.&lt;/p&gt;
-&lt;p style=&quot;text-align: justify;&quot;&gt;
-	Je crée ce blog en 2012, tout simplement pour y partager mes différentes créations et découvertes. Elles sont nombreuses et pas vraiment abouties, car c'est avant tout le challenge technique qui me motive. J'aime me lancer des défis et expérimenter, mais une fois que c'est réussi, je passe bien souvent au challenge suivant ...&lt;/p&gt;
-
-</description>
-				<pubDate>2012-09-22T12:00:00</pubDate>
 				<dc:creator>Sébastien CAPARROS</dc:creator>
 			</item>
 		</channel>
