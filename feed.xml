@@ -5,8 +5,22 @@
 		<language>en</language>
 		<description>Some developer's blog</description>
 		<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://localhost/feed.php" />
-		<lastBuildDate>2017-04-03T13:49:00</lastBuildDate>
+		<lastBuildDate>2017-04-04T12:00:00</lastBuildDate>
 		
+					<item>
+				<title>The blog has moved to a new domain</title>
+				<link>http://www.sebastien.caparros.me/new-domain.html</link>
+				<guid>http://www.sebastien.caparros.me/new-domain.html</guid>
+				<description>&lt;time datetime=&quot;2017-04-04T12:00:00&quot;&gt;04/04/2017 at 12:00:00&lt;/time&gt;
+&lt;h1&gt;The blog has moved to a new domain&lt;/h1&gt;
+
+&lt;p&gt;
+    I just moved this blog to a new domain. It's now available at &lt;strong&gt;http://www.sebastien.caparros.me/&lt;/strong&gt; instead of &lt;strong&gt;http://www.sebastien-caparros.name/&lt;/strong&gt;.
+&lt;/p&gt;
+</description>
+				<pubDate>2017-04-04T12:00:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
 					<item>
 				<title>Blogging in English</title>
 				<link>http://www.sebastien.caparros.me/blogging-in-english.html</link>
