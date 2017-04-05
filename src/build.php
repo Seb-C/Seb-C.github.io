@@ -42,6 +42,7 @@ foreach($files as $file) {
 		'title'             => $title,
 		'filename'          => $filename,
 		'content'           => $articleContent,
+		'expanded'          => true,
 	);
 	
 	// Setting article page itself
@@ -61,11 +62,12 @@ file_put_contents('../feed.xml', $rssContent);
 // Creating homepage file
 $articlesDataHome = array();
 foreach($articlesData as $i => $articleData) {
-	if($i >= 2) {
+	if($i >= 1) {
 		$articleData['content'] = '
 			<time datetime="'.$articleData['datetime'].'">'.$articleData['datetimeFormatted'].'</time>
 			<a href="'.$articleData['filename'].'"><h1>'.$articleData['title'].'</h1></a>
 		';
+		$articleData['expanded'] = false;
 	}
 	$articlesDataHome[] = $articleData;
 }
@@ -73,10 +75,3 @@ $homeContent = getPageContent($articlesDataHome, 'model.html');
 file_put_contents('../index.html', $homeContent);
 
 echo "DONE\n";
-
-
-
-
-
-
-

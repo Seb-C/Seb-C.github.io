@@ -48,7 +48,33 @@
 	<a href="images/jmonkeyengine/Capture.png" rel="lightbox"><img alt="Aperçu 3 de jMonkeyEngine" src="images/jmonkeyengine/Capture.png" style="width: 480px; height: 375px;" /></a></p>
 <p>
 	La 3D étant quand même un domaine très intéréssant, j'ai quand même fini par m'y remettre il y a quelques jours. Cette fois-ci, je commence par les bases et j'ai pour objectif de me familiariser directement avec WebGL.</p>
-				</section>
+											<aside>
+							<button class="full-size" type="button" id="show-comments">Show comments</button>
+							<script type="text/javascript">
+								window.addEventListener("load", function() {
+									document.getElementById('show-comments').addEventListener('click', function() {
+										var disqusContainer = document.createElement('div');
+										disqusContainer.setAttribute('id', 'disqus_thread');
+										this.parentNode.appendChild(disqusContainer);
+										this.parentNode.removeChild(this);
+
+										// Disqus code
+										window.disqus_config = function () {
+											this.page.title = "Retour sur jMonkeyEngine";
+											this.page.url = "http:\/\/www.sebastien.caparros.me\/retour-sur-jmonkeyengine.html";
+											this.page.identifier = "retour-sur-jmonkeyengine.html";
+										};
+										(function() {
+											var d = document, s = d.createElement('script');
+											s.src = 'https://some-developers-blog.disqus.com/embed.js';
+											s.setAttribute('data-timestamp', +new Date());
+											(d.head || d.body).appendChild(s);
+										})();
+									});
+								});
+							</script>
+						</aside>
+									</section>
 					</div>
 		<footer>
 			<p>

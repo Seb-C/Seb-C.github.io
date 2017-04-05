@@ -40,7 +40,33 @@
 	Il reste quelques petits bugs au niveau de la physique, mais dans l'ensemble ca commence à marcher pas trop mal (la vidéo n'est pas très fluide, mais le jeu est correct dans la réalité).</p>
 <p style="text-align: center;">
 	<iframe allowfullscreen="" frameborder="0" src="http://www.youtube.com/embed/PkGUlvfqktI?rel=0" width="600" height="380"></iframe></p>
-				</section>
+											<aside>
+							<button class="full-size" type="button" id="show-comments">Show comments</button>
+							<script type="text/javascript">
+								window.addEventListener("load", function() {
+									document.getElementById('show-comments').addEventListener('click', function() {
+										var disqusContainer = document.createElement('div');
+										disqusContainer.setAttribute('id', 'disqus_thread');
+										this.parentNode.appendChild(disqusContainer);
+										this.parentNode.removeChild(this);
+
+										// Disqus code
+										window.disqus_config = function () {
+											this.page.title = "Exp\u00e9rimentation d'un moteur de particules";
+											this.page.url = "http:\/\/www.sebastien.caparros.me\/experimentation-moteur-particules.html";
+											this.page.identifier = "experimentation-moteur-particules.html";
+										};
+										(function() {
+											var d = document, s = d.createElement('script');
+											s.src = 'https://some-developers-blog.disqus.com/embed.js';
+											s.setAttribute('data-timestamp', +new Date());
+											(d.head || d.body).appendChild(s);
+										})();
+									});
+								});
+							</script>
+						</aside>
+									</section>
 					</div>
 		<footer>
 			<p>

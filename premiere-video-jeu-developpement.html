@@ -38,7 +38,33 @@
 	Une vidéo où je présente le jeu sur lequel je travaille depuis de nombreux mois.</p>
 <p>
 	<iframe allowfullscreen="" frameborder="0" src="//www.youtube.com/embed/eC0HhQq1DgQ?rel=0" width="600" height="450"></iframe></p>
-				</section>
+											<aside>
+							<button class="full-size" type="button" id="show-comments">Show comments</button>
+							<script type="text/javascript">
+								window.addEventListener("load", function() {
+									document.getElementById('show-comments').addEventListener('click', function() {
+										var disqusContainer = document.createElement('div');
+										disqusContainer.setAttribute('id', 'disqus_thread');
+										this.parentNode.appendChild(disqusContainer);
+										this.parentNode.removeChild(this);
+
+										// Disqus code
+										window.disqus_config = function () {
+											this.page.title = "Petite vid\u00e9o de pr\u00e9sentation du jeu";
+											this.page.url = "http:\/\/www.sebastien.caparros.me\/premiere-video-jeu-developpement.html";
+											this.page.identifier = "premiere-video-jeu-developpement.html";
+										};
+										(function() {
+											var d = document, s = d.createElement('script');
+											s.src = 'https://some-developers-blog.disqus.com/embed.js';
+											s.setAttribute('data-timestamp', +new Date());
+											(d.head || d.body).appendChild(s);
+										})();
+									});
+								});
+							</script>
+						</aside>
+									</section>
 					</div>
 		<footer>
 			<p>

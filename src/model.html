@@ -33,6 +33,34 @@
 			<?php foreach($articles as $article): ?>
 				<section>
 					<?php echo $article['content']; ?>
+					<?php if($article['expanded']): ?>
+						<aside>
+							<button class="full-size" type="button" id="show-comments">Show comments</button>
+							<script type="text/javascript">
+								window.addEventListener("load", function() {
+									document.getElementById('show-comments').addEventListener('click', function() {
+										var disqusContainer = document.createElement('div');
+										disqusContainer.setAttribute('id', 'disqus_thread');
+										this.parentNode.appendChild(disqusContainer);
+										this.parentNode.removeChild(this);
+
+										// Disqus code
+										window.disqus_config = function () {
+											this.page.title = <?= json_encode($article['title']) ?>;
+											this.page.url = <?= json_encode('http://www.sebastien.caparros.me/'.$article['filename']) ?>;
+											this.page.identifier = <?= json_encode($article['filename']) ?>;
+										};
+										(function() {
+											var d = document, s = d.createElement('script');
+											s.src = 'https://some-developers-blog.disqus.com/embed.js';
+											s.setAttribute('data-timestamp', +new Date());
+											(d.head || d.body).appendChild(s);
+										})();
+									});
+								});
+							</script>
+						</aside>
+					<?php endif ?>
 				</section>
 			<?php endforeach ?>
 		</div>

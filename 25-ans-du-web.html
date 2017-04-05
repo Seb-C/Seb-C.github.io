@@ -38,7 +38,33 @@
 	Si vous avez lu les actualités récemment, vous savez que c'est le 25<sup>ème</sup> anniversaire du Web (à ne pas confondre avec Internet). J'en profite donc pour apporter ma modeste pierre à l'édifice, mais surtout pour relayer le message publié par Tim Berners-Lee (plus de détails sur <a href="http://www.webat25.org/">webat25.org</a>). Car si cela fait déjà 25 ans que la plus belle création humaine (oui, j'ose l'affirmer ! Vous en connaissez d'autres qui ont réuni 2.5 milliards de personnes dans un but commun ?) a commencé à bouleverser notre civilisation, il ne faut pas oublier que les deux tiers de la population mondiale n'y ont toujours pas accès.</p>
 <p>
 	<iframe allowfullscreen="" frameborder="0" mozallowfullscreen="" src="//player.vimeo.com/video/88343326" webkitallowfullscreen="" width="600" height="450"></iframe></p>
-				</section>
+											<aside>
+							<button class="full-size" type="button" id="show-comments">Show comments</button>
+							<script type="text/javascript">
+								window.addEventListener("load", function() {
+									document.getElementById('show-comments').addEventListener('click', function() {
+										var disqusContainer = document.createElement('div');
+										disqusContainer.setAttribute('id', 'disqus_thread');
+										this.parentNode.appendChild(disqusContainer);
+										this.parentNode.removeChild(this);
+
+										// Disqus code
+										window.disqus_config = function () {
+											this.page.title = "25 ans du Web";
+											this.page.url = "http:\/\/www.sebastien.caparros.me\/25-ans-du-web.html";
+											this.page.identifier = "25-ans-du-web.html";
+										};
+										(function() {
+											var d = document, s = d.createElement('script');
+											s.src = 'https://some-developers-blog.disqus.com/embed.js';
+											s.setAttribute('data-timestamp', +new Date());
+											(d.head || d.body).appendChild(s);
+										})();
+									});
+								});
+							</script>
+						</aside>
+									</section>
 					</div>
 		<footer>
 			<p>

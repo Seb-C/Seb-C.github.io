@@ -58,7 +58,33 @@
 	Au début, j'avais opté pour un serveur HTTP très simple et fait à la main, avec une librairie pour gérer les websockets. Le problème de cette solution, c'est qu'il fallait occuper deux ports pour les deux serveurs (alors que le protocole websockets s'implante normalement sur HTTP), que je ne connaissait absolument pas le fonctionnement interne de la librairie, et qu'il allait falloir gérer le multi-threading du serveur HTTP (c'était des sockets en java.io).</p>
 <p style="text-align: justify;">
 	Après quelques prises de tête avec java.nio (qui peut faire des sockets de manière asynchrone, et donc sans devoir créer un thread par client), j'ai finalement opté pour la librairie Grizzly. Son utilisation est simple, elle utilise java.nio et elle s'intègre comme une simple librairie, sans devoir créer 50 fichiers de configuration ou écrire trois pages de code supplémentaires.</p>
-				</section>
+											<aside>
+							<button class="full-size" type="button" id="show-comments">Show comments</button>
+							<script type="text/javascript">
+								window.addEventListener("load", function() {
+									document.getElementById('show-comments').addEventListener('click', function() {
+										var disqusContainer = document.createElement('div');
+										disqusContainer.setAttribute('id', 'disqus_thread');
+										this.parentNode.appendChild(disqusContainer);
+										this.parentNode.removeChild(this);
+
+										// Disqus code
+										window.disqus_config = function () {
+											this.page.title = "Le projet du moment";
+											this.page.url = "http:\/\/www.sebastien.caparros.me\/le-projet-du-moment.html";
+											this.page.identifier = "le-projet-du-moment.html";
+										};
+										(function() {
+											var d = document, s = d.createElement('script');
+											s.src = 'https://some-developers-blog.disqus.com/embed.js';
+											s.setAttribute('data-timestamp', +new Date());
+											(d.head || d.body).appendChild(s);
+										})();
+									});
+								});
+							</script>
+						</aside>
+									</section>
 					</div>
 		<footer>
 			<p>

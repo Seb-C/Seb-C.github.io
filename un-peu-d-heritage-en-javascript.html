@@ -119,7 +119,33 @@ Fille.extend(Mere);</code></pre>
 	Au niveau du code en lui-même, je ne modifie pas Object, mais Function. Du coup, quand vous utiliserez un simple objet comme tableau associatif, vous n'aurez pas d'attribut parasite. Par contre, si vous voulez boucler sur les attributs d'une instance d'une classe (Function), il y en aura (mais vous ne devriez pas avoir besoin de le faire si vous développez proprement ;) ), auquel cas il faudra suivre les recommandations en utilisant hasOwnProperty.</p>
 <p>
 	En espérant que ca soit utile à quelqu'un ! Sentez vous libre de réutiliser ma fonction où vous voulez et sans restrictions, mais si vous pouvez mettre un lien vers cette page en commentaire de la fonction, j'apprécierais.</p>
-				</section>
+											<aside>
+							<button class="full-size" type="button" id="show-comments">Show comments</button>
+							<script type="text/javascript">
+								window.addEventListener("load", function() {
+									document.getElementById('show-comments').addEventListener('click', function() {
+										var disqusContainer = document.createElement('div');
+										disqusContainer.setAttribute('id', 'disqus_thread');
+										this.parentNode.appendChild(disqusContainer);
+										this.parentNode.removeChild(this);
+
+										// Disqus code
+										window.disqus_config = function () {
+											this.page.title = "Un peu d'h\u00e9ritage en JavaScript";
+											this.page.url = "http:\/\/www.sebastien.caparros.me\/un-peu-d-heritage-en-javascript.html";
+											this.page.identifier = "un-peu-d-heritage-en-javascript.html";
+										};
+										(function() {
+											var d = document, s = d.createElement('script');
+											s.src = 'https://some-developers-blog.disqus.com/embed.js';
+											s.setAttribute('data-timestamp', +new Date());
+											(d.head || d.body).appendChild(s);
+										})();
+									});
+								});
+							</script>
+						</aside>
+									</section>
 					</div>
 		<footer>
 			<p>

@@ -37,98 +37,118 @@
 <p>
     I just moved this blog to a new domain. It's now available at <strong>http://www.sebastien.caparros.me/</strong> instead of <strong>http://www.sebastien-caparros.name/</strong>.
 </p>
-				</section>
-							<section>
-					<time datetime="2017-04-03T13:49:00">03/04/2017 at 13:49:00</time>
-<h1>Blogging in English</h1>
+											<aside>
+							<button class="full-size" type="button" id="show-comments">Show comments</button>
+							<script type="text/javascript">
+								window.addEventListener("load", function() {
+									document.getElementById('show-comments').addEventListener('click', function() {
+										var disqusContainer = document.createElement('div');
+										disqusContainer.setAttribute('id', 'disqus_thread');
+										this.parentNode.appendChild(disqusContainer);
+										this.parentNode.removeChild(this);
 
-<p>
-    Since the beginning, this blog was written in French, because it's my native language. At this time, I also wasn't very confident with my English level.
-</p>
-<p>
-    I have decided that I will now write new articles in English instead of French. I translated the main parts of the page (like menus, title... yeah, this blog doesn't have much 😂). I probably will also translate the old articles in the future, but for now, it will stay in French.
-</p>
-				</section>
+										// Disqus code
+										window.disqus_config = function () {
+											this.page.title = "The blog has moved to a new domain";
+											this.page.url = "http:\/\/www.sebastien.caparros.me\/new-domain.html";
+											this.page.identifier = "new-domain.html";
+										};
+										(function() {
+											var d = document, s = d.createElement('script');
+											s.src = 'https://some-developers-blog.disqus.com/embed.js';
+											s.setAttribute('data-timestamp', +new Date());
+											(d.head || d.body).appendChild(s);
+										})();
+									});
+								});
+							</script>
+						</aside>
+									</section>
+							<section>
+					
+			<time datetime="2017-04-03T13:49:00">03/04/2017 at 13:49:00</time>
+			<a href="blogging-in-english.html"><h1>Blogging in English</h1></a>
+											</section>
 							<section>
 					
 			<time datetime="2016-01-03T21:09:00">03/01/2016 at 21:09:00</time>
 			<a href="demenagement-du-site.html"><h1>Déménagement du site</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2015-07-02T20:18:00">02/07/2015 at 20:18:00</time>
 			<a href="classe-string-php.html"><h1>Une classe String en PHP ?</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2015-03-11T19:00:00">11/03/2015 at 19:00:00</time>
 			<a href="partage-glitchyverse-github.html"><h1>Partage de GlitchyVerse sur GitHub</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2014-06-01T12:04:00">01/06/2014 at 12:04:00</time>
 			<a href="algorithme-diamondsquare.html"><h1>Algorithme DiamondSquare</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2014-03-12T17:50:00">12/03/2014 at 17:50:00</time>
 			<a href="25-ans-du-web.html"><h1>25 ans du Web</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2014-02-10T14:10:00">10/02/2014 at 14:10:00</time>
 			<a href="deuxieme-video-presentation-jeu.html"><h1>Deuxième vidéo de présentation de mon jeu</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2013-12-02T19:53:00">02/12/2013 at 19:53:00</time>
 			<a href="publication-librairie-fileloader-js.html"><h1>Publication d'une librairie JS : FileLoader.js</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2013-10-26T01:51:00">26/10/2013 at 01:51:00</time>
 			<a href="premiere-video-jeu-developpement.html"><h1>Petite vidéo de présentation du jeu</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2013-06-29T13:15:00">29/06/2013 at 13:15:00</time>
 			<a href="un-peu-d-heritage-en-javascript.html"><h1>Un peu d'héritage en JavaScript</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2013-02-27T18:31:00">27/02/2013 at 18:31:00</time>
 			<a href="faire-un-deplacement-totalement-libre-en-webgl.html"><h1>Déplacements totalement libres en WebGL</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2013-02-10T12:33:00">10/02/2013 at 12:33:00</time>
 			<a href="publication-sources-du-jeu-multijoueurs.html"><h1>Publication sources du jeu multijoueurs</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2012-12-27T11:41:00">27/12/2012 at 11:41:00</time>
 			<a href="joyeuses-fetes.html"><h1>Joyeuses fêtes</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2012-10-07T18:40:00">07/10/2012 at 18:40:00</time>
 			<a href="retour-sur-jmonkeyengine.html"><h1>Retour sur jMonkeyEngine</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2012-09-29T15:55:00">29/09/2012 at 15:55:00</time>
 			<a href="experimentation-moteur-particules.html"><h1>Expérimentation d'un moteur de particules</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2012-09-24T01:24:00">24/09/2012 at 01:24:00</time>
 			<a href="le-projet-du-moment.html"><h1>Le projet du moment</h1></a>
-						</section>
+											</section>
 							<section>
 					
 			<time datetime="2012-09-22T19:58:00">22/09/2012 at 19:58:00</time>
 			<a href="demarrage-du-blog.html"><h1>Démarrage du blog</h1></a>
-						</section>
+											</section>
 					</div>
 		<footer>
 			<p>

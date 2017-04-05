@@ -50,7 +50,33 @@
 	A part ca, je me suis mis à tester WebGL, et je dois dire que c'est assez intéréssant car j'apprend beaucoup de choses, même si je m'arrache souvent les cheveux pour les comprendre. J'ai également décidé de me mettre au langage Ruby, qui me servira pour le côté serveur.</p>
 <p>
 	J'essayerais de publier des articles là dessus.</p>
-				</section>
+											<aside>
+							<button class="full-size" type="button" id="show-comments">Show comments</button>
+							<script type="text/javascript">
+								window.addEventListener("load", function() {
+									document.getElementById('show-comments').addEventListener('click', function() {
+										var disqusContainer = document.createElement('div');
+										disqusContainer.setAttribute('id', 'disqus_thread');
+										this.parentNode.appendChild(disqusContainer);
+										this.parentNode.removeChild(this);
+
+										// Disqus code
+										window.disqus_config = function () {
+											this.page.title = "Publication sources du jeu multijoueurs";
+											this.page.url = "http:\/\/www.sebastien.caparros.me\/publication-sources-du-jeu-multijoueurs.html";
+											this.page.identifier = "publication-sources-du-jeu-multijoueurs.html";
+										};
+										(function() {
+											var d = document, s = d.createElement('script');
+											s.src = 'https://some-developers-blog.disqus.com/embed.js';
+											s.setAttribute('data-timestamp', +new Date());
+											(d.head || d.body).appendChild(s);
+										})();
+									});
+								});
+							</script>
+						</aside>
+									</section>
 					</div>
 		<footer>
 			<p>

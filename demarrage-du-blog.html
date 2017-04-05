@@ -47,7 +47,33 @@
 	Au début, j'avais envisagé d'utiliser un générateur de blogs statiques (du style Pelican), accompagné de Disqus ou IntenseDebate pour les commentaires. Ca m'aurait permis d'éviter la surcouche PHP pour économiser encore plus les ressources, mais c'est plutôt galère à installer et à maintenir. Et si je peux éviter de dédier le système de commentaires à un service externe, c'est pas plus mal.</p>
 <p style="text-align: justify;">
 	En dehors de présenter l'actualité de mes activités en matière de développement de jeux, j'ai aussi prévu de présenter&nbsp; tout ce que j'ai déjà fait. Il va me falloir beaucoup de temps pour rattraper le retard, du coup je ne sais pas encore si je vais tout faire d'un seul coup ou si je le ferais petit à petit.</p>
-				</section>
+											<aside>
+							<button class="full-size" type="button" id="show-comments">Show comments</button>
+							<script type="text/javascript">
+								window.addEventListener("load", function() {
+									document.getElementById('show-comments').addEventListener('click', function() {
+										var disqusContainer = document.createElement('div');
+										disqusContainer.setAttribute('id', 'disqus_thread');
+										this.parentNode.appendChild(disqusContainer);
+										this.parentNode.removeChild(this);
+
+										// Disqus code
+										window.disqus_config = function () {
+											this.page.title = "D\u00e9marrage du blog";
+											this.page.url = "http:\/\/www.sebastien.caparros.me\/demarrage-du-blog.html";
+											this.page.identifier = "demarrage-du-blog.html";
+										};
+										(function() {
+											var d = document, s = d.createElement('script');
+											s.src = 'https://some-developers-blog.disqus.com/embed.js';
+											s.setAttribute('data-timestamp', +new Date());
+											(d.head || d.body).appendChild(s);
+										})();
+									});
+								});
+							</script>
+						</aside>
+									</section>
 					</div>
 		<footer>
 			<p>
