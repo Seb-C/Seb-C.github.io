@@ -5,8 +5,28 @@
 		<language>en</language>
 		<description>Some developer's blog</description>
 		<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://localhost/feed.php" />
-		<lastBuildDate>2017-04-04T12:00:00</lastBuildDate>
+		<lastBuildDate>2017-04-06T12:00:00</lastBuildDate>
 		
+					<item>
+				<title>The comments are back</title>
+				<link>http://www.sebastien.caparros.me/comments-are-back.html</link>
+				<guid>http://www.sebastien.caparros.me/comments-are-back.html</guid>
+				<description>&lt;time datetime=&quot;2017-04-06T12:00:00&quot;&gt;06/04/2017 at 12:00:00&lt;/time&gt;
+&lt;h1&gt;The comments are back&lt;/h1&gt;
+
+&lt;p&gt;
+    The comments were removed from this blog since I started to host it on GitHub pages. I just added a new one using Disqus.
+&lt;/p&gt;
+&lt;p&gt;
+    I can't say I'm really comfortable with the idea of adding a third party dependency to my blog, but it's a very convenient solution.
+&lt;/p&gt;
+&lt;p&gt;
+    I'm also aware of the privacy matter. That's why I made it so it's disabled by default, and clicking on the &quot;Show comments&quot; button is required to enable the Disquss plugin.
+&lt;/p&gt;
+</description>
+				<pubDate>2017-04-06T12:00:00</pubDate>
+				<dc:creator>Sébastien CAPARROS</dc:creator>
+			</item>
 					<item>
 				<title>The blog has moved to a new domain</title>
 				<link>http://www.sebastien.caparros.me/new-domain.html</link>
