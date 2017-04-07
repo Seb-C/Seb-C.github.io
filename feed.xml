@@ -96,7 +96,7 @@
 		Sans connaître le langage, savez vous comment &lt;code&gt;splitter&lt;/code&gt; une chaîne de caractères ? Il existe une fonction &lt;code&gt;split&lt;/code&gt;, mais elle est obsolète et agit sur les expressions rationelles. Il existe aussi la fonction &lt;code&gt;preg_split&lt;/code&gt; pour les expressions régulières. La fonction &lt;code&gt;str_split&lt;/code&gt; alors ? Non plus, car elle permet uniquement de découper une chaîne en fonction d'une certaine longueur. Il faut utiliser &lt;code&gt;explode&lt;/code&gt; pour faire un &lt;code&gt;split&lt;/code&gt;&amp;nbsp;conventionnel.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;
-	J'ai donc créé une classe intitulée &lt;a href=&quot;documents/nicestring.php.tar.gz&quot;&gt;NiceString&lt;/a&gt; (le mot clé &quot;String&quot; n'est pas réservé par le langage, mais ça ne me semble pas très prudent non plus de l'utiliser) que je partage sur &lt;a href=&quot;https://github.com/Seb-C/NiceString.php&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+	J'ai donc créé une classe intitulée &lt;a href=&quot;https://github.com/Seb-C/NiceString.php/blob/master/NiceString.php&quot;&gt;NiceString&lt;/a&gt; (le mot clé &quot;String&quot; n'est pas réservé par le langage, mais ça ne me semble pas très prudent non plus de l'utiliser) que je partage sur &lt;a href=&quot;https://github.com/Seb-C/NiceString.php&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;
 	On y retrouve les méthodes classiques de ce genre de classe, que je vous laisse découvrir (je me suis beaucoup inspiré de Java), mais je me suis surtout amusé avec les différentes méthodes et classes magiques de PHP. J'insiste sur le côté expérimental, je l'ai fait surtout pour le fun, c'est très probablement lent, et c'est horrible et élégant à la fois.&lt;/p&gt;
 &lt;h2&gt;
